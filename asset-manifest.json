@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/runecrafter/static/css/main.09d85a9c.css",
+    "main.js": "/runecrafter/static/js/main.976c3cd3.js",
+    "static/js/787.132333bb.chunk.js": "/runecrafter/static/js/787.132333bb.chunk.js",
+    "index.html": "/runecrafter/index.html",
+    "main.09d85a9c.css.map": "/runecrafter/static/css/main.09d85a9c.css.map",
+    "main.976c3cd3.js.map": "/runecrafter/static/js/main.976c3cd3.js.map",
+    "787.132333bb.chunk.js.map": "/runecrafter/static/js/787.132333bb.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.09d85a9c.css",
+    "static/js/main.976c3cd3.js"
+  ]
+}
