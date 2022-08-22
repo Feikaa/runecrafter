@@ -1,8 +1,9 @@
 import React from "react";
+import runeEssence from "../icons/rune_essence.png";
 
 export default function Item(props) {
-    const img = props.item;
+
     return (
-        <img src={"/icons/" + img + ".png"} alt="Rune essence" width="48px" height="48px"></img>
+        <img src={props.item === "rune_essence" ? runeEssence : ""} alt="Rune essence" width="48px" height="48px"></img>
     )
 }
