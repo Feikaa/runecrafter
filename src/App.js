@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+import TitleSection from "./sections/TitleSection";
+import ClickSection from "./sections/ClickSection";
+import UpgradesSection from "./sections/UpgradesSection";
+import RunecraftSection from "./sections/RunecraftSection";
+import InventorySection from "./sections/InventorySection";
 import './App.css';
+import React, { useState } from 'react';
 
 function App() {
+
+  const [inventory, setInventory] = useState([]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TitleSection />
+      <ClickSection inventory={inventory} setInventory={setInventory}/>
+      <UpgradesSection />
+      <RunecraftSection />
+      <InventorySection inventory={inventory} setInventory={setInventory}/>
     </div>
   );
 }
