@@ -1,17 +1,25 @@
 {
   "files": {
-    "main.css": "/runecrafter/static/css/main.09d85a9c.css",
-    "main.js": "/runecrafter/static/js/main.95e1d188.js",
+    "main.css": "/runecrafter/static/css/main.89237d68.css",
+    "main.js": "/runecrafter/static/js/main.d75dcf5d.js",
     "static/js/787.132333bb.chunk.js": "/runecrafter/static/js/787.132333bb.chunk.js",
+    "static/media/craft.wav": "/runecrafter/static/media/craft.924d55b5e627cf4bac3d.wav",
     "static/media/rune_essence_detail.png": "/runecrafter/static/media/rune_essence_detail.141194d93cff3accaaea.png",
+    "static/media/air_rune.png": "/runecrafter/static/media/air_rune.e734e046fb74c3d580ff.png",
+    "static/media/astral_rune.png": "/runecrafter/static/media/astral_rune.72c8fad756773e280ef1.png",
+    "static/media/wrath_rune.png": "/runecrafter/static/media/wrath_rune.8b42144f8fe596e1d70a.png",
+    "static/media/cosmic_rune.png": "/runecrafter/static/media/cosmic_rune.4bb1db16a4a257f26b3a.png",
+    "static/media/earth_rune.png": "/runecrafter/static/media/earth_rune.b73df9da45c2bb8c9189.png",
+    "static/media/blood_rune.png": "/runecrafter/static/media/blood_rune.9919e3cdd031f29884c6.png",
+    "static/media/law_rune.webp": "/runecrafter/static/media/law_rune.48e7c0ee5e5d5f92d7d9.webp",
     "static/media/click.mp3": "/runecrafter/static/media/click.e1e7ced0df9214d6bf1f.mp3",
     "index.html": "/runecrafter/index.html",
-    "main.09d85a9c.css.map": "/runecrafter/static/css/main.09d85a9c.css.map",
-    "main.95e1d188.js.map": "/runecrafter/static/js/main.95e1d188.js.map",
+    "main.89237d68.css.map": "/runecrafter/static/css/main.89237d68.css.map",
+    "main.d75dcf5d.js.map": "/runecrafter/static/js/main.d75dcf5d.js.map",
     "787.132333bb.chunk.js.map": "/runecrafter/static/js/787.132333bb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.09d85a9c.css",
-    "static/js/main.95e1d188.js"
+    "static/css/main.89237d68.css",
+    "static/js/main.d75dcf5d.js"
   ]
 }
