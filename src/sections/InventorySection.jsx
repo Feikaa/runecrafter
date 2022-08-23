@@ -6,7 +6,6 @@ import { React } from 'react';
 export default function InventorySection(props) {
 
     const inventory = props.inventory;
-    const setInventory = props.setInventory;
     
     return (
         <Box className="inventory">

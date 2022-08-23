@@ -9,23 +9,23 @@ export default function ClickSection(props) {
 
     const inventory = props.inventory;
     const setInventory = props.setInventory;
+    const lvl = props.lvl;
+    const setLvl = props.setLvl;
 
     const audio = new Audio(clickAudio);
     const [shake, setShake] = useState(false);
 
     return (
-        <Box paddingTop="5%">
+        <Box paddingTop="1%">
             <img src={click} alt="Clickable Rune essence" width="500px" height="500px" className={shake ? 'shake' : ""} onClick={() => {
                 if (inventory.length < 36) {
+                    setLvl(lvl + 1);
                     audio.play();
                     setShake(true);
                     setInventory([...inventory, (<Item item={"rune_essence"} />)]);
                 }
-
-                console.log(shake);
                 }}
-                onAnimationEnd={() => {setShake(false);
-                    console.log(shake);}}></img>
+                onAnimationEnd={() => {setShake(false)}}></img>
         </Box>
     )
 }
