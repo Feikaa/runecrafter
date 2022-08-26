@@ -96,7 +96,7 @@ function App() {
   });
   const [essenceType, setEssenceType] = useState(() => {
     const saved = localStorage.getItem("essenceType");
-    return saved || "pure_essence"
+    return saved || "rune_essence"
   });
 
   // Saving progress
