@@ -128,7 +128,7 @@ export default function RunecraftSection(props) {
                 </div>
                     <Button variant="contained" color="success" onClick={() => {
                         if (inventory.length > 0) { // this if should be in the function btw
-                            craftRune("air", inventory.length * 100);
+                            craftRune("air", inventory.length);
                         }
                     }}>
                         Craft Air Rune&nbsp;
@@ -144,7 +144,7 @@ export default function RunecraftSection(props) {
                     </div>
                     <Button variant="contained" color={lvl >= 9 ? "success" : "error"} disabled={lvl >= 9 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
-                            craftRune("earth", inventory.length * 100);
+                            craftRune("earth", inventory.length);
                         }
                     }}>
                         Craft Earth Rune&nbsp;
@@ -160,7 +160,7 @@ export default function RunecraftSection(props) {
                     </div>
                     <Button variant="contained" color={lvl >= 27 ? "success" : "error"} disabled={lvl >= 27 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
-                            craftRune("cosmic", inventory.length * 100);
+                            craftRune("cosmic", inventory.length);
                         }
                     }}>
                         Craft Cosmic Rune&nbsp;
