@@ -34,6 +34,9 @@ export default function UpgradesSection(props) {
     const autoaltar = props.autoaltar;
     const setAutoaltar = props.setAutoaltar;
 
+    const pouch = props.pouch;
+    const setPouch = props.setPouch;
+
     const theme = createTheme({
         palette: {
             upgrade: {
@@ -75,7 +78,7 @@ export default function UpgradesSection(props) {
           <List>
             <Tooltip title={
               <React.Fragment>
-                <Typography>Auto generates 1 <img src={runeEssence} alt="Pure Essence"></img> every second.</Typography>
+                <Typography>Auto generates 1 essence every second.</Typography>
               </React.Fragment>} arrow placement="right">
               <span style={{height: "80px", width: "250px", display: "block"}}>
             <Button key={"auto click"} sx={{border: 1, color: "orange"}} disabled={autoclick ? true : air < 200 ? true : earth >= 300 ? false : true} onClick={() => {
@@ -85,12 +88,12 @@ export default function UpgradesSection(props) {
             }}>
               Pure Essence Runner
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-              <Box sx={{border: 1, width: "39px", color: air >= 200 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: autoclick ? "black" : air >= 200 ? "green" : "red"}}>
                 <img src={airRune} alt="Air Rune Amount"></img>
                 200
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: earth >= 300 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: autoclick ? "black" : earth >= 300 ? "green" : "red"}}>
                 <img src={earthRune} alt="Earth Rune Amount"></img>
                 300
               </Box>
@@ -114,17 +117,17 @@ export default function UpgradesSection(props) {
             }}>
               Altar Camper
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-              <Box sx={{border: 1, width: "39px", color: air >= 300 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: autoaltar ? "black" : air >= 300 ? "green" : "red"}}>
                 <img src={airRune} alt="Air Rune Amount"></img>
                 300
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: earth >= 300 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: autoaltar ? "black" : earth >= 300 ? "green" : "red"}}>
                 <img src={earthRune} alt="Earth Rune Amount"></img>
                 300
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: earth >= 300 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: autoaltar ? "black" : cosmic >= 300 ? "green" : "red"}}>
                 <img src={cosmicRune} alt="Cosmic Rune Amount"></img>
                 300
               </Box>
@@ -132,6 +135,41 @@ export default function UpgradesSection(props) {
             </Button>
             </span>
             </Tooltip>
+
+            <br></br>
+
+            <Tooltip title={
+            <React.Fragment>
+                <Typography>Gives another inventory of essence.</Typography>
+              </React.Fragment>} arrow placement="right">
+              <span style={{height: "80px", width: "250px", display: "block"}}>
+            <Button key={"auto altar"} sx={{border: 1, color: "orange", height: "80px", width: "250px"}} disabled={pouch ? true : air < 1000 ? true : cosmic < 1000 ? true : astral < 200 ? true : false} onClick={() => {
+              setAir(air - 1000);
+              setCosmic(earth - 1000);
+              setAstral(astral - 200);
+              setPouch(true);
+            }}>
+              Essence Pouch
+              <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
+              <Box sx={{border: 1, width: "39px", color: pouch ? "black" : air >= 1000 ? "green" : "red"}}>
+                <img src={airRune} alt="Air Rune Amount"></img>
+                1000
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: pouch ? "black" : cosmic >= 1000 ? "green" : "red"}}>
+                <img src={cosmicRune} alt="Cosmic Rune Amount"></img>
+                1000
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: pouch ? "black" : astral >= 200 ? "green" : "red"}}>
+                <img src={astralRune} alt="Astral Rune Amount"></img>
+                200
+              </Box>
+              </Grid>
+            </Button>
+            </span>
+            </Tooltip>
+
           </List>
           {/* <Divider />
           <List>

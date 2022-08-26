@@ -20,11 +20,19 @@ export default function ClickSection(props) {
 
     const autoclick = props.autoclick;
 
+    const pouch = props.pouch;
+    const extra = props.extra;
+    const setExtra = props.setExtra;
+
     function doClick() {
         if (inventory.length < 24) {
             audio.play();
             setShake(true);
             setInventory((inventory) => [...inventory, (<Item item={"rune_essence"} />)]);
+        } else if (pouch && extra < 24) {
+            audio.play();
+            setShake(true);
+            setExtra((extra) => extra + 1);
         }
     }
 
