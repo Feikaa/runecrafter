@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/runecrafter/static/css/main.51d068d8.css",
-    "main.js": "/runecrafter/static/js/main.70b9cd91.js",
+    "main.css": "/runecrafter/static/css/main.01e46283.css",
+    "main.js": "/runecrafter/static/js/main.e0850352.js",
     "static/js/787.132333bb.chunk.js": "/runecrafter/static/js/787.132333bb.chunk.js",
     "static/media/craft.wav": "/runecrafter/static/media/craft.924d55b5e627cf4bac3d.wav",
     "static/media/rune_essence_detail.png": "/runecrafter/static/media/rune_essence_detail.141194d93cff3accaaea.png",
@@ -14,12 +14,12 @@
     "static/media/law_rune.webp": "/runecrafter/static/media/law_rune.48e7c0ee5e5d5f92d7d9.webp",
     "static/media/click.mp3": "/runecrafter/static/media/click.e1e7ced0df9214d6bf1f.mp3",
     "index.html": "/runecrafter/index.html",
-    "main.51d068d8.css.map": "/runecrafter/static/css/main.51d068d8.css.map",
-    "main.70b9cd91.js.map": "/runecrafter/static/js/main.70b9cd91.js.map",
+    "main.01e46283.css.map": "/runecrafter/static/css/main.01e46283.css.map",
+    "main.e0850352.js.map": "/runecrafter/static/js/main.e0850352.js.map",
     "787.132333bb.chunk.js.map": "/runecrafter/static/js/787.132333bb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.51d068d8.css",
-    "static/js/main.70b9cd91.js"
+    "static/css/main.01e46283.css",
+    "static/js/main.e0850352.js"
   ]
 }
