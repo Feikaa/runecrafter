@@ -37,6 +37,9 @@ export default function RunecraftSection(props) {
     const setBlood = props.setBlood;
     const setWrath = props.setWrath;
 
+    const autoaltar = props.autoaltar;
+    const runename = props.runename;
+
     const audio = new Audio(craftAudio);
     audio.volume = 0.1;
 
@@ -101,9 +104,17 @@ export default function RunecraftSection(props) {
     }
 
     useEffect(() => {
-        calcXp((xpgain / inventory.length));
-        setInventory([]);
+        if (xpgain > 0) {
+            calcXp((xpgain / inventory.length));
+            setInventory([]);
+        }
     }, [xpgain]);
+
+    useEffect(() => {
+        if (autoaltar && inventory.length === 24) {
+            craftRune(runename, inventory.length);
+        }
+    }, [inventory]);
 
     return (
         <Box sx={{width: "80%"}}>
@@ -117,7 +128,7 @@ export default function RunecraftSection(props) {
                 </div>
                     <Button variant="contained" color="success" onClick={() => {
                         if (inventory.length > 0) { // this if should be in the function btw
-                            craftRune("air", inventory.length);
+                            craftRune("air", inventory.length * 100);
                         }
                     }}>
                         Craft Air Rune&nbsp;
@@ -133,7 +144,7 @@ export default function RunecraftSection(props) {
                     </div>
                     <Button variant="contained" color={lvl >= 9 ? "success" : "error"} disabled={lvl >= 9 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
-                            craftRune("earth", inventory.length);
+                            craftRune("earth", inventory.length * 100);
                         }
                     }}>
                         Craft Earth Rune&nbsp;
@@ -149,7 +160,7 @@ export default function RunecraftSection(props) {
                     </div>
                     <Button variant="contained" color={lvl >= 27 ? "success" : "error"} disabled={lvl >= 27 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
-                            craftRune("cosmic", inventory.length);
+                            craftRune("cosmic", inventory.length * 100);
                         }
                     }}>
                         Craft Cosmic Rune&nbsp;
