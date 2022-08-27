@@ -10,6 +10,8 @@ import craftAudio from "../audio/craft.wav";
 import { useState } from "react";
 import "../styles/RunecraftSection.scss";
 import { useEffect } from "react";
+import { createTheme } from "@mui/material";
+import { ThemeProvider } from "@mui/system";
 
 export default function RunecraftSection(props) {
 
@@ -40,6 +42,9 @@ export default function RunecraftSection(props) {
     const autoaltar = props.autoaltar;
     const runename = props.runename;
 
+    const extra = props.extra;
+    const setExtra = props.setExtra;
+
     const audio = new Audio(craftAudio);
     audio.volume = 0.1;
 
@@ -52,6 +57,14 @@ export default function RunecraftSection(props) {
     const [showWrath, setShowWrath] = useState(false);
     const [xpgain, setXpgain] = useState(0);
     var xpbase = 0;
+
+    const theme = createTheme({
+        palette: {
+            action: {
+                disabled: "#240000"
+            }
+        }
+    })
 
     function craftRune(rune, amt) {
         audio.play();
@@ -89,34 +102,48 @@ export default function RunecraftSection(props) {
 
     function calcXp(base) {
         if (xp + xpgain >= (1/4 * Math.floor(lvl + 300 * (Math.pow(2, (lvl) / 7))))) {
-            setLvl(lvl + 1);
-            var carryover = Math.floor(xp+xpgain - (1/4 * Math.floor(lvl + 300 * (Math.pow(2, (lvl) / 7)))));
-            var leftover = Math.floor(carryover / base);
-            // console.log("carryover: " + carryover);
-            // console.log("leftover: " + leftover);
-            // console.log("Lvl: " + lvl);
-            setXp(0 + carryover);
-            setProgress(0 + leftover);
+            calcLevel(xp+xpgain, 0, base)
+            // setCarryover(Math.floor(xp+xpgain - (1/4 * Math.floor(lvl + 300 * (Math.pow(2, (lvl) / 7))))));
+            // var leftover = Math.floor(carryover / base);
+            // // console.log("carryover: " + carryover);
+            // // console.log("leftover: " + leftover);
+            // // console.log("Lvl: " + lvl);
+            // setXp(0 + carryover);
+            // setProgress(0 + leftover);
         } else {
             setXp(xp + xpgain);
             setProgress(progress + Math.floor(xpgain / (1/4 * Math.floor(lvl + 300 * (Math.pow(2, (lvl) / 7)))) * 100));
         }
     }
 
+    function calcLevel(carryover, gain, base) {
+        var newCarryover = Math.floor(carryover - (1/4 * Math.floor((lvl + gain) + 300 * (Math.pow(2, (lvl + gain) / 7)))));
+        if (newCarryover > (1/4 * Math.floor((lvl + gain + 1) + 300 * (Math.pow(2, (lvl + gain + 1) / 7))))) {
+            calcLevel(newCarryover, gain + 1, base);
+        } else {
+            setLvl(lvl + gain + 1);
+            var leftover = Math.floor(newCarryover / base);
+            setXp(0 + newCarryover);
+            setProgress(0 + leftover);
+        }
+    }
+
     useEffect(() => {
         if (xpgain > 0) {
-            calcXp((xpgain / inventory.length));
+            calcXp((xpgain / (inventory.length + extra)));
             setInventory([]);
+            setExtra(0)
         }
     }, [xpgain]);
 
     useEffect(() => {
-        if (autoaltar && inventory.length === 24) {
-            craftRune(runename, inventory.length);
+        if (autoaltar && inventory.length === 24 && extra === inventory.length) {
+            craftRune(runename, inventory.length + extra);
         }
     }, [inventory]);
 
     return (
+        <ThemeProvider theme={theme}>
         <Box sx={{width: "80%"}}>
             {/* XP: {xp}
             <br></br>
@@ -127,8 +154,8 @@ export default function RunecraftSection(props) {
                     +{xpgain}
                 </div>
                     <Button variant="contained" color="success" onClick={() => {
-                        if (inventory.length > 0) { // this if should be in the function btw
-                            craftRune("air", inventory.length);
+                        if (inventory.length > 0 || extra > 0) { // this if should be in the function btw
+                            craftRune("air", inventory.length + extra);
                         }
                     }}>
                         Craft Air Rune&nbsp;
@@ -235,5 +262,6 @@ export default function RunecraftSection(props) {
                 </Grid>
             </Grid>
         </Box>
+        </ThemeProvider>
     )
 }

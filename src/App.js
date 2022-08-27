@@ -10,6 +10,7 @@ import './App.css';
 import React, { useEffect, useState } from 'react';
 import { Grid } from "@mui/material";
 import Item from "./class/Item";
+import { Button } from "@mui/material";
 
 function App() {
 
@@ -92,7 +93,7 @@ function App() {
   const [pouch, setPouch] = useState(() => {
     const saved = localStorage.getItem("pouch");
     const value = JSON.parse(saved);
-    return false
+    return value === true
   });
   const [essenceType, setEssenceType] = useState(() => {
     const saved = localStorage.getItem("essenceType");
@@ -142,13 +143,16 @@ function App() {
 
   return (
     <div className="App">
+      <Button onClick={() => {
+        localStorage.clear();
+        window.location.reload(false)}}>Reset</Button>
       <TitleSection />
       <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
       <UpgradesSection air={air} setAir={setAir} earth={earth} setEarth={setEarth} cosmic={cosmic} setCosmic={setCosmic} astral={astral} setAstral={setAstral}
                        law={law} setLaw={setLaw} blood={blood} setBlood={setBlood} wrath={wrath} setWrath={setWrath}
                        autoclick={autoclick} setAutoclick={setAutoclick}
                        autoaltar={autoaltar} setAutoaltar={setAutoaltar}
-                       pouch={pouch} setPouch={pouch}/>
+                       pouch={pouch} setPouch={setPouch}/>
       {autoaltar ? <ChooseSection lvl={lvl} runename={runename} setRunename={setRunename}/> : ""}
       </Grid>
       <XPSection progress={progress} lvl={lvl}/>
@@ -157,7 +161,8 @@ function App() {
       <RunecraftSection lvl={lvl} setLvl={setLvl} inventory={inventory} setInventory={setInventory} xp={xp} setXp={setXp} progress={progress} setProgress={setProgress}
                         air={air} setAir={setAir} earth={earth} setEarth={setEarth} cosmic={cosmic} setCosmic={setCosmic} astral={astral} setAstral={setAstral}
                         law={law} setLaw={setLaw} blood={blood} setBlood={setBlood} wrath={wrath} setWrath={setWrath}
-                        autoaltar={autoaltar} runename={runename}/>
+                        autoaltar={autoaltar} runename={runename}
+                        extra={extra} setExtra={setExtra}/>
       <InventorySection inventory={inventory} extra={extra} pouch={pouch}/>
     </div>
   );

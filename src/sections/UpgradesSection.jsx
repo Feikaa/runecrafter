@@ -43,6 +43,9 @@ export default function UpgradesSection(props) {
                 main: "#484343",
                 contrastText: "#B03904",
             },
+            action: {
+              disabled: "#240000"
+            },
         },
         components: {
             MuiDrawer: {
