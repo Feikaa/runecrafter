@@ -170,8 +170,11 @@ function App() {
   return (
     <div className="App">
       <Button onClick={() => {
-        localStorage.clear();
-        window.location.reload(false)}}>Reset</Button>
+        if (window.confirm("Are you sure you want to reset? This will delete all our runes, inventory, etc.")) {
+          localStorage.clear();
+          window.location.reload(false);
+        }
+        }} sx={{position: "fixed", left: "0px", color: "#B03904"}}>Reset</Button>
       <TitleSection />
       <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
       <UpgradesSection air={air} setAir={setAir} earth={earth} setEarth={setEarth} cosmic={cosmic} setCosmic={setCosmic} astral={astral} setAstral={setAstral}
