@@ -73,7 +73,7 @@ function App() {
     return value || 0
   });
 
-  const [runename, setRunename] = useState('air');
+  const [runename, setRunename] = useState('none');
   const [extra, setExtra] = useState(() => {
     const saved = localStorage.getItem("extra");
     const value = JSON.parse(saved);
@@ -83,12 +83,12 @@ function App() {
   const [autoclick, setAutoclick] = useState(() => {
     const saved = localStorage.getItem("autoclick");
     const value = JSON.parse(saved);
-    return value === true
+    return value || 0
   });
   const [autoaltar, setAutoaltar] = useState(() => {
     const saved = localStorage.getItem("autoaltar");
     const value = JSON.parse(saved);
-    return value === true
+    return value || 0
   });
   const [pouch, setPouch] = useState(() => {
     const saved = localStorage.getItem("pouch");
@@ -99,6 +99,28 @@ function App() {
     const saved = localStorage.getItem("essenceType");
     return saved || "rune_essence"
   });
+
+  const [hat, setHat] = useState(() => {
+    const saved = localStorage.getItem("hat");
+    const value = JSON.parse(saved);
+    return value === true
+  })
+  const [top, setTop] = useState(() => {
+    const saved = localStorage.getItem("top");
+    const value = JSON.parse(saved);
+    return value === true
+  })
+  const [bottom, setBottom] = useState(() => {
+    const saved = localStorage.getItem("bottom");
+    const value = JSON.parse(saved);
+    return value === true
+  })
+  const [boots, setBoots] = useState(() => {
+    const saved = localStorage.getItem("boots");
+    const value = JSON.parse(saved);
+    return value === true
+  })
+  const [bonus, setBonus] = useState(1);
 
   // Saving progress
   useEffect(() => {
@@ -135,7 +157,11 @@ function App() {
     localStorage.setItem("autoclick", JSON.stringify(autoclick));
     localStorage.setItem("autoaltar", JSON.stringify(autoaltar));
     localStorage.setItem("pouch", JSON.stringify(pouch));
-  }, [autoclick, autoaltar, pouch])
+    localStorage.setItem("hat", JSON.stringify(hat));
+    localStorage.setItem("top", JSON.stringify(top))
+    localStorage.setItem("bottom", JSON.stringify(bottom))
+    localStorage.setItem("boots", JSON.stringify(boots))
+  }, [autoclick, autoaltar, pouch, hat, top, bottom, boots])
 
   useEffect(() => {
     localStorage.setItem("essenceType", essenceType);
@@ -152,17 +178,24 @@ function App() {
                        law={law} setLaw={setLaw} blood={blood} setBlood={setBlood} wrath={wrath} setWrath={setWrath}
                        autoclick={autoclick} setAutoclick={setAutoclick}
                        autoaltar={autoaltar} setAutoaltar={setAutoaltar}
-                       pouch={pouch} setPouch={setPouch}/>
-      {autoaltar ? <ChooseSection lvl={lvl} runename={runename} setRunename={setRunename}/> : ""}
+                       pouch={pouch} setPouch={setPouch}
+                       hat={hat} setHat={setHat}
+                       top={top} setTop={setTop}
+                       bottom={bottom} setBottom={setBottom}
+                       boots={boots} setBoots={setBoots}
+                       essenceType={essenceType} setEssenceType={setEssenceType} setInventory={setInventory} setExtra={setExtra}/>
+      {autoaltar ? <ChooseSection runename={runename} setRunename={setRunename} autoaltar={autoaltar}/> : ""}
       </Grid>
-      <XPSection progress={progress} lvl={lvl}/>
-      <RunesSection air={air} earth={earth} cosmic={cosmic} astral={astral} law={law} blood={blood} wrath={wrath}/>
-      <ClickSection inventory={inventory} setInventory={setInventory} autoclick={autoclick} pouch={pouch} extra={extra} setExtra={setExtra}/>
+      <XPSection progress={progress} lvl={lvl} xp={xp}/>
+      <RunesSection air={air} earth={earth} cosmic={cosmic} astral={astral} law={law} blood={blood} wrath={wrath} bonus={bonus} hat={hat} top={top} bottom={bottom} boots={boots}/>
+      <ClickSection inventory={inventory} setInventory={setInventory} autoclick={autoclick} pouch={pouch} extra={extra} setExtra={setExtra} essenceType={essenceType}/>
       <RunecraftSection lvl={lvl} setLvl={setLvl} inventory={inventory} setInventory={setInventory} xp={xp} setXp={setXp} progress={progress} setProgress={setProgress}
                         air={air} setAir={setAir} earth={earth} setEarth={setEarth} cosmic={cosmic} setCosmic={setCosmic} astral={astral} setAstral={setAstral}
                         law={law} setLaw={setLaw} blood={blood} setBlood={setBlood} wrath={wrath} setWrath={setWrath}
                         autoaltar={autoaltar} runename={runename}
-                        extra={extra} setExtra={setExtra}/>
+                        pouch={pouch} extra={extra} setExtra={setExtra}
+                        hat={hat} top={top} bottom={bottom} boots={boots} bonus={bonus} setBonus={setBonus}
+                        essenceType={essenceType}/>
       <InventorySection inventory={inventory} extra={extra} pouch={pouch}/>
     </div>
   );

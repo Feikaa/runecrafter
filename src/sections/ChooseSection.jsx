@@ -9,7 +9,7 @@ import wrathRune from "../icons/wrath_rune_small.png";
 
 export default function ChooseSection(props) {
 
-    const lvl = props.lvl;
+    const autoaltar = props.autoaltar;
 
     const runename = props.runename;
     const setRunename = props.setRunename;
@@ -33,25 +33,28 @@ export default function ChooseSection(props) {
                     label="Altar"
                     onChange={handleChange}
                 >
+                    <MenuItem value="none">None
+                    </MenuItem>
                     <MenuItem value="air">Air&nbsp;
                         <img src={airRune} alt="Air Rune"></img>
                     </MenuItem> 
-                    <MenuItem value="earth">Earth&nbsp;
+                    {autoaltar >= 2 ? <MenuItem value="earth">Earth&nbsp;
                         <img src={earthRune} alt="Earth Rune"></img>
-                    </MenuItem>
-                    <MenuItem value="cosmic">Cosmic&nbsp;
+                    </MenuItem> : ""}
+                    {autoaltar >= 3 ? <MenuItem value="cosmic">Cosmic&nbsp;
                         <img src={cosmicRune} alt="Cosmic Rune"></img>
-                    </MenuItem>
-                    {lvl >= 40 ? <MenuItem value="astral">Astral&nbsp;
+                    </MenuItem> : ""
+                    }
+                    {autoaltar >= 4 ? <MenuItem value="astral">Astral&nbsp;
                         <img src={astralRune} alt="Astral Rune"></img>
                     </MenuItem> : ""}
-                    {lvl >= 54 ? <MenuItem value="law">Law&nbsp;
+                    {autoaltar >= 5 ? <MenuItem value="law">Law&nbsp;
                         <img src={lawRune} alt="Law Rune"></img>
                     </MenuItem> : ""}
-                    {lvl >= 77 ? <MenuItem value="blood">Blood&nbsp;
+                    {autoaltar >= 6 ? <MenuItem value="blood">Blood&nbsp;
                         <img src={bloodRune} alt="Blood Rune"></img>
                     </MenuItem> : ""}
-                    {lvl >= 95 ? <MenuItem value="wrath">Wrath&nbsp;
+                    {autoaltar >= 7 ? <MenuItem value="wrath">Wrath&nbsp;
                         <img src={wrathRune} alt="Wrath Rune"></img>
                     </MenuItem> : ""}
                 </Select>

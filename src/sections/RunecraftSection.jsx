@@ -42,8 +42,18 @@ export default function RunecraftSection(props) {
     const autoaltar = props.autoaltar;
     const runename = props.runename;
 
+    const pouch = props.pouch;
     const extra = props.extra;
     const setExtra = props.setExtra;
+
+    const hat = props.hat;
+    const top = props.top;
+    const bottom = props.bottom;
+    const boots = props.boots;
+    const bonus = props.bonus;
+    const setBonus = props.setBonus;
+
+    const essenceType = props.essenceType;
 
     const audio = new Audio(craftAudio);
     audio.volume = 0.1;
@@ -61,43 +71,55 @@ export default function RunecraftSection(props) {
     const theme = createTheme({
         palette: {
             action: {
-                disabled: "#240000"
+                disabled: "red"
             }
         }
     })
 
+    useEffect(() => {
+        setBonus(1 + ([hat, top, bottom, boots].reduce((a, f) => a + f, 0) / 10))
+        if (hat && top && bottom && boots) {
+            setBonus(1.6)
+        }
+    }, [hat, top, bottom, boots])
+
     function craftRune(rune, amt) {
         audio.play();
+        var boost = 1;
         if (rune === "air") {
             xpbase = 5;
             setShowAir(true);
-            setAir(air + amt);
+            setAir(air + Math.floor(amt * bonus));
         } else if (rune === "earth") {
             xpbase = 8;
             setShowEarth(true);
-            setEarth(earth + amt);
+            setEarth(earth + Math.floor(amt * bonus));
         } else if (rune === "cosmic") {
             xpbase = 12;
             setShowCosmic(true);
-            setCosmic(cosmic + amt);
+            setCosmic(cosmic + Math.floor(amt * bonus));
         } else if (rune === "astral") {
             xpbase = 15;
             setShowAstral(true);
-            setAstral(astral + amt);
+            setAstral(astral + Math.floor(amt * bonus));
         } else if (rune === "law") {
             xpbase = 19;
             setShowLaw(true);
-            setLaw(law + amt);
+            setLaw(law + Math.floor(amt * bonus));
         } else if (rune === "blood") {
             xpbase = 24;
             setShowBlood(true);
-            setBlood(blood + amt);
+            setBlood(blood + Math.floor(amt * bonus));
         } else {
             xpbase = 30;
             setShowWrath(true);
-            setWrath(wrath + amt);
+            setWrath(wrath + Math.floor(amt * bonus));
         }
-        setXpgain(xpbase * amt);
+
+        if (essenceType === "daeyalt_essence") {
+            boost = 1.5;
+        }
+        setXpgain(xpbase * amt * boost);
     }
 
     function calcXp(base) {
@@ -132,15 +154,15 @@ export default function RunecraftSection(props) {
         if (xpgain > 0) {
             calcXp((xpgain / (inventory.length + extra)));
             setInventory([]);
-            setExtra(0)
+            setExtra(0);
         }
     }, [xpgain]);
 
     useEffect(() => {
-        if (autoaltar && inventory.length === 24 && extra === inventory.length) {
+        if (autoaltar && inventory.length === 24 && (!pouch || extra === inventory.length) && runename !== "none") {
             craftRune(runename, inventory.length + extra);
         }
-    }, [inventory]);
+    }, [inventory, runename]);
 
     return (
         <ThemeProvider theme={theme}>
@@ -148,7 +170,7 @@ export default function RunecraftSection(props) {
             {/* XP: {xp}
             <br></br>
             Next Lvl: {(1/4 * Math.floor(lvl + 300 * (Math.pow(2, (lvl) / 7))))} */}
-            <Grid container spacing={3} sx={{ marginTop: "0px", marginLeft: "0px"}}>
+            <Grid container spacing={3} sx={{ marginLeft: "0px"}}>
                 <Grid item xs>
                 <div style={{visibility: showAir ? '' : "hidden", color: "green", fontSize: "20px"}} className={showAir ? "slide" : ""} onAnimationEnd={() => {setShowAir(false); setXpgain(0);}}>
                     +{xpgain}

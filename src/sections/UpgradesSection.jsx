@@ -3,12 +3,34 @@ import React, { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import airRune from "../icons/air_rune_small.png";
 import earthRune from "../icons/earth_rune_small.png";
-import runeEssence from "../icons/rune_essence.png";
 import cosmicRune from "../icons/cosmic_rune_small.png";
 import astralRune from "../icons/astral_rune_small.png";
 import lawRune from "../icons/law_rune_small.png";
 import bloodRune from "../icons/blood_rune_small.png";
 import wrathRune from "../icons/wrath_rune_small.png";
+import automine1 from "../icons/automine1.png";
+import automine2 from "../icons/automine2.png";
+import automine3 from "../icons/automine3.png";
+import automine4 from "../icons/automine4.png";
+import automine5 from "../icons/automine5.png";
+import automine6 from "../icons/automine6.png";
+import automine7 from "../icons/automine7.png";
+import automine8 from "../icons/automine8.png";
+import automineMAX from "../icons/automineMAX.png";
+import autocraft1 from "../icons/autocraft1.png";
+import autocraft2 from "../icons/autocraft2.png";
+import autocraft3 from "../icons/autocraft3.png";
+import autocraft4 from "../icons/autocraft4.png";
+import autocraft5 from "../icons/autocraft5.png";
+import autocraft6 from "../icons/autocraft6.png";
+import autocraft7 from "../icons/autocraft7.png";
+import autocraftMAX from "../icons/autocraftMAX.png";
+import giantPouch from "../icons/giant_pouch.png";
+import eyeHat from "../icons/hat_of_the_eye.png";
+import eyeTop from "../icons/top_of_the_eye.png";
+import eyeBottom from "../icons/bottom_of_the_eye.png";
+import eyeBoots from "../icons/boots_of_the_eye.png";
+import daeyaltEssence from "../icons/daeyalt_essence.png"
 
 export default function UpgradesSection(props) {
 
@@ -30,12 +52,32 @@ export default function UpgradesSection(props) {
 
     const autoclick = props.autoclick;
     const setAutoclick = props.setAutoclick;
+    const pickList = [automine1, automine2, automine3, automine4, automine5, automine6, automine7, automine8, automineMAX];
 
     const autoaltar = props.autoaltar;
     const setAutoaltar = props.setAutoaltar;
+    const nextRune = ["air", "earth", "cosmic", "astral", "law", "blood", "wrath"];
+    const talismanList = [autocraft1, autocraft2, autocraft3, autocraft4, autocraft5, autocraft6, autocraft7, autocraftMAX];
 
     const pouch = props.pouch;
     const setPouch = props.setPouch;
+
+    const hat = props.hat;
+    const setHat = props.setHat;
+
+    const top = props.top;
+    const setTop = props.setTop;
+
+    const bottom = props.bottom;
+    const setBottom = props.setBottom;
+
+    const boots = props.boots;
+    const setBoots = props.setBoots;
+
+    const essenceType = props.essenceType;
+    const setEssenceType = props.setEssenceType;
+    const setInventory = props.setInventory;
+    const setExtra = props.setExtra;
 
     const theme = createTheme({
         palette: {
@@ -44,7 +86,7 @@ export default function UpgradesSection(props) {
                 contrastText: "#B03904",
             },
             action: {
-              disabled: "#240000"
+              disabled: "red"
             },
         },
         components: {
@@ -81,59 +123,193 @@ export default function UpgradesSection(props) {
           <List>
             <Tooltip title={
               <React.Fragment>
-                <Typography>Auto generates 1 essence every second.</Typography>
+                {autoclick < 8 ? <Typography>Auto mines 1 essence every {Math.round((1 / (autoclick + 1)) * 100) / 100} second{autoclick === 0 ? "" : "s"}.</Typography> : <Typography>Upgrade MAX.</Typography>} 
+                
               </React.Fragment>} arrow placement="right">
-              <span style={{height: "80px", width: "250px", display: "block"}}>
-            <Button key={"auto click"} sx={{border: 1, color: "orange"}} disabled={autoclick ? true : air < 200 ? true : earth >= 300 ? false : true} onClick={() => {
-              setAir(air - 200);
-              setEarth(earth - 300);
-              setAutoclick(true);
+              <span style={{width: "250px", display: "block"}}>
+            <Button key={"auto click"} sx={{border: 1, color: "green"}} disabled={autoclick === 8 ? true : 
+            autoclick === 0 ? (air < 200 ? true : earth >= 300 ? false : true) :
+            autoclick === 1 ? (earth < 1000 ? true : cosmic >= 500 ? false : true) : 
+            autoclick === 2 ? (earth < 1000 ? true : cosmic < 1000 ? true : astral >= 500 ? false : true) :
+            autoclick === 3 ? (air < 2000 ? true : astral < 1000 ? true : law >= 500 ? false : true) : 
+            autoclick === 4 ? (astral < 3000 ? true : law >= 2000 ? false : true) : 
+            autoclick === 5 ? (astral < 3000 ? true : law < 3000 ? true : blood >= 3000 ? false : true) : 
+            autoclick === 6 ? (air < 5000 ? true : astral < 5000 ? true : blood >= 5000 ? false : true) :
+            (law < 7000 ? true : blood < 5000 ? true : wrath >= 5000 ? false : true)} onClick={() => {
+              if (autoclick === 0) {
+                setAir(air - 200);
+                setEarth(earth - 300);
+              } else if (autoclick === 1) {
+                setEarth(earth - 1000);
+                setCosmic(cosmic - 500);
+              } else if (autoclick === 2) {
+                setEarth(earth - 1000);
+                setCosmic(cosmic - 1000);
+                setAstral(astral - 500);
+              } else if (autoclick === 3) {
+                setAir(air - 2000);
+                setAstral(astral - 1000);
+                setLaw(law - 500);
+              } else if (autoclick === 4) {
+                setAstral(astral - 3000);
+                setLaw(law - 2000);
+              } else if (autoclick === 5) {
+                setAstral(astral - 3000);
+                setLaw(law - 3000);
+                setBlood(blood - 3000);
+              } else if (autoclick === 6) {
+                setAir(air - 5000);
+                setAstral(astral - 5000);
+                setBlood(blood - 5000);
+              } else if (autoclick === 7) {
+                setLaw(law - 7000);
+                setBlood(blood - 5000);
+                setWrath(wrath - 5000);
+              }
+              setAutoclick(autoclick + 1);
             }}>
-              Pure Essence Runner
+              Essence Miner&nbsp; {autoclick < 3 ? "I".repeat(autoclick + 1) : autoclick === 3 ? "IV" : autoclick < 8 ? "V" + "I".repeat(autoclick - 4) : "MAXED"} <img src={pickList[autoclick]} alt="Pic" height="32px" width="32px"></img>
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-              <Box sx={{border: 1, width: "39px", color: autoclick ? "black" : air >= 200 ? "green" : "red"}}>
+              {
+              // Level 1
+              autoclick === 0 ?
+              <React.Fragment>
+              <Box sx={{border: 1, width: "39px", color: air >= 200 ? "green" : "red"}}>
                 <img src={airRune} alt="Air Rune Amount"></img>
                 200
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: autoclick ? "black" : earth >= 300 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: earth >= 300 ? "green" : "red"}}>
                 <img src={earthRune} alt="Earth Rune Amount"></img>
                 300
               </Box>
-              </Grid>
-            </Button>
-            </span>
-            </Tooltip>
-
-            <br></br>
-
-            <Tooltip title={
-            <React.Fragment>
-                <Typography>Autocrafts your runes when you run out of inventory space.</Typography>
-              </React.Fragment>} arrow placement="right">
-              <span style={{height: "80px", width: "250px", display: "block"}}>
-            <Button key={"auto altar"} sx={{border: 1, color: "orange", height: "80px", width: "250px"}} disabled={autoaltar ? true : air < 300 ? true : earth < 300 ? true : cosmic < 300 ? true : false} onClick={() => {
-              setAir(air - 300);
-              setEarth(earth - 300);
-              setCosmic(cosmic - 300);
-              setAutoaltar(true);
-            }}>
-              Altar Camper
-              <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-              <Box sx={{border: 1, width: "39px", color: autoaltar ? "black" : air >= 300 ? "green" : "red"}}>
-                <img src={airRune} alt="Air Rune Amount"></img>
-                300
-              </Box>
-
-              <Box sx={{border: 1, width: "39px", color: autoaltar ? "black" : earth >= 300 ? "green" : "red"}}>
+              </React.Fragment>
+              :
+              // Level 2
+              autoclick === 1 ?
+              <React.Fragment>
+              <Box sx={{border: 1, width: "39px", color: earth >= 1000 ? "green" : "red"}}>
                 <img src={earthRune} alt="Earth Rune Amount"></img>
-                300
+                1000
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: autoaltar ? "black" : cosmic >= 300 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: cosmic >= 500 ? "green" : "red"}}>
                 <img src={cosmicRune} alt="Cosmic Rune Amount"></img>
-                300
+                500
               </Box>
+              </React.Fragment>
+              :
+              // Level 3
+              autoclick === 2 ?
+              <React.Fragment>
+              <Box sx={{border: 1, width: "39px", color: earth >= 1000 ? "green" : "red"}}>
+                <img src={earthRune} alt="Earth Rune Amount"></img>
+                1000
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: cosmic >= 1000 ? "green" : "red"}}>
+                <img src={cosmicRune} alt="Cosmic Rune Amount"></img>
+                1000
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: astral >= 500 ? "green" : "red"}}>
+                <img src={astralRune} alt="Astral Rune Amount"></img>
+                500
+              </Box>
+              </React.Fragment>
+              :
+              // Level 4
+              autoclick === 3 ?
+              <React.Fragment>
+              <Box sx={{border: 1, width: "39px", color: air >= 2000 ? "green" : "red"}}>
+                <img src={airRune} alt="Earth Rune Amount"></img>
+                2000
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: astral >= 1000 ? "green" : "red"}}>
+                <img src={astralRune} alt="Astral Rune Amount"></img>
+                1000
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: law >= 500 ? "green" : "red"}}>
+                <img src={lawRune} alt="Law Rune Amount"></img>
+                500
+              </Box>
+              </React.Fragment>
+              :
+              // Level 5
+              autoclick === 4 ?
+              <React.Fragment>
+              <Box sx={{border: 1, width: "39px", color: astral >= 3000 ? "green" : "red"}}>
+                <img src={astralRune} alt="Astral Rune Amount"></img>
+                3000
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: law >= 2000 ? "green" : "red"}}>
+                <img src={lawRune} alt="Law Rune Amount"></img>
+                2000
+              </Box>
+              </React.Fragment>
+              :
+              // Level 6
+              autoclick === 5 ?
+              <React.Fragment>
+              <Box sx={{border: 1, width: "39px", color: astral >= 3000 ? "green" : "red"}}>
+                <img src={astralRune} alt="Astral Rune Amount"></img>
+                3000
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: law >= 3000 ? "green" : "red"}}>
+                <img src={lawRune} alt="Law Rune Amount"></img>
+                3000
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: blood >= 3000 ? "green" : "red"}}>
+                <img src={bloodRune} alt="Blood Rune Amount"></img>
+                3000
+              </Box>
+              </React.Fragment>
+              :
+              // Level 7
+              autoclick === 6 ?
+              <React.Fragment>
+              <Box sx={{border: 1, width: "39px", color: air >= 5000 ? "green" : "red"}}>
+                <img src={airRune} alt="Air Rune Amount"></img>
+                5000
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: astral >= 5000 ? "green" : "red"}}>
+                <img src={astralRune} alt="Astral Rune Amount"></img>
+                5000
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: blood >= 5000 ? "green" : "red"}}>
+                <img src={bloodRune} alt="Blood Rune Amount"></img>
+                5000
+              </Box>
+              </React.Fragment>
+              :
+              // Level 8
+              autoclick === 7 ?
+              <React.Fragment>
+              <Box sx={{border: 1, width: "39px", color: law >= 7000 ? "green" : "red"}}>
+                <img src={lawRune} alt="Law Rune Amount"></img>
+                7000
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: blood >= 5000 ? "green" : "red"}}>
+                <img src={bloodRune} alt="Blood Rune Amount"></img>
+                5000
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: wrath >= 5000 ? "green" : "red"}}>
+                <img src={wrathRune} alt="Wrath Rune Amount"></img>
+                5000
+              </Box>
+              </React.Fragment>
+              :
+              ""}
+              
               </Grid>
             </Button>
             </span>
@@ -143,16 +319,121 @@ export default function UpgradesSection(props) {
 
             <Tooltip title={
             <React.Fragment>
-                <Typography>Gives another inventory of essence.</Typography>
+                <Typography>Autocrafts {nextRune[autoaltar]} runes when your inventory is full.</Typography>
               </React.Fragment>} arrow placement="right">
-              <span style={{height: "80px", width: "250px", display: "block"}}>
-            <Button key={"auto altar"} sx={{border: 1, color: "orange", height: "80px", width: "250px"}} disabled={pouch ? true : air < 1000 ? true : cosmic < 1000 ? true : astral < 200 ? true : false} onClick={() => {
+              <span style={{width: "250px", display: "block"}}>
+            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={autoaltar === 7 ? true : 
+            autoaltar === 0 ? (air < 1000 ? true : false) : 
+            autoaltar === 1 ? (earth < 1000 ? true : false) :
+            autoaltar === 2 ? (cosmic < 1000 ? true : false) :
+            autoaltar === 3 ? (astral < 1000 ? true : false) :
+            autoaltar === 4 ? (law < 1000 ? true : false) :
+            autoaltar === 5 ? (blood < 1000 ? true : false) :
+            (wrath < 1000 ? true : false)} onClick={() => {
+              if (autoaltar === 0) {
+                setAir(air - 1000);
+              } else if (autoaltar === 1) {
+                setEarth(earth - 1000);
+              } else if (autoaltar === 2) {
+                setCosmic(cosmic - 1000);
+              } else if (autoaltar === 3) {
+                setAstral(astral - 1000);
+              } else if (autoaltar === 4) {
+                setLaw(law - 1000);
+              } else if (autoaltar === 5) {
+                setBlood(blood - 1000);
+              } else if (autoaltar === 6) {
+                setWrath(wrath - 1000);
+              }
+              setAutoaltar(autoaltar + 1);
+            }}>
+              Talisman Mysteries&nbsp; {autoaltar < 3 ? "I".repeat(autoaltar + 1) : autoaltar === 3 ? "IV" : autoaltar < 7 ? "V" + "I".repeat(autoaltar - 4) : "MAXED" }<img src={talismanList[autoaltar]} alt="Catalytic Talisman" height="32px" width="32px"></img>
+              <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
+              {
+              // Level 1
+              autoaltar === 0 ?
+              <React.Fragment>
+              <Box sx={{border: 1, width: "39px", color: air >= 1000 ? "green" : "red"}}>
+                <img src={airRune} alt="Air Rune Amount"></img>
+                1000
+              </Box>
+              </React.Fragment>
+              :
+              // Level 2
+              autoaltar === 1 ?
+              <React.Fragment>
+              <Box sx={{border: 1, width: "39px", color: earth >= 1000 ? "green" : "red"}}>
+                <img src={earthRune} alt="Earth Rune Amount"></img>
+                1000
+              </Box>
+              </React.Fragment>
+              :
+              // Level 3
+              autoaltar === 2 ?
+              <React.Fragment>
+              <Box sx={{border: 1, width: "39px", color: cosmic >= 1000 ? "green" : "red"}}>
+                <img src={cosmicRune} alt="Cosmic Rune Amount"></img>
+                1000
+              </Box>
+              </React.Fragment>
+              :
+              // Level 4
+              autoaltar === 3 ?
+              <React.Fragment>
+              <Box sx={{border: 1, width: "39px", color: astral >= 1000 ? "green" : "red"}}>
+                <img src={astralRune} alt="Astral Rune Amount"></img>
+                1000
+              </Box>
+              </React.Fragment>
+              :
+              // Level 5
+              autoaltar === 4 ?
+              <React.Fragment>
+              <Box sx={{border: 1, width: "39px", color: law >= 1000 ? "green" : "red"}}>
+                <img src={lawRune} alt="Law Rune Amount"></img>
+                1000
+              </Box>
+              </React.Fragment>
+              :
+              // Level 6
+              autoaltar === 5 ?
+              <React.Fragment>
+              <Box sx={{border: 1, width: "39px", color: blood >= 1000 ? "green" : "red"}}>
+                <img src={bloodRune} alt="Blood Rune Amount"></img>
+                1000
+              </Box>
+              </React.Fragment>
+              :
+              // Level 7
+              autoaltar === 6 ?
+              <React.Fragment>
+              <Box sx={{border: 1, width: "39px", color: wrath >= 1000 ? "green" : "red"}}>
+                <img src={wrathRune} alt="Wrath Rune Amount"></img>
+                1000
+              </Box>
+              </React.Fragment>
+              :
+              ""
+              }
+              </Grid>
+            </Button>
+            </span>
+            </Tooltip>
+
+            <br></br>
+
+            <Tooltip title={
+            <React.Fragment>
+                <Typography>Gives another inventory to collect essence in.</Typography>
+              </React.Fragment>} arrow placement="right">
+              <span style={{width: "250px", display: "block"}}>
+            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={pouch ? true : air < 1000 ? true : cosmic < 1000 ? true : astral < 200 ? true : false} onClick={() => {
               setAir(air - 1000);
-              setCosmic(earth - 1000);
+              setCosmic(cosmic - 1000);
               setAstral(astral - 200);
               setPouch(true);
             }}>
-              Essence Pouch
+              Essence Pouch <img src={giantPouch} alt="Giant Pouch" height="32px" width="32px"></img>
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
               <Box sx={{border: 1, width: "39px", color: pouch ? "black" : air >= 1000 ? "green" : "red"}}>
                 <img src={airRune} alt="Air Rune Amount"></img>
@@ -173,20 +454,169 @@ export default function UpgradesSection(props) {
             </span>
             </Tooltip>
 
+            <br></br>
+
+            <Tooltip title={
+            <React.Fragment>
+                <Typography>Grants 10% more runes when runecrafting.</Typography>
+              </React.Fragment>} arrow placement="right">
+              <span style={{width: "250px", display: "block"}}>
+            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={hat ? true : air < 400 ? true : astral < 500 ? true : false} onClick={() => {
+              setAir(air - 400);
+              setAstral(astral - 500);
+              setHat(true);
+            }}>
+              Hat of the eye <img src={eyeHat} alt="Eye hat" height="32px" width="32px"></img>
+              <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
+              <Box sx={{border: 1, width: "39px", color: hat ? "black" : air >= 400 ? "green" : "red"}}>
+                <img src={airRune} alt="Air Rune Amount"></img>
+                400
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: hat ? "black" : astral >= 500 ? "green" : "red"}}>
+                <img src={astralRune} alt="Astral Rune Amount"></img>
+                500
+              </Box>
+              </Grid>
+            </Button>
+            </span>
+            </Tooltip>
+
+            <br></br>
+            
+            <Tooltip title={
+            <React.Fragment>
+                <Typography>Grants 10% more runes when runecrafting.</Typography>
+              </React.Fragment>} arrow placement="right">
+              <span style={{width: "250px", display: "block"}}>
+            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={top ? true : earth < 350 ? true : astral < 500 ? true : false} onClick={() => {
+              setEarth(earth - 350);
+              setAstral(astral - 500);
+              setTop(true);
+            }}>
+              Robe top of the eye <img src={eyeTop} alt="Eye top" height="32px" width="32px"></img>
+              <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
+              <Box sx={{border: 1, width: "39px", color: top ? "black" : earth >= 350 ? "green" : "red"}}>
+                <img src={earthRune} alt="Earth Rune Amount"></img>
+                350
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: top ? "black" : astral >= 500 ? "green" : "red"}}>
+                <img src={astralRune} alt="Astral Rune Amount"></img>
+                500
+              </Box>
+              </Grid>
+            </Button>
+            </span>
+            </Tooltip>
+
+            <br></br>
+
+            <Tooltip title={
+            <React.Fragment>
+                <Typography>Grants 10% more runes when runecrafting.</Typography>
+              </React.Fragment>} arrow placement="right">
+              <span style={{width: "250px", display: "block"}}>
+            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={bottom ? true : cosmic < 350 ? true : astral < 500 ? true : false} onClick={() => {
+              setCosmic(cosmic - 350);
+              setAstral(astral - 500);
+              setBottom(true);
+            }}>
+              Robe bottom of the eye <img src={eyeBottom} alt="Eye bottom" height="32px" width="32px"></img>
+              <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
+              <Box sx={{border: 1, width: "39px", color: bottom ? "black" : cosmic >= 350 ? "green" : "red"}}>
+                <img src={cosmicRune} alt="Cosmic Rune Amount"></img>
+                350
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: bottom ? "black" : astral >= 500 ? "green" : "red"}}>
+                <img src={astralRune} alt="Astral Rune Amount"></img>
+                500
+              </Box>
+              </Grid>
+            </Button>
+            </span>
+            </Tooltip>
+
+            <br></br>
+
+            <Tooltip title={
+            <React.Fragment>
+                <Typography>Grants 10% more runes when runecrafting.</Typography>
+              </React.Fragment>} arrow placement="right">
+              <span style={{width: "250px", display: "block"}}>
+            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={boots ? true : law < 250 ? true : astral < 500 ? true : false} onClick={() => {
+              setLaw(law - 250);
+              setAstral(astral - 500);
+              setBoots(true);
+            }}>
+              Boots of the eye <img src={eyeBoots} alt="Eye boots" height="32px" width="32px"></img>
+              <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
+              <Box sx={{border: 1, width: "39px", color: boots ? "black" : astral >= 500 ? "green" : "red"}}>
+                <img src={astralRune} alt="Astral Rune Amount"></img>
+                500
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: boots ? "black" : law >= 250 ? "green" : "red"}}>
+                <img src={lawRune} alt="Law Rune Amount"></img>
+                250
+              </Box>
+              </Grid>
+            </Button>
+            </span>
+            </Tooltip>
+
+            <br></br>
+
+            <Tooltip title={
+            <React.Fragment>
+                <Typography>Gives 50% extra experience per essence.</Typography>
+                <Typography sx={{color: "red"}}>WARNING: WILL EMPTY YOUR INVENTORY AND POUCH</Typography>
+              </React.Fragment>} arrow placement="right">
+              <span style={{width: "250px", display: "block"}}>
+            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "109px", width: "250px"}} disabled={essenceType === "daeyalt_essence" ? true : air < 500 ? true : earth < 500 ? true : 
+            cosmic < 500 ? true : law < 500 ? true : astral < 500 ? true : false} onClick={() => {
+              setAir(air - 500);
+              setEarth(earth - 500);
+              setCosmic(cosmic - 500)
+              setLaw(law - 500);
+              setAstral(astral - 500);
+              setEssenceType("daeyalt_essence");
+              setInventory([]);
+              setExtra(0);
+            }}>
+              Daeyalt Essence <img src={daeyaltEssence} alt="Daeyalt essence" height="32px" width="32px"></img>
+              <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
+              <Box sx={{border: 1, width: "39px", color: hat ? "black" : air >= 500 ? "green" : "red"}}>
+                <img src={airRune} alt="Air Rune Amount"></img>
+                500
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: top ? "black" : earth >= 500 ? "green" : "red"}}>
+                <img src={earthRune} alt="Earth Rune Amount"></img>
+                500
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: bottom ? "black" : cosmic >= 500 ? "green" : "red"}}>
+                <img src={cosmicRune} alt="Cosmic Rune Amount"></img>
+                500
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: boots ? "black" : astral >= 500 ? "green" : "red"}}>
+                <img src={astralRune} alt="Astral Rune Amount"></img>
+                500
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: boots ? "black" : law >= 500 ? "green" : "red"}}>
+                <img src={lawRune} alt="Law Rune Amount"></img>
+                500
+              </Box>
+              </Grid>
+            </Button>
+            </span>
+            </Tooltip>
+
           </List>
-          {/* <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List> */}
         </Box>
       );
 
