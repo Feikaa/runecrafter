@@ -1,11 +1,13 @@
 import { Box, Button, Grid } from "@mui/material";
 import airRune from "../icons/air_rune.png";
 import earthRune from "../icons/earth_rune.png";
-import cosmicRune from "../icons/cosmic_rune.png";
+import waterRune from "../icons/water_rune.png";
+import fireRune from "../icons/fire_rune.png";
 import astralRune from "../icons/astral_rune.png";
 import lawRune from "../icons/law_rune.webp";
 import bloodRune from "../icons/blood_rune.png";
 import wrathRune from "../icons/wrath_rune.png";
+import zmiAltar from "../icons/ourania_altar.png";
 import craftAudio from "../audio/craft.wav";
 import { useState } from "react";
 import "../styles/RunecraftSection.scss";
@@ -14,6 +16,8 @@ import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
 
 export default function RunecraftSection(props) {
+
+    const mute = props.mute;
 
     const lvl = props.lvl;
     const setLvl = props.setLvl;
@@ -26,14 +30,16 @@ export default function RunecraftSection(props) {
 
     const air = props.air;
     const earth = props.earth;
-    const cosmic = props.cosmic;
+    const water = props.water;
+    const fire = props.fire;
     const astral = props.astral;
     const law = props.law;
     const blood = props.blood;
     const wrath = props.wrath;
     const setAir = props.setAir;
     const setEarth = props.setEarth;
-    const setCosmic = props.setCosmic;
+    const setWater = props.setWater;
+    const setFire = props.setFire;
     const setAstral = props.setAstral;
     const setLaw = props.setLaw;
     const setBlood = props.setBlood;
@@ -41,8 +47,10 @@ export default function RunecraftSection(props) {
 
     const autoaltar = props.autoaltar;
     const runename = props.runename;
+    const ouraniaAltar = props.ouraniaAltar;
 
     const pouch = props.pouch;
+    const extraList = [3, 9, 18, 30, 40];
     const extra = props.extra;
     const setExtra = props.setExtra;
 
@@ -60,12 +68,26 @@ export default function RunecraftSection(props) {
 
     const [showAir, setShowAir] = useState(false);
     const [showEarth, setShowEarth] = useState(false);
-    const [showCosmic, setShowCosmic] = useState(false);
+    const [showWater, setShowWater] = useState(false);
+    const [showFire, setShowFire] = useState(false);
     const [showAstral, setShowAstral] = useState(false);
     const [showLaw, setShowLaw] = useState(false);
     const [showBlood, setShowBlood] = useState(false);
     const [showWrath, setShowWrath] = useState(false);
+    const [showOurania, setShowOurania] = useState(false);
     const [xpgain, setXpgain] = useState(0);
+
+    const ourania9 = [7, 30, 105, 400, 700, 1300, 2500, 10000];
+    const ourania19 = [9, 45, 145, 1000, 2200, 4600, 6700, 10000];
+    const ourania29 = [23, 110, 430, 3250, 4750, 6150, 7500, 10000];
+    const ourania39 = [60, 250, 1000, 5300, 6500, 7600, 8500, 10000];
+    const ourania49 = [120, 500, 2000, 6500, 7300, 8050, 8750, 10000];
+    const ourania59 = [250, 1300, 4150, 7000, 7700, 8350, 8950, 10000];
+    const ourania69 = [300, 1500, 4450, 7200, 7900, 8500, 9050, 10000];
+    const ourania79 = [700, 3500, 6200, 8300, 8700, 9100, 9400, 10000];
+    const ourania89 = [1000, 3900, 6300, 8400, 8900, 9300, 9600, 10000];
+    const ourania99 = [2200, 5200, 7500, 9000, 9300, 9600, 9800, 10000];
+
     var xpbase = 0;
 
     const theme = createTheme({
@@ -84,8 +106,14 @@ export default function RunecraftSection(props) {
     }, [hat, top, bottom, boots])
 
     function craftRune(rune, amt) {
-        audio.play();
+        if (!mute) {audio.play();}
         var boost = 1;
+        if (essenceType === "daeyalt_essence") {
+            boost = 1.5;
+        } else if (essenceType === "dark_essence") {
+            boost = 2;
+        }
+
         if (rune === "air") {
             xpbase = 5;
             setShowAir(true);
@@ -94,10 +122,14 @@ export default function RunecraftSection(props) {
             xpbase = 8;
             setShowEarth(true);
             setEarth(earth + Math.floor(amt * bonus));
-        } else if (rune === "cosmic") {
+        } else if (rune === "water") {
+            xpbase = 10;
+            setShowWater(true);
+            setWater(water + Math.floor(amt * bonus));
+        } else if (rune === "fire") {
             xpbase = 12;
-            setShowCosmic(true);
-            setCosmic(cosmic + Math.floor(amt * bonus));
+            setShowFire(true);
+            setFire(fire + Math.floor(amt * bonus));
         } else if (rune === "astral") {
             xpbase = 15;
             setShowAstral(true);
@@ -110,16 +142,59 @@ export default function RunecraftSection(props) {
             xpbase = 24;
             setShowBlood(true);
             setBlood(blood + Math.floor(amt * bonus));
-        } else {
+        } else if (rune === "wrath") {
             xpbase = 30;
             setShowWrath(true);
             setWrath(wrath + Math.floor(amt * bonus));
+        } else if (rune === "ourania") {
+            var chances = [];
+            if (lvl <= 9) {
+                chances = ourania9;
+            } else if (lvl <= 19) {
+                chances = ourania19;
+            } else if (lvl <= 29) {
+                chances = ourania29;
+            } else if (lvl <= 39) {
+                chances = ourania39;
+            } else if (lvl <= 49) {
+                chances = ourania49;
+            } else if (lvl <= 59) {
+                chances = ourania59;
+            } else if (lvl <= 69) {
+                chances = ourania69;
+            } else if (lvl <= 79) {
+                chances = ourania79;
+            } else if (lvl <= 89) {
+                chances = ourania89;
+            } else {
+                chances = ourania99;
+            }
+            var runes = [0, 0, 0, 0, 0, 0, 0, 0];
+            for (let i = 0; i < amt; i++) {
+                var roll = Math.floor(Math.random() * 10000);
+                for (let j = 0; j < chances.length; j++) {
+                    if (roll < chances[j]) {
+                        runes[j] += 1;
+                        break;
+                    }
+                }
+            }
+            setWrath(wrath + Math.floor(runes[0] * bonus));
+            setBlood(blood + Math.floor(runes[1] * bonus));
+            setLaw(law + Math.floor(runes[2] * bonus));
+            setAstral(astral + Math.floor(runes[3] * bonus));
+            setFire(fire + Math.floor(runes[4] * bonus));
+            setWater(water + Math.floor(runes[5] * bonus));
+            setEarth(earth + Math.floor(runes[6] * bonus));
+            setAir(air + Math.floor(runes[7] * bonus));
+
+            setShowOurania(true);
+            setXpgain(Math.floor(((30 * runes[0]) + (24 * runes[1]) + (19 * runes[2]) + (15 * runes[3]) + (12 * runes[4]) + (10 * runes[5]) + (8 * runes[6]) + (5 * runes[7])) * boost * 1.7));
         }
 
-        if (essenceType === "daeyalt_essence") {
-            boost = 1.5;
+        if (rune !== "ourania") {
+            setXpgain(Math.floor(xpbase * amt * boost));
         }
-        setXpgain(xpbase * amt * boost);
     }
 
     function calcXp(base) {
@@ -134,7 +209,7 @@ export default function RunecraftSection(props) {
             // setProgress(0 + leftover);
         } else {
             setXp(xp + xpgain);
-            setProgress(progress + Math.floor(xpgain / (1/4 * Math.floor(lvl + 300 * (Math.pow(2, (lvl) / 7)))) * 100));
+            setProgress(Math.floor((xp + xpgain) / (1/4 * Math.floor(lvl + 300 * (Math.pow(2, (lvl) / 7)))) * 100));
         }
     }
 
@@ -159,10 +234,10 @@ export default function RunecraftSection(props) {
     }, [xpgain]);
 
     useEffect(() => {
-        if (autoaltar && inventory.length === 24 && (!pouch || extra === inventory.length) && runename !== "none") {
+        if (autoaltar && inventory.length === 24 && (!pouch || extra === extraList[pouch - 1]) && runename !== "none") {
             craftRune(runename, inventory.length + extra);
         }
-    }, [inventory, runename]);
+    }, [inventory, runename, extra]);
 
     return (
         <ThemeProvider theme={theme}>
@@ -193,7 +268,7 @@ export default function RunecraftSection(props) {
                     </div>
                     <Button variant="contained" color={lvl >= 9 ? "success" : "error"} disabled={lvl >= 9 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
-                            craftRune("earth", inventory.length);
+                            craftRune("earth", inventory.length + extra);
                         }
                     }}>
                         Craft Earth Rune&nbsp;
@@ -204,16 +279,32 @@ export default function RunecraftSection(props) {
                 </Grid>
 
                 <Grid item xs>
-                    <div style={{visibility: showCosmic ? '' : "hidden", color: "green", fontSize: "20px"}} className={showCosmic ? "slide" : ""} onAnimationEnd={() => {setShowCosmic(false); setXpgain(0);}}>
+                    <div style={{visibility: showWater ? '' : "hidden", color: "green", fontSize: "20px"}} className={showWater ? "slide" : ""} onAnimationEnd={() => {setShowWater(false); setXpgain(0);}}>
+                        +{xpgain}
+                    </div>
+                    <Button variant="contained" color={lvl >= 14 ? "success" : "error"} disabled={lvl >= 14 ? false : true} onClick={() => {
+                        if (inventory.length > 0) {
+                            craftRune("water", inventory.length + extra);
+                        }
+                    }}>
+                        Craft Water Rune&nbsp;
+                        <img src={waterRune} alt="Craft Water" width="50px" height="50px"></img>
+                    </Button>
+                    <br></br>
+                    Lvl: 14
+                </Grid>
+
+                <Grid item xs>
+                    <div style={{visibility: showFire ? '' : "hidden", color: "green", fontSize: "20px"}} className={showFire ? "slide" : ""} onAnimationEnd={() => {setShowFire(false); setXpgain(0);}}>
                         +{xpgain}
                     </div>
                     <Button variant="contained" color={lvl >= 27 ? "success" : "error"} disabled={lvl >= 27 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
-                            craftRune("cosmic", inventory.length);
+                            craftRune("fire", inventory.length + extra);
                         }
                     }}>
-                        Craft Cosmic Rune&nbsp;
-                        <img src={cosmicRune} alt="Craft Cosmic" width="50px" height="50px"></img>
+                        Craft Fire Rune&nbsp;
+                        <img src={fireRune} alt="Craft Fire" width="50px" height="50px"></img>
                     </Button>
                     <br></br>
                     Lvl: 27
@@ -225,7 +316,7 @@ export default function RunecraftSection(props) {
                     </div>
                     <Button variant="contained" color={lvl >= 40 ? "success" : "error"} disabled={lvl >= 40 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
-                            craftRune("astral", inventory.length);
+                            craftRune("astral", inventory.length + extra);
                         }
                     }}>
                         Craft Astral Rune&nbsp;
@@ -241,7 +332,7 @@ export default function RunecraftSection(props) {
                     </div>
                     <Button variant="contained" color={lvl >= 54 ? "success" : "error"} disabled={lvl >= 54 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
-                            craftRune("law", inventory.length);
+                            craftRune("law", inventory.length + extra);
                         }
                     }}>
                         Craft Law Rune&nbsp;
@@ -257,7 +348,7 @@ export default function RunecraftSection(props) {
                     </div>
                     <Button variant="contained" color={lvl >= 77 ? "success" : "error"} disabled={lvl >= 77 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
-                            craftRune("blood", inventory.length);
+                            craftRune("blood", inventory.length + extra);
                         }
                     }}>
                         Craft Blood Rune&nbsp;
@@ -273,7 +364,7 @@ export default function RunecraftSection(props) {
                     </div>
                     <Button variant="contained" color={lvl >= 95 ? "success" : "error"} disabled={lvl >= 95 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
-                            craftRune("wrath", inventory.length);
+                            craftRune("wrath", inventory.length + extra);
                         }
                     }}>
                         Craft Wrath Rune&nbsp;
@@ -282,6 +373,24 @@ export default function RunecraftSection(props) {
                     <br></br>
                     Lvl: 95
                 </Grid>
+
+                {ouraniaAltar ? 
+                <Grid item xs>
+                    <div style={{visibility: showOurania ? '' : "hidden", color: "green", fontSize: "20px"}} className={showOurania ? "slide" : ""} onAnimationEnd={() => {setShowOurania(false); setXpgain(0);}}>
+                        +{xpgain}
+                    </div>
+                    <Button variant="contained" color="success" onClick={() => {
+                        if (inventory.length > 0) {
+                            craftRune("ourania", inventory.length + extra);
+                        }
+                    }}>
+                        Craft Ourania Altar&nbsp;
+                        <img src={zmiAltar} alt="Craft Ourania" width="50px" height="50px"></img>
+                    </Button>
+                    <br></br>
+                </Grid>
+                :
+                ""}
             </Grid>
         </Box>
         </ThemeProvider>

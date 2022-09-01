@@ -4,11 +4,14 @@ import Item from "../class/Item.jsx";
 import { useState } from 'react';
 import runeEssence from "../icons/rune_essence_detail.png";
 import daeyaltEssence from "../icons/daeyalt_essence_click.png";
+import darkEssence from "../icons/dark_essence_click.png";
 import clickAudio from "../audio/click.mp3";
 import { useEffect } from "react";
 import useInterval from "react-useinterval";
 
 export default function ClickSection(props) {
+
+    const mute = props.mute;
 
     const inventory = props.inventory;
     const setInventory = props.setInventory;
@@ -20,6 +23,7 @@ export default function ClickSection(props) {
     const autoclick = props.autoclick;
 
     const pouch = props.pouch;
+    const extraList = [3, 9, 18, 30, 40];
     const extra = props.extra;
     const setExtra = props.setExtra;
 
@@ -39,12 +43,12 @@ export default function ClickSection(props) {
 
     function doClick() {
         if (inventory.length < 24) {
-            audio.play();
-            setShake(true);
+            if (!mute) {audio.play();}
+            setShake(true)
             setInventory((inventory) => [...inventory, (<Item key={inventory.length} item={essenceType} />)]);
-        } else if (pouch && extra < 24) {
-            audio.play();
-            setShake(true);
+        } else if (pouch && extra < extraList[pouch - 1]) {
+            if (!mute) {audio.play();}
+            setShake(true)
             setExtra((extra) => extra + 1);
         }
     }
@@ -57,7 +61,7 @@ export default function ClickSection(props) {
 
     return (
         <Box paddingTop="1%">
-            <img src={essenceType === "rune_essence" ? runeEssence : essenceType === "daeyalt_essence" ? daeyaltEssence : ""} alt="Clickable Rune essence" width={width > 500 ? "500px" : "200px"} height={width > 500 ? "500px" : "200px"} className={shake ? 'shake' : ""} onClick={() => {
+            <img src={essenceType === "rune_essence" ? runeEssence : essenceType === "daeyalt_essence" ? daeyaltEssence : essenceType === "dark_essence" ? darkEssence : ""} alt="Clickable Rune essence" width={width > 500 ? "500px" : "200px"} height={width > 500 ? "500px" : "200px"} className={shake ? 'shake' : ""} onClick={() => {
                 doClick();
                 }}
                 onAnimationEnd={() => {setShake(false)}}></img>
