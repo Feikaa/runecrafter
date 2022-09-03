@@ -28,13 +28,14 @@ export default function ChooseSection(props) {
                     <option value="air">Air</option>
                     <option value="earth">Earth</option>
                 </select> */}
-                <InputLabel id="select-altar-label">Craft</InputLabel>
+                <InputLabel id="select-altar-label" sx={{ color: "white" }}>Craft</InputLabel>
                 <Select
                     labelId="select-altar-label"
                     id="select-altar"
                     value={runename}
                     label="Altar"
                     onChange={handleChange}
+                    sx={{ color: "white" }}
                 >
                     <MenuItem value="none">None
                     </MenuItem>

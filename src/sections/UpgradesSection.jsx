@@ -42,6 +42,8 @@ import zmiAltar from "../icons/ourania_altar.png";
 
 export default function UpgradesSection(props) {
 
+    const mode = props.mode;
+
     const lvl = props.lvl;
     const prestige = props.prestige;
 
@@ -77,6 +79,11 @@ export default function UpgradesSection(props) {
     const nextPouch = ["3", "6", "9", "12", "40"];
     const pouchList = [pouch1, pouch2, pouch3, pouch4, pouch5, pouch5];
 
+    const daeyalt = props.daeyalt;
+    const setDaeyalt = props.setDaeyalt;
+    const dark = props.dark;
+    const setDark = props.setDark;
+
     const hat = props.hat;
     const setHat = props.setHat;
 
@@ -91,6 +98,7 @@ export default function UpgradesSection(props) {
 
     const essenceType = props.essenceType;
     const setEssenceType = props.setEssenceType;
+    const eternal = props.eternal;
     const setInventory = props.setInventory;
     const setExtra = props.setExtra;
 
@@ -334,6 +342,69 @@ export default function UpgradesSection(props) {
 
             <br></br>
 
+            { mode === "zmi" ?
+            <Tooltip title={
+              <React.Fragment>
+                {autoaltar < 1 ? <Typography>Allows autocrafting runes when your inventory is full.</Typography> : <Typography>Upgrade MAX.</Typography>}
+              </React.Fragment>} arrow placement="right">
+              <span style={{width: "250px", display: "block"}}>
+            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "163.5px", width: "250px"}} disabled={autoaltar ? true : air < 500 ? true : earth < 500 ? true :
+            water < 500 ? true : fire < 500 ? true : astral < 500 ? true : law < 500 ? true : blood < 500 ? true : wrath < 500 ? true : false} onClick={() => {
+              setAir(air - 500);
+              setEarth(earth - 500);
+              setWater(water - 500);
+              setFire(fire - 500)
+              setLaw(law - 500);
+              setAstral(astral - 500);
+              setBlood(blood - 500);
+              setAutoaltar(1);
+            }}>
+              Talisman Mysteries <img src={talismanList[8]} alt="Auto Altar" height="32px" width="32px"></img>
+              <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
+              <Box sx={{border: 1, width: "39px", color: autoaltar ? "black" : air >= 500 ? "green" : "red"}}>
+                <img src={airRune} alt="Air Rune Amount"></img>
+                500
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: autoaltar ? "black" : earth >= 500 ? "green" : "red"}}>
+                <img src={earthRune} alt="Earth Rune Amount"></img>
+                500
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: autoaltar ? "black" : water >= 500 ? "green" : "red"}}>
+                <img src={waterRune} alt="Water Rune Amount"></img>
+                500
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: autoaltar ? "black" : fire >= 500 ? "green" : "red"}}>
+                <img src={fireRune} alt="Fire Rune Amount"></img>
+                500
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: autoaltar ? "black" : astral >= 500 ? "green" : "red"}}>
+                <img src={astralRune} alt="Astral Rune Amount"></img>
+                500
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: autoaltar ? "black" : law >= 500 ? "green" : "red"}}>
+                <img src={lawRune} alt="Law Rune Amount"></img>
+                500
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: autoaltar ? "black" : blood >= 500 ? "green" : "red"}}>
+                <img src={bloodRune} alt="Blood Rune Amount"></img>
+                500
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: autoaltar ? "black" : wrath >= 500 ? "green" : "red"}}>
+                <img src={wrathRune} alt="Wrath Rune Amount"></img>
+                500
+              </Box>
+              </Grid>
+            </Button>
+            </span>
+            </Tooltip>
+            :
             <Tooltip title={
             <React.Fragment>
                 {autoaltar < 8 ? <Typography>Allows autocrafting {nextRune[autoaltar]} runes when your inventory is full.</Typography> : <Typography>Upgrade MAX.</Typography>}
@@ -448,6 +519,7 @@ export default function UpgradesSection(props) {
             </Button>
             </span>
             </Tooltip>
+            }
 
             <br></br>
 
@@ -680,7 +752,7 @@ export default function UpgradesSection(props) {
                 <Typography sx={{color: "red"}}>WARNING: WILL EMPTY YOUR INVENTORY AND POUCH</Typography>
               </React.Fragment>} arrow placement="right">
               <span style={{width: "250px", display: "block"}}>
-            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "109px", width: "250px"}} disabled={essenceType === "daeyalt_essence" ? true : air < 500 ? true : earth < 500 ? true : 
+            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "109px", width: "250px"}} disabled={daeyalt ? true : air < 500 ? true : earth < 500 ? true : 
             fire < 500 ? true : law < 500 ? true : astral < 500 ? true : false} onClick={() => {
               setAir(air - 500);
               setEarth(earth - 500);
@@ -689,37 +761,38 @@ export default function UpgradesSection(props) {
               setLaw(law - 500);
               setAstral(astral - 500);
               setEssenceType("daeyalt_essence");
+              setDaeyalt(true);
               setInventory([]);
               setExtra(0);
             }}>
               Daeyalt Essence <img src={daeyaltEssence} alt="Daeyalt essence" height="32px" width="32px"></img>
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-              <Box sx={{border: 1, width: "39px", color: essenceType === "daeyalt_essence" ? "black" : air >= 500 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: daeyalt ? "black" : air >= 500 ? "green" : "red"}}>
                 <img src={airRune} alt="Air Rune Amount"></img>
                 500
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: essenceType === "daeyalt_essence" ? "black" : earth >= 500 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: daeyalt ? "black" : earth >= 500 ? "green" : "red"}}>
                 <img src={earthRune} alt="Earth Rune Amount"></img>
                 500
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: essenceType === "daeyalt_essence" ? "black" : water >= 500 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: daeyalt ? "black" : water >= 500 ? "green" : "red"}}>
                 <img src={waterRune} alt="Water Rune Amount"></img>
                 500
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: essenceType === "daeyalt_essence" ? "black" : fire >= 500 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: daeyalt ? "black" : fire >= 500 ? "green" : "red"}}>
                 <img src={fireRune} alt="Fire Rune Amount"></img>
                 500
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: essenceType === "daeyalt_essence" ? "black" : astral >= 500 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: daeyalt ? "black" : astral >= 500 ? "green" : "red"}}>
                 <img src={astralRune} alt="Astral Rune Amount"></img>
                 500
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: essenceType === "daeyalt_essence" ? "black" : law >= 500 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: daeyalt ? "black" : law >= 500 ? "green" : "red"}}>
                 <img src={lawRune} alt="Law Rune Amount"></img>
                 500
               </Box>
@@ -736,7 +809,7 @@ export default function UpgradesSection(props) {
                 <Typography sx={{color: "red"}}>WARNING: WILL EMPTY YOUR INVENTORY AND POUCH</Typography>
               </React.Fragment>} arrow placement="right">
               <span style={{width: "250px", display: "block"}}>
-            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "163.5px", width: "250px"}} disabled={essenceType === "dark_essence" ? true : air < 1000 ? true : earth < 1000 ? true : 
+            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "163.5px", width: "250px"}} disabled={dark ? true : air < 1000 ? true : earth < 1000 ? true : 
             fire < 1000 ? true : law < 1000 ? true : astral < 1000 ? true : blood < 1000 ? true : false} onClick={() => {
               setAir(air - 1000);
               setEarth(earth - 1000);
@@ -746,42 +819,43 @@ export default function UpgradesSection(props) {
               setAstral(astral - 1000);
               setBlood(blood - 1000);
               setEssenceType("dark_essence");
+              setDark(true);
               setInventory([]);
               setExtra(0);
             }}>
               Dark Essence <img src={darkEssence} alt="Dark essence" height="32px" width="32px"></img>
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-              <Box sx={{border: 1, width: "39px", color: essenceType === "dark_essence" ? "black" : air >= 1000 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: dark ? "black" : air >= 1000 ? "green" : "red"}}>
                 <img src={airRune} alt="Air Rune Amount"></img>
                 1000
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: essenceType === "dark_essence" ? "black" : earth >= 1000 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: dark ? "black" : earth >= 1000 ? "green" : "red"}}>
                 <img src={earthRune} alt="Earth Rune Amount"></img>
                 1000
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: essenceType === "dark_essence" ? "black" : water >= 1000 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: dark ? "black" : water >= 1000 ? "green" : "red"}}>
                 <img src={waterRune} alt="Water Rune Amount"></img>
                 1000
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: essenceType === "dark_essence" ? "black" : fire >= 1000 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: dark ? "black" : fire >= 1000 ? "green" : "red"}}>
                 <img src={fireRune} alt="Fire Rune Amount"></img>
                 1000
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: essenceType === "dark_essence" ? "black" : astral >= 1000 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: dark ? "black" : astral >= 1000 ? "green" : "red"}}>
                 <img src={astralRune} alt="Astral Rune Amount"></img>
                 1000
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: essenceType === "dark_essence" ? "black" : law >= 1000 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: dark ? "black" : law >= 1000 ? "green" : "red"}}>
                 <img src={lawRune} alt="Law Rune Amount"></img>
                 1000
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: essenceType === "dark_essence" ? "black" : blood >= 1000 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: dark ? "black" : blood >= 1000 ? "green" : "red"}}>
                 <img src={bloodRune} alt="Blood Rune Amount"></img>
                 1000
               </Box>
@@ -792,70 +866,74 @@ export default function UpgradesSection(props) {
 
             <br></br>
 
+            {mode !== "zmi" ? 
             <Tooltip title={
-            <React.Fragment>
-                <Typography>Gains access to the Ourania Altar. Gives 70% extra experience per essence, however, all crafted runes are random.<br></br>Bonus is multiplicative with essence upgrades.</Typography>
-              </React.Fragment>} arrow placement="right">
-              <span style={{width: "250px", display: "block"}}>
-            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "163.5px", width: "250px"}} disabled={ouraniaAltar ? true : air < 1000 ? true : earth < 1000 ? true : 
-            fire < 1000 ? true : law < 1000 ? true : astral < 1000 ? true : blood < 1000 ? true : wrath < 1000 ? true : false} onClick={() => {
-              setAir(air - 1000);
-              setEarth(earth - 1000);
-              setWater(water - 1000);
-              setFire(fire - 1000)
-              setLaw(law - 1000);
-              setAstral(astral - 1000);
-              setBlood(blood - 1000);
-              setWrath(wrath - 1000);
-              setOuraniaAltar(true);
-              setInventory([]);
-              setExtra(0);
-            }}>
-              Ourania Altar <img src={zmiAltar} alt="Ourania Altar" height="32px" width="32px"></img>
-              <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-              <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : air >= 1000 ? "green" : "red"}}>
-                <img src={airRune} alt="Air Rune Amount"></img>
-                1000
-              </Box>
-
-              <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : earth >= 1000 ? "green" : "red"}}>
-                <img src={earthRune} alt="Earth Rune Amount"></img>
-                1000
-              </Box>
-
-              <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : water >= 1000 ? "green" : "red"}}>
-                <img src={waterRune} alt="Water Rune Amount"></img>
-                1000
-              </Box>
-
-              <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : fire >= 1000 ? "green" : "red"}}>
-                <img src={fireRune} alt="Fire Rune Amount"></img>
-                1000
-              </Box>
-
-              <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : astral >= 1000 ? "green" : "red"}}>
-                <img src={astralRune} alt="Astral Rune Amount"></img>
-                1000
-              </Box>
-
-              <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : law >= 1000 ? "green" : "red"}}>
-                <img src={lawRune} alt="Law Rune Amount"></img>
-                1000
-              </Box>
-
-              <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : blood >= 1000 ? "green" : "red"}}>
-                <img src={bloodRune} alt="Blood Rune Amount"></img>
-                1000
-              </Box>
-
-              <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : wrath >= 1000 ? "green" : "red"}}>
-                <img src={wrathRune} alt="Wrath Rune Amount"></img>
-                1000
-              </Box>
-              </Grid>
-            </Button>
-            </span>
-            </Tooltip>
+              <React.Fragment>
+                  <Typography>Gains access to the Ourania Altar. Gives 70% extra experience per essence, however, all crafted runes are random.<br></br>Bonus is multiplicative with essence upgrades.</Typography>
+                </React.Fragment>} arrow placement="right">
+                <span style={{width: "250px", display: "block"}}>
+              <Button key={"auto altar"} sx={{border: 1, color: "green", height: "163.5px", width: "250px"}} disabled={ouraniaAltar ? true : air < 1000 ? true : earth < 1000 ? true : 
+              fire < 1000 ? true : law < 1000 ? true : astral < 1000 ? true : blood < 1000 ? true : wrath < 1000 ? true : false} onClick={() => {
+                setAir(air - 1000);
+                setEarth(earth - 1000);
+                setWater(water - 1000);
+                setFire(fire - 1000)
+                setLaw(law - 1000);
+                setAstral(astral - 1000);
+                setBlood(blood - 1000);
+                setWrath(wrath - 1000);
+                setOuraniaAltar(true);
+                setInventory([]);
+                setExtra(0);
+              }}>
+                Ourania Altar <img src={zmiAltar} alt="Ourania Altar" height="32px" width="32px"></img>
+                <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
+                <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : air >= 1000 ? "green" : "red"}}>
+                  <img src={airRune} alt="Air Rune Amount"></img>
+                  1000
+                </Box>
+  
+                <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : earth >= 1000 ? "green" : "red"}}>
+                  <img src={earthRune} alt="Earth Rune Amount"></img>
+                  1000
+                </Box>
+  
+                <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : water >= 1000 ? "green" : "red"}}>
+                  <img src={waterRune} alt="Water Rune Amount"></img>
+                  1000
+                </Box>
+  
+                <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : fire >= 1000 ? "green" : "red"}}>
+                  <img src={fireRune} alt="Fire Rune Amount"></img>
+                  1000
+                </Box>
+  
+                <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : astral >= 1000 ? "green" : "red"}}>
+                  <img src={astralRune} alt="Astral Rune Amount"></img>
+                  1000
+                </Box>
+  
+                <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : law >= 1000 ? "green" : "red"}}>
+                  <img src={lawRune} alt="Law Rune Amount"></img>
+                  1000
+                </Box>
+  
+                <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : blood >= 1000 ? "green" : "red"}}>
+                  <img src={bloodRune} alt="Blood Rune Amount"></img>
+                  1000
+                </Box>
+  
+                <Box sx={{border: 1, width: "39px", color: ouraniaAltar ? "black" : wrath >= 1000 ? "green" : "red"}}>
+                  <img src={wrathRune} alt="Wrath Rune Amount"></img>
+                  1000
+                </Box>
+                </Grid>
+              </Button>
+              </span>
+              </Tooltip>
+              :
+              ""}
+          
 
           </List>
         </Box>
@@ -863,7 +941,7 @@ export default function UpgradesSection(props) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box sx={{paddingBottom: "15px", mx: "auto", marginRight: autoaltar ? "0.5%" : "auto", marginLeft: lvl >= 99 ? "0.5%" : prestige >= 1 ? "0.5%" : "auto"}}>
+            <Box sx={{paddingBottom: "15px", mx: "auto", marginRight: autoaltar ? "0.5%" : "auto", marginLeft: lvl >= 99 ? "0.5%" : prestige >= 1 ? "0.5%" : mode !== "normal" ? "0.5%" : "auto"}}>
                 <Button variant="contained" color="upgrade" onClick={toggleDrawer(true)}>Upgrades</Button>
                 <SwipeableDrawer
                 anchor="left"

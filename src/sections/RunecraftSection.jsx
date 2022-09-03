@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, Tooltip, Typography } from "@mui/material";
 import airRune from "../icons/air_rune.png";
 import earthRune from "../icons/earth_rune.png";
 import waterRune from "../icons/water_rune.png";
@@ -7,9 +7,15 @@ import astralRune from "../icons/astral_rune.png";
 import lawRune from "../icons/law_rune.webp";
 import bloodRune from "../icons/blood_rune.png";
 import wrathRune from "../icons/wrath_rune.png";
+import mistRune from "../icons/mist_rune.png";
+import dustRune from "../icons/dust_rune.png";
+import mudRune from "../icons/mud_rune.png";
+import smokeRune from "../icons/smoke_rune.png";
+import steamRune from "../icons/steam_rune.png";
+import lavaRune from "../icons/lava_rune.png";
 import zmiAltar from "../icons/ourania_altar.png";
 import craftAudio from "../audio/craft.wav";
-import { useState } from "react";
+import React, { useState } from "react";
 import "../styles/RunecraftSection.scss";
 import { useEffect } from "react";
 import { createTheme } from "@mui/material";
@@ -18,6 +24,7 @@ import { ThemeProvider } from "@mui/system";
 export default function RunecraftSection(props) {
 
     const mute = props.mute;
+    const mode = props.mode;
 
     const lvl = props.lvl;
     const setLvl = props.setLvl;
@@ -61,6 +68,8 @@ export default function RunecraftSection(props) {
     const bonus = props.bonus;
     const setBonus = props.setBonus;
 
+    const combination = props.combination;
+
     const essenceType = props.essenceType;
 
     const audio = new Audio(craftAudio);
@@ -75,6 +84,12 @@ export default function RunecraftSection(props) {
     const [showBlood, setShowBlood] = useState(false);
     const [showWrath, setShowWrath] = useState(false);
     const [showOurania, setShowOurania] = useState(false);
+    const [showDust, setShowDust] = useState(false);
+    const [showMist, setShowMist] = useState(false);
+    const [showMud, setShowMud] = useState(false);
+    const [showSmoke, setShowSmoke] = useState(false);
+    const [showSteam, setShowSteam] = useState(false);
+    const [showLava, setShowLava] = useState(false);
     const [xpgain, setXpgain] = useState(0);
 
     const ourania9 = [7, 30, 105, 400, 700, 1300, 2500, 10000];
@@ -87,6 +102,10 @@ export default function RunecraftSection(props) {
     const ourania79 = [700, 3500, 6200, 8300, 8700, 9100, 9400, 10000];
     const ourania89 = [1000, 3900, 6300, 8400, 8900, 9300, 9600, 10000];
     const ourania99 = [2200, 5200, 7500, 9000, 9300, 9600, 9800, 10000];
+
+    const eternal = props.eternal;
+    const infinv = props.infinv;
+    const setInfinv = props.setInfinv;
 
     var xpbase = 0;
 
@@ -225,11 +244,57 @@ export default function RunecraftSection(props) {
         }
     }
 
+    function craftCombination(rune, amt) {
+        if (!mute) {audio.play();}
+        var boost = 1;
+        if (essenceType === "daeyalt_essence") {
+            boost = 1.5;
+        } else if (essenceType === "dark_essence") {
+            boost = 2;
+        }
+
+        if (rune === "dust") {
+            xpbase = 13;
+            setShowDust(true);
+            setAir(air + Math.floor(amt * bonus));
+            setEarth(earth + Math.floor(amt * bonus));
+        } else if (rune === "mist") {
+            xpbase = 15;
+            setShowMist(true);
+            setAir(air + Math.floor(amt * bonus));
+            setWater(water + Math.floor(amt * bonus));
+        } else if (rune === "mud") {
+            xpbase = 18;
+            setShowMud(true);
+            setEarth(earth + Math.floor(amt * bonus));
+            setWater(water + Math.floor(amt * bonus));
+        } else if (rune === "smoke") {
+            xpbase = 17;
+            setShowSmoke(true);
+            setAir(air + Math.floor(amt * bonus));
+            setFire(fire + Math.floor(amt * bonus));
+        } else if (rune === "steam") {
+            xpbase = 22;
+            setWater(water + Math.floor(amt * bonus));
+            setFire(fire + Math.floor(amt * bonus));
+        } else if (rune === "lava") {
+            xpbase = 20;
+            setEarth(earth + Math.floor(amt * bonus));
+            setFire(fire + Math.floor(amt * bonus));
+        }
+
+        setXpgain(Math.floor(xpbase * amt * boost));
+    }
+
     useEffect(() => {
         if (xpgain > 0) {
             calcXp((xpgain / (inventory.length + extra)));
-            setInventory([]);
-            setExtra(0);
+            if (eternal && essenceType === "rune_essence") {
+                setInfinv(0);
+            } else {
+                setInventory([]);
+                setExtra(0);
+            }
         }
     }, [xpgain]);
 
@@ -246,12 +311,19 @@ export default function RunecraftSection(props) {
             <br></br>
             Next Lvl: {(1/4 * Math.floor(lvl + 300 * (Math.pow(2, (lvl) / 7))))} */}
             <Grid container spacing={3} sx={{ marginLeft: "0px"}}>
+                {mode === "zmi" ? ""
+                :
+                !combination ? 
+                <React.Fragment>
                 <Grid item xs>
                 <div style={{visibility: showAir ? '' : "hidden", color: "green", fontSize: "20px"}} className={showAir ? "slide" : ""} onAnimationEnd={() => {setShowAir(false); setXpgain(0);}}>
                     +{xpgain}
                 </div>
                     <Button variant="contained" color="success" onClick={() => {
-                        if (inventory.length > 0 || extra > 0) { // this if should be in the function btw
+                        if (eternal && essenceType === "rune_essence" && infinv > 0) {
+                            craftRune("air", infinv);
+                        }
+                        else if (inventory.length > 0 || extra > 0) { // this if should be in the function btw
                             craftRune("air", inventory.length + extra);
                         }
                     }}>
@@ -267,7 +339,10 @@ export default function RunecraftSection(props) {
                         +{xpgain}
                     </div>
                     <Button variant="contained" color={lvl >= 9 ? "success" : "error"} disabled={lvl >= 9 ? false : true} onClick={() => {
-                        if (inventory.length > 0) {
+                        if (eternal && essenceType === "rune_essence" && infinv > 0) {
+                            craftRune("earth", infinv);
+                        }
+                        else if (inventory.length > 0) {
                             craftRune("earth", inventory.length + extra);
                         }
                     }}>
@@ -283,7 +358,10 @@ export default function RunecraftSection(props) {
                         +{xpgain}
                     </div>
                     <Button variant="contained" color={lvl >= 14 ? "success" : "error"} disabled={lvl >= 14 ? false : true} onClick={() => {
-                        if (inventory.length > 0) {
+                        if (eternal && essenceType === "rune_essence" && infinv > 0) {
+                            craftRune("water", infinv);
+                        }
+                        else if (inventory.length > 0) {
                             craftRune("water", inventory.length + extra);
                         }
                     }}>
@@ -299,7 +377,10 @@ export default function RunecraftSection(props) {
                         +{xpgain}
                     </div>
                     <Button variant="contained" color={lvl >= 27 ? "success" : "error"} disabled={lvl >= 27 ? false : true} onClick={() => {
-                        if (inventory.length > 0) {
+                        if (eternal && essenceType === "rune_essence" && infinv > 0) {
+                            craftRune("fire", infinv);
+                        }
+                        else if (inventory.length > 0) {
                             craftRune("fire", inventory.length + extra);
                         }
                     }}>
@@ -309,13 +390,168 @@ export default function RunecraftSection(props) {
                     <br></br>
                     Lvl: 27
                 </Grid>
+                </React.Fragment>
+                :
+                // Combinations
+                <React.Fragment>
+                <Tooltip title={
+                    <React.Fragment>
+                        <Typography>Combination: <img src={airRune} width="36px" height="36px" alt="Air Rune"></img><img src={earthRune} width="36px" height="36px" alt="Earth Rune"></img></Typography>
+                    </React.Fragment>} arrow placement="right" disableInteractive>
+                <Grid item xs>
+                <div style={{visibility: showDust ? '' : "hidden", color: "green", fontSize: "20px"}} className={showDust ? "slide" : ""} onAnimationEnd={() => {setShowDust(false); setXpgain(0);}}>
+                    +{xpgain}
+                </div>
+                    <Button variant="contained" color="success" onClick={() => {
+                        if (eternal && essenceType === "rune_essence" && infinv > 0) {
+                            craftCombination("dust", infinv);
+                        }
+                        else if (inventory.length > 0 || extra > 0) { // this if should be in the function btw
+                            craftCombination("dust", inventory.length + extra);
+                        }
+                    }}>
+                        Craft Dust Rune&nbsp;
+                        <img src={dustRune} alt="Craft Dust" width="50px" height="50px"></img>
+                    </Button>
+                    <br></br>
+                    Lvl: 1
+                </Grid>
+                </Tooltip>
 
+                <Tooltip title={
+                    <React.Fragment>
+                        <Typography>Combination: <img src={airRune} width="36px" height="36px" alt="Air Rune"></img><img src={waterRune} width="36px" height="36px" alt="Water Rune"></img></Typography>
+                    </React.Fragment>} arrow placement="right" disableInteractive>
+                <Grid item xs>
+                    <div style={{visibility: showMist ? '' : "hidden", color: "green", fontSize: "20px"}} className={showMist ? "slide" : ""} onAnimationEnd={() => {setShowMist(false); setXpgain(0);}}>
+                        +{xpgain}
+                    </div>
+                    <Button variant="contained" color={lvl >= 8 ? "success" : "error"} disabled={lvl >= 8 ? false : true} onClick={() => {
+                        if (eternal && essenceType === "rune_essence" && infinv > 0) {
+                            craftCombination("mist", infinv);
+                        }
+                        else if (inventory.length > 0) {
+                            craftCombination("mist", inventory.length + extra);
+                        }
+                    }}>
+                        Craft Mist Rune&nbsp;
+                        <img src={mistRune} alt="Craft Mist" width="50px" height="50px"></img>
+                    </Button>
+                    <br></br>
+                    Lvl: 8
+                </Grid>
+                </Tooltip>
+
+                <Tooltip title={
+                    <React.Fragment>
+                        <Typography>Combination: <img src={waterRune} width="36px" height="36px" alt="Water Rune"></img><img src={earthRune} width="36px" height="36px" alt="Earth Rune"></img></Typography>
+                    </React.Fragment>} arrow placement="right" disableInteractive>
+                <Grid item xs>
+                    <div style={{visibility: showMud ? '' : "hidden", color: "green", fontSize: "20px"}} className={showMud ? "slide" : ""} onAnimationEnd={() => {setShowMud(false); setXpgain(0);}}>
+                        +{xpgain}
+                    </div>
+                    <Button variant="contained" color={lvl >= 13 ? "success" : "error"} disabled={lvl >= 13 ? false : true} onClick={() => {
+                        if (eternal && essenceType === "rune_essence" && infinv > 0) {
+                            craftCombination("mud", infinv);
+                        }
+                        else if (inventory.length > 0) {
+                            craftCombination("mud", inventory.length + extra);
+                        }
+                    }}>
+                        Craft Mud Rune&nbsp;
+                        <img src={mudRune} alt="Craft Mud" width="50px" height="50px"></img>
+                    </Button>
+                    <br></br>
+                    Lvl: 13
+                </Grid>
+                </Tooltip>
+
+                <Tooltip title={
+                    <React.Fragment>
+                        <Typography>Combination: <img src={airRune} width="36px" height="36px" alt="Air Rune"></img><img src={fireRune} width="36px" height="36px" alt="Fire Rune"></img></Typography>
+                    </React.Fragment>} arrow placement="right" disableInteractive>
+                <Grid item xs>
+                    <div style={{visibility: showSmoke ? '' : "hidden", color: "green", fontSize: "20px"}} className={showSmoke ? "slide" : ""} onAnimationEnd={() => {setShowSmoke(false); setXpgain(0);}}>
+                        +{xpgain}
+                    </div>
+                    <Button variant="contained" color={lvl >= 15 ? "success" : "error"} disabled={lvl >= 15 ? false : true} onClick={() => {
+                        if (eternal && essenceType === "rune_essence" && infinv > 0) {
+                            craftCombination("smoke", infinv);
+                        }
+                        else if (inventory.length > 0) {
+                            craftCombination("smoke", inventory.length + extra);
+                        }
+                    }}>
+                        Craft Smoke Rune&nbsp;
+                        <img src={smokeRune} alt="Craft Smoke" width="50px" height="50px"></img>
+                    </Button>
+                    <br></br>
+                    Lvl: 15
+                </Grid>
+                </Tooltip>
+
+                <Tooltip title={
+                    <React.Fragment>
+                        <Typography>Combination: <img src={earthRune} width="36px" height="36px" alt="Earth Rune"></img><img src={fireRune} width="36px" height="36px" alt="Fire Rune"></img></Typography>
+                    </React.Fragment>} arrow placement="right" disableInteractive>
+                <Grid item xs>
+                    <div style={{visibility: showLava ? '' : "hidden", color: "green", fontSize: "20px"}} className={showLava ? "slide" : ""} onAnimationEnd={() => {setShowLava(false); setXpgain(0);}}>
+                        +{xpgain}
+                    </div>
+                    <Button variant="contained" color={lvl >= 19 ? "success" : "error"} disabled={lvl >= 19 ? false : true} onClick={() => {
+                        if (eternal && essenceType === "rune_essence" && infinv > 0) {
+                            craftCombination("lava", infinv);
+                        }
+                        else if (inventory.length > 0) {
+                            craftCombination("lava", inventory.length + extra);
+                        }
+                    }}>
+                        Craft Lava Rune&nbsp;
+                        <img src={lavaRune} alt="Craft Lava" width="50px" height="50px"></img>
+                    </Button>
+                    <br></br>
+                    Lvl: 19
+                </Grid>
+                </Tooltip>
+
+                <Tooltip title={
+                    <React.Fragment>
+                        <Typography>Combination: <img src={waterRune} width="36px" height="36px" alt="Water Rune"></img><img src={fireRune} width="36px" height="36px" alt="Fire Rune"></img></Typography>
+                    </React.Fragment>} arrow placement="right" disableInteractive>
+                <Grid item xs>
+                    <div style={{visibility: showSteam ? '' : "hidden", color: "green", fontSize: "20px"}} className={showSteam ? "slide" : ""} onAnimationEnd={() => {setShowSteam(false); setXpgain(0);}}>
+                        +{xpgain}
+                    </div>
+                    <Button variant="contained" color={lvl >= 23 ? "success" : "error"} disabled={lvl >= 23 ? false : true} onClick={() => {
+                        if (eternal && essenceType === "rune_essence" && infinv > 0) {
+                            craftCombination("steam", infinv);
+                        }
+                        else if (inventory.length > 0) {
+                            craftCombination("steam", inventory.length + extra);
+                        }
+                    }}>
+                        Craft Steam Rune&nbsp;
+                        <img src={steamRune} alt="Craft Steam" width="50px" height="50px"></img>
+                    </Button>
+                    <br></br>
+                    Lvl: 23
+                </Grid>
+                </Tooltip>
+                </React.Fragment>
+                }
+
+                {mode === "zmi" ? ""
+                :
+                <React.Fragment>
                 <Grid item xs>
                     <div style={{visibility: showAstral ? '' : "hidden", color: "green", fontSize: "20px"}} className={showAstral ? "slide" : ""} onAnimationEnd={() => {setShowAstral(false); setXpgain(0);}}>
                         +{xpgain}
                     </div>
                     <Button variant="contained" color={lvl >= 40 ? "success" : "error"} disabled={lvl >= 40 ? false : true} onClick={() => {
-                        if (inventory.length > 0) {
+                        if (eternal && essenceType === "rune_essence" && infinv > 0) {
+                            craftRune("astral", infinv);
+                        }
+                        else if (inventory.length > 0) {
                             craftRune("astral", inventory.length + extra);
                         }
                     }}>
@@ -331,7 +567,10 @@ export default function RunecraftSection(props) {
                         +{xpgain}
                     </div>
                     <Button variant="contained" color={lvl >= 54 ? "success" : "error"} disabled={lvl >= 54 ? false : true} onClick={() => {
-                        if (inventory.length > 0) {
+                        if (eternal && essenceType === "rune_essence" && infinv > 0) {
+                            craftRune("law", infinv);
+                        }
+                        else if (inventory.length > 0) {
                             craftRune("law", inventory.length + extra);
                         }
                     }}>
@@ -347,7 +586,10 @@ export default function RunecraftSection(props) {
                         +{xpgain}
                     </div>
                     <Button variant="contained" color={lvl >= 77 ? "success" : "error"} disabled={lvl >= 77 ? false : true} onClick={() => {
-                        if (inventory.length > 0) {
+                        if (eternal && essenceType === "rune_essence" && infinv > 0) {
+                            craftRune("blood", infinv);
+                        }
+                        else if (inventory.length > 0) {
                             craftRune("blood", inventory.length + extra);
                         }
                     }}>
@@ -363,7 +605,10 @@ export default function RunecraftSection(props) {
                         +{xpgain}
                     </div>
                     <Button variant="contained" color={lvl >= 95 ? "success" : "error"} disabled={lvl >= 95 ? false : true} onClick={() => {
-                        if (inventory.length > 0) {
+                        if (eternal && essenceType === "rune_essence" && infinv > 0) {
+                            craftRune("wrath", infinv);
+                        }
+                        else if (inventory.length > 0) {
                             craftRune("wrath", inventory.length + extra);
                         }
                     }}>
@@ -373,6 +618,7 @@ export default function RunecraftSection(props) {
                     <br></br>
                     Lvl: 95
                 </Grid>
+                </React.Fragment>}
 
                 {ouraniaAltar ? 
                 <Grid item xs>
@@ -380,7 +626,10 @@ export default function RunecraftSection(props) {
                         +{xpgain}
                     </div>
                     <Button variant="contained" color="success" onClick={() => {
-                        if (inventory.length > 0) {
+                        if (eternal) {
+                            craftRune("ourania", infinv);
+                        }
+                        else if (inventory.length > 0) {
                             craftRune("ourania", inventory.length + extra);
                         }
                     }}>

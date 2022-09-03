@@ -16,7 +16,11 @@ export default function ClickSection(props) {
     const inventory = props.inventory;
     const setInventory = props.setInventory;
 
+    const infinv = props.infinv;
+    const setInfinv = props.setInfinv;
+
     const audio = new Audio(clickAudio);
+    audio.volume = 0.1;
     const [shake, setShake] = useState(false);
     const [width, setWidth] = useState(0);
 
@@ -26,6 +30,30 @@ export default function ClickSection(props) {
     const extraList = [3, 9, 18, 30, 40];
     const extra = props.extra;
     const setExtra = props.setExtra;
+
+    const eternal = props.eternal;
+    const primordial = props.primordial;
+    const pegasian = props.pegasian;
+    const runes = ["air", "earth", "water", "fire", "astral", "law", "blood", "wrath"];
+
+    const air = props.air;
+    const earth = props.earth;
+    const water = props.water;
+    const fire = props.fire;
+    const astral = props.astral;
+    const law = props.law;
+    const blood = props.blood;
+    const wrath = props.wrath;
+    const setAir = props.setAir;
+    const setEarth = props.setEarth;
+    const setWater = props.setWater;
+    const setFire = props.setFire;
+    const setAstral = props.setAstral;
+    const setLaw = props.setLaw;
+    const setBlood = props.setBlood;
+    const setWrath = props.setWrath;
+    
+    const bonus = props.bonus;
 
     const essenceType = props.essenceType;
 
@@ -41,15 +69,55 @@ export default function ClickSection(props) {
         setWidth(width);
     }
 
+    function craftRune(rune, amt) {
+        if (rune === "air") {
+            setAir(air + Math.floor(amt * bonus));
+        } else if (rune === "earth") {
+            setEarth(earth + Math.floor(amt * bonus));
+        } else if (rune === "water") {
+            setWater(water + Math.floor(amt * bonus));
+        } else if (rune === "fire") {
+            setFire(fire + Math.floor(amt * bonus));
+        } else if (rune === "astral") {
+            setAstral(astral + Math.floor(amt * bonus));
+        } else if (rune === "law") {
+            setLaw(law + Math.floor(amt * bonus));
+        } else if (rune === "blood") {
+            setBlood(blood + Math.floor(amt * bonus));
+        } else if (rune === "wrath") {
+            setWrath(wrath + Math.floor(amt * bonus));
+        }
+    }
+
     function doClick() {
-        if (inventory.length < 24) {
+        // console.log(inventory);
+        if (pegasian) {
+            craftRune(runes[Math.floor(Math.random() * runes.length)], 1);
+        }
+        if (eternal && essenceType === "rune_essence") {
             if (!mute) {audio.play();}
             setShake(true)
-            setInventory((inventory) => [...inventory, (<Item key={inventory.length} item={essenceType} />)]);
+            if (primordial) {
+                setInfinv(infinv + 2);
+            } else {
+                setInfinv(infinv + 1);
+            }
+        } else if (inventory.length < 24) {
+            if (!mute) {audio.play();}
+            setShake(true)
+            if (primordial && inventory.length + 2 <= 24) {
+                setInventory((inventory) => [...inventory, (<Item key={inventory.length} item={essenceType} />), (<Item key={inventory.length+1} item={essenceType} />)]);
+            } else {
+                setInventory((inventory) => [...inventory, (<Item key={inventory.length} item={essenceType} />)]);
+            }
         } else if (pouch && extra < extraList[pouch - 1]) {
             if (!mute) {audio.play();}
             setShake(true)
-            setExtra((extra) => extra + 1);
+            if (primordial && extra + 2 <= extraList[pouch - 1]) {
+                setExtra((extra) => extra + 2);
+            } else {
+                setExtra((extra) => extra + 1);
+            }
         }
     }
 
