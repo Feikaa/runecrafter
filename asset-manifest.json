@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/runecrafter/static/css/main.064f0f48.css",
-    "main.js": "/runecrafter/static/js/main.6cf6c076.js",
+    "main.css": "/runecrafter/static/css/main.ba48b8b3.css",
+    "main.js": "/runecrafter/static/js/main.b6343e90.js",
     "static/js/787.132333bb.chunk.js": "/runecrafter/static/js/787.132333bb.chunk.js",
     "static/media/dark_essence_click.png": "/runecrafter/static/media/dark_essence_click.868021d629f123f222da.png",
     "static/media/craft.wav": "/runecrafter/static/media/craft.924d55b5e627cf4bac3d.wav",
@@ -19,6 +19,7 @@
     "static/media/dust_rune.png": "/runecrafter/static/media/dust_rune.d5f0a3a70a7b550648ae.png",
     "static/media/air_rune.png": "/runecrafter/static/media/air_rune.e734e046fb74c3d580ff.png",
     "static/media/hat_of_the_eye.png": "/runecrafter/static/media/hat_of_the_eye.7bc88aeb2a9646b29b2b.png",
+    "static/media/blood_essence.png": "/runecrafter/static/media/blood_essence.bc94684895aa43a988b7.png",
     "static/media/astral_rune.png": "/runecrafter/static/media/astral_rune.72c8fad756773e280ef1.png",
     "static/media/wrath_rune.png": "/runecrafter/static/media/wrath_rune.8b42144f8fe596e1d70a.png",
     "static/media/earth_rune.png": "/runecrafter/static/media/earth_rune.b73df9da45c2bb8c9189.png",
@@ -29,10 +30,12 @@
     "static/media/daeyalt_essence_click.png": "/runecrafter/static/media/daeyalt_essence_click.7ef4f71815791e9e1597.png",
     "static/media/prestige.png": "/runecrafter/static/media/prestige.1de8675860b2cf08c67e.png",
     "static/media/autocraft5.png": "/runecrafter/static/media/autocraft5.f3ca4c55b056ef66f4ce.png",
+    "static/media/ironman.ico": "/runecrafter/static/media/ironman.7ac6a26dc965c2aa372e.ico",
     "static/media/ironman_logo.png": "/runecrafter/static/media/ironman_logo.7ac6a26dc965c2aa372e.png",
     "static/media/eternal_crystal.png": "/runecrafter/static/media/eternal_crystal.58069671c965020684d6.png",
     "static/media/autocraft6.png": "/runecrafter/static/media/autocraft6.098952921a0794cd3d15.png",
     "static/media/pouch3.png": "/runecrafter/static/media/pouch3.22f32347ac66de747b9d.png",
+    "static/media/smashing2.png": "/runecrafter/static/media/smashing2.1842b565671c10536ca0.png",
     "static/media/bottom_of_the_eye.png": "/runecrafter/static/media/bottom_of_the_eye.640fead0ebf644f0fe97.png",
     "static/media/pouch2.png": "/runecrafter/static/media/pouch2.40fdba524b364cda6a5e.png",
     "static/media/pouch4.png": "/runecrafter/static/media/pouch4.530f82810e6cc5746e6b.png",
@@ -48,10 +51,12 @@
     "static/media/automine8.png": "/runecrafter/static/media/automine8.75687be13f11d41aae6e.png",
     "static/media/autocraft4.png": "/runecrafter/static/media/autocraft4.c50c6f667e8253d99f18.png",
     "static/media/binding_necklace.png": "/runecrafter/static/media/binding_necklace.f23ea6abee06047f2e61.png",
+    "static/media/smashing3.png": "/runecrafter/static/media/smashing3.d63f0dbc625e8aef21ea.png",
     "static/media/law_rune.webp": "/runecrafter/static/media/law_rune.48e7c0ee5e5d5f92d7d9.webp",
     "static/media/automine7.png": "/runecrafter/static/media/automine7.b680fbe82a9b8682706f.png",
     "static/media/automineMAX.png": "/runecrafter/static/media/automineMAX.e05303c48448089e1a77.png",
     "static/media/automine3.png": "/runecrafter/static/media/automine3.15be5075a61bfc281982.png",
+    "static/media/smashing1.png": "/runecrafter/static/media/smashing1.12863c74733ae6ece50a.png",
     "static/media/automine6.png": "/runecrafter/static/media/automine6.7037e437213b93114db1.png",
     "static/media/automine4.png": "/runecrafter/static/media/automine4.5c6cf2001ddfa50d76dc.png",
     "static/media/automine2.png": "/runecrafter/static/media/automine2.6bd06ed0dd26f698ae49.png",
@@ -59,12 +64,13 @@
     "static/media/automine1.png": "/runecrafter/static/media/automine1.e7d9de541516cb5d0a19.png",
     "static/media/click.mp3": "/runecrafter/static/media/click.e1e7ced0df9214d6bf1f.mp3",
     "index.html": "/runecrafter/index.html",
-    "main.064f0f48.css.map": "/runecrafter/static/css/main.064f0f48.css.map",
-    "main.6cf6c076.js.map": "/runecrafter/static/js/main.6cf6c076.js.map",
+    "static/media/zmi.ico": "/runecrafter/static/media/zmi.a07d785c883f7fab9068.ico",
+    "main.ba48b8b3.css.map": "/runecrafter/static/css/main.ba48b8b3.css.map",
+    "main.b6343e90.js.map": "/runecrafter/static/js/main.b6343e90.js.map",
     "787.132333bb.chunk.js.map": "/runecrafter/static/js/787.132333bb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.064f0f48.css",
-    "static/js/main.6cf6c076.js"
+    "static/css/main.ba48b8b3.css",
+    "static/js/main.b6343e90.js"
   ]
 }
