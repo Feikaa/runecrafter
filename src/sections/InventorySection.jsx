@@ -36,7 +36,7 @@ export default function InventorySection(props) {
     }
     
     return (
-        <Box className="inventory" height={width > 1110 ? "338px !important" : "50px !important"} top={width > 1110 ? "" : 0} position={width > 1110 ? "fixed" : "absolute"} sx={{fontSize: "25px", textAlign: "right" }}>
+        <Box className="inventory" height={width > 1110 ? "386px !important" : "50px !important"} top={width > 1110 ? "" : 0} position={width > 1110 ? "fixed" : "absolute"} sx={{fontSize: "25px", textAlign: "right" }}>
             {pouch ? <img src={pouchList[pouch - 1]} style={{textAlign: ""}} alt="Essence Pouch" width="48px" height="48px"></img> : ""}
             {pouch ? " x" + extra : ""}
             {width > 1110 ?

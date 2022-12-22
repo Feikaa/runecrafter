@@ -17,15 +17,24 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
+import zmiIcon from "./icons/zmi.ico";
+import ironmanIcon from "./icons/ironman.ico";
 
 function App() {
 
+  const [currentToast, setCurrentToast] = useState([]);
+
   const notify = () => {
-    toast.info("Progress Saved!", {
-      position: toast.POSITION.BOTTOM_CENTER,
-      pauseOnFocusLoss: false,
-      pauseOnHover: false
-    })
+    if (currentToast.length < 1) {
+      const id = toast.success("Progress Saved!", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        autoClose: 2000,
+        onClose: () => {setCurrentToast([]);}
+      });
+      setCurrentToast([id]);
+    }
   }
 
   // Modes
@@ -40,9 +49,9 @@ function App() {
       for (var i = 0; i < JSON.parse(localStorage.getItem("inventory")); i++) {
         inv = [...inv, (<Item item={localStorage.getItem("essenceType")} />)]
       }
-    } else if (mode === "zmi") {
-      for (var i = 0; i < JSON.parse(localStorage.getItem("inventoryZMI")); i++) {
-        inv = [...inv, (<Item item={localStorage.getItem("essenceTypeZMI")} />)]
+    } else {
+      for (var i = 0; i < JSON.parse(localStorage.getItem("inventory" + mode)); i++) {
+        inv = [...inv, (<Item item={localStorage.getItem("essenceType" + mode)} />)]
       }
     }
     return inv || []
@@ -51,8 +60,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("infinv");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("infinvZMI");
+    } else {
+      saved = localStorage.getItem("infinv" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -61,8 +70,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("progress");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("progressZMI");
+    } else {
+      saved = localStorage.getItem("progress" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -71,8 +80,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("lvl");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("lvlZMI");
+    } else {
+      saved = localStorage.getItem("lvl" + mode);
     }
     const value = JSON.parse(saved);
     return value || 1
@@ -81,8 +90,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("prestige");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("prestigeZMI");
+    } else {
+      saved = localStorage.getItem("prestige" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -91,19 +100,36 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("xp");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("xpZMI");
+    } else {
+      saved = localStorage.getItem("xp" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
   });
+  const [totalxp, setTotalxp] = useState(() => {
+    var saved;
+    if (mode === "normal") {
+      saved = localStorage.getItem("totalxp");
+    } else {
+      saved = localStorage.getItem("totalxp" + mode);
+    }
+    const value = JSON.parse(saved);
+    return value || 0;
+  })
+  const [nextxp, setNextxp] = useState(() => {
+    var sum = 0;
+    for (var i = 1; i < lvl+1; i++) {
+        sum += Math.floor(i + 300 * Math.pow(2, i/7));
+    }
+    return sum
+  })
 
   const [air, setAir] = useState(() => {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("air");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("airZMI");
+    } else {
+      saved = localStorage.getItem("air" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -112,8 +138,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("earth");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("earthZMI");
+    } else {
+      saved = localStorage.getItem("earth" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -122,8 +148,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("water");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("waterZMI");
+    } else {
+      saved = localStorage.getItem("water" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -132,8 +158,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("fire");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("fireZMI");
+    } else {
+      saved = localStorage.getItem("fire" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -142,8 +168,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("astral");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("astralZMI");
+    } else {
+      saved = localStorage.getItem("astral" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -152,8 +178,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("law");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("lawZMI");
+    } else {
+      saved = localStorage.getItem("law" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -162,8 +188,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("blood");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("bloodZMI");
+    } else {
+      saved = localStorage.getItem("blood" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -172,8 +198,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("wrath");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("wrathZMI");
+    } else {
+      saved = localStorage.getItem("wrath" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -183,8 +209,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("elemental");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("elementalZMI");
+    } else {
+      saved = localStorage.getItem("elemental" + mode);
     }
     const value = JSON.parse(saved)
     return value || 0
@@ -193,8 +219,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("catalytic");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("catalyticZMI");
+    } else {
+      saved = localStorage.getItem("catalytic" + mode);
     }
     const value = JSON.parse(saved)
     return value || 0
@@ -205,8 +231,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("extra");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("extraZMI");
+    } else {
+      saved = localStorage.getItem("extra" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -216,8 +242,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("autoclick");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("autoclickZMI");
+    } else {
+      saved = localStorage.getItem("autoclick" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -228,6 +254,8 @@ function App() {
       saved = localStorage.getItem("autoaltar");
     } else if (mode === "zmi") {
       saved = 0;
+    } else {
+      saved = localStorage.getItem("autoaltar" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -236,8 +264,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("pouch");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("pouchZMI");
+    } else {
+      saved = localStorage.getItem("pouch" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -246,8 +274,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("essenceType");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("essenceTypeZMI");
+    } else {
+      saved = localStorage.getItem("essenceType" + mode);
     }
     return saved || "rune_essence"
   });
@@ -255,8 +283,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("daeyalt");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("daeyaltZMI");
+    } else {
+      saved = localStorage.getItem("daeyalt" + mode);
     }
     const value = JSON.parse(saved);
     return value === true
@@ -265,8 +293,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("dark");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("darkZMI");
+    } else {
+      saved = localStorage.getItem("dark" + mode);
     }
     const value = JSON.parse(saved);
     return value === true
@@ -276,8 +304,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("hat");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("hatZMI");
+    } else {
+      saved = localStorage.getItem("hat" + mode);
     }
     const value = JSON.parse(saved);
     return value === true
@@ -286,8 +314,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("top");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("topZMI");
+    } else {
+      saved = localStorage.getItem("top" + mode);
     }
     const value = JSON.parse(saved);
     return value === true
@@ -296,8 +324,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("bottom");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("bottomZMI");
+    } else {
+      saved = localStorage.getItem("bottom" + mode);
     }
     const value = JSON.parse(saved);
     return value === true
@@ -306,11 +334,21 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("boots");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("bootsZMI");
+    } else {
+      saved = localStorage.getItem("boots" + mode);
     }
     const value = JSON.parse(saved);
     return value === true
+  })
+  const [bloodEssence, setBloodEssence] = useState(() => {
+    var saved;
+    if (mode === "normal") {
+      saved = localStorage.getItem("bloodEssence");
+    } else {
+      saved = localStorage.getItem("bloodEssence" + mode);
+    }
+    const value = JSON.parse(saved);
+    return value === true;
   })
   const [ouraniaAltar, setOuraniaAltar] = useState(() => {
     var saved;
@@ -318,6 +356,8 @@ function App() {
       saved = localStorage.getItem("ouraniaAltar");
     } else if (mode === "zmi") {
       saved = true;
+    } else {
+      saved = localStorage.getItem("ouraniaAltar" + mode);
     }
     const value = JSON.parse(saved);
     return value === true
@@ -330,16 +370,28 @@ function App() {
       saved = localStorage.getItem("combination");
     } else if (mode === "zmi") {
       saved = false;
+    } else {
+      saved = localStorage.getItem("combination" + mode);
     }
     const value = JSON.parse(saved);
     return value === true
+  })
+  const [smashing, setSmashing] = useState(() => {
+    var saved;
+    if (mode === "normal") {
+      saved = localStorage.getItem("smashing");
+    } else {
+      saved = localStorage.getItem("smashing" + mode);
+    }
+    const value = JSON.parse(saved);
+    return value || 0
   })
   const [primordial, setPrimordial] = useState(() => {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("primordial");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("primordialZMI");
+    } else {
+      saved = localStorage.getItem("primordial" + mode);
     }
     const value = JSON.parse(saved);
     return value === true
@@ -348,8 +400,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("pegasian");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("pegasianZMI");
+    } else {
+      saved = localStorage.getItem("pegasian" + mode);
     }
     const value = JSON.parse(saved);
     return value === true
@@ -358,8 +410,8 @@ function App() {
     var saved;
     if (mode === "normal") {
       saved = localStorage.getItem("eternal");
-    } else if (mode === "zmi") {
-      saved = localStorage.getItem("eternalZMI");
+    } else {
+      saved = localStorage.getItem("eternal" + mode);
     }
     const value = JSON.parse(saved);
     return value === true
@@ -391,91 +443,62 @@ const theme = createTheme({
   }
 })
 
-  function save() {
-    localStorage.setItem("inventory", inventory.length);
-    localStorage.setItem("infinv", JSON.stringify(infinv));
-    localStorage.setItem("progress", JSON.stringify(progress));
-    localStorage.setItem("lvl", JSON.stringify(lvl));
-    localStorage.setItem("prestige", JSON.stringify(prestige));
-    localStorage.setItem("xp", JSON.stringify(xp));
+  function save(currentMode) {
+    localStorage.setItem("inventory" + currentMode, inventory.length);
+    localStorage.setItem("infinv" + currentMode, JSON.stringify(infinv));
+    localStorage.setItem("progress" + currentMode, JSON.stringify(progress));
+    localStorage.setItem("lvl" + currentMode, JSON.stringify(lvl));
+    localStorage.setItem("prestige" + currentMode, JSON.stringify(prestige));
+    localStorage.setItem("xp" + currentMode, JSON.stringify(xp));
+    localStorage.setItem("totalxp" + currentMode, JSON.stringify(totalxp));
 
-    localStorage.setItem("air", JSON.stringify(air));
-    localStorage.setItem("earth", JSON.stringify(earth));
-    localStorage.setItem("water", JSON.stringify(water));
-    localStorage.setItem("fire", JSON.stringify(fire));
-    localStorage.setItem("astral", JSON.stringify(astral));
-    localStorage.setItem("law", JSON.stringify(law));
-    localStorage.setItem("blood", JSON.stringify(blood));
-    localStorage.setItem("wrath", JSON.stringify(wrath));
+    localStorage.setItem("air" + currentMode, JSON.stringify(air));
+    localStorage.setItem("earth" + currentMode, JSON.stringify(earth));
+    localStorage.setItem("water" + currentMode, JSON.stringify(water));
+    localStorage.setItem("fire" + currentMode, JSON.stringify(fire));
+    localStorage.setItem("astral" + currentMode, JSON.stringify(astral));
+    localStorage.setItem("law" + currentMode, JSON.stringify(law));
+    localStorage.setItem("blood" + currentMode, JSON.stringify(blood));
+    localStorage.setItem("wrath" + currentMode, JSON.stringify(wrath));
 
-    localStorage.setItem("elemental", JSON.stringify(elemental));
-    localStorage.setItem("catalytic", JSON.stringify(catalytic));
+    localStorage.setItem("elemental" + currentMode, JSON.stringify(elemental));
+    localStorage.setItem("catalytic" + currentMode, JSON.stringify(catalytic));
 
-    localStorage.setItem("extra", JSON.stringify(extra));
+    localStorage.setItem("extra" + currentMode, JSON.stringify(extra));
 
-    localStorage.setItem("autoclick", JSON.stringify(autoclick));
-    localStorage.setItem("autoaltar", JSON.stringify(autoaltar));
-    localStorage.setItem("pouch", JSON.stringify(pouch));
-    localStorage.setItem("hat", JSON.stringify(hat));
-    localStorage.setItem("top", JSON.stringify(top));
-    localStorage.setItem("bottom", JSON.stringify(bottom));
-    localStorage.setItem("boots", JSON.stringify(boots));
-    localStorage.setItem("ouraniaaltar", JSON.stringify(ouraniaAltar));
+    localStorage.setItem("autoclick" + currentMode, JSON.stringify(autoclick));
+    localStorage.setItem("pouch" + currentMode, JSON.stringify(pouch));
+    localStorage.setItem("hat" + currentMode, JSON.stringify(hat));
+    localStorage.setItem("top" + currentMode, JSON.stringify(top));
+    localStorage.setItem("bottom" + currentMode, JSON.stringify(bottom));
+    localStorage.setItem("boots" + currentMode, JSON.stringify(boots));
+    localStorage.setItem("bloodEssence" + currentMode, JSON.stringify(bloodEssence));
 
     localStorage.setItem("mode", mode);
 
-    localStorage.setItem("combination", JSON.stringify(combination));
-    localStorage.setItem("primordial", JSON.stringify(primordial));
-    localStorage.setItem("pegasian", JSON.stringify(pegasian));
-    localStorage.setItem("eternal", JSON.stringify(eternal));
+    localStorage.setItem("smashing" + currentMode, JSON.stringify(smashing));
+    localStorage.setItem("primordial" + currentMode, JSON.stringify(primordial));
+    localStorage.setItem("pegasian" + currentMode, JSON.stringify(pegasian));
+    localStorage.setItem("eternal" + currentMode, JSON.stringify(eternal));
 
-    localStorage.setItem("essenceType", essenceType);
-    localStorage.setItem("daeyalt", daeyalt);
-    localStorage.setItem("dark", dark);
+    localStorage.setItem("essenceType" + currentMode, essenceType);
+    localStorage.setItem("daeyalt" + currentMode, daeyalt);
+    localStorage.setItem("dark" + currentMode, dark);
+
+    if (currentMode !== "zmi") {
+      localStorage.setItem("autoaltar" + currentMode, JSON.stringify(autoaltar));
+      localStorage.setItem("ouraniaaltar" + currentMode, JSON.stringify(ouraniaAltar));
+      localStorage.setItem("combination" + currentMode, JSON.stringify(combination));
+    }
 
     notify();
   }
 
-  function saveZMI() {
-    localStorage.setItem("inventoryZMI", inventory.length);
-    localStorage.setItem("infinvZMI", JSON.stringify(infinv));
-    localStorage.setItem("progressZMI", JSON.stringify(progress));
-    localStorage.setItem("lvlZMI", JSON.stringify(lvl));
-    localStorage.setItem("prestigeZMI", JSON.stringify(prestige));
-    localStorage.setItem("xpZMI", JSON.stringify(xp));
-
-    localStorage.setItem("airZMI", JSON.stringify(air));
-    localStorage.setItem("earthZMI", JSON.stringify(earth));
-    localStorage.setItem("waterZMI", JSON.stringify(water));
-    localStorage.setItem("fireZMI", JSON.stringify(fire));
-    localStorage.setItem("astralZMI", JSON.stringify(astral));
-    localStorage.setItem("lawZMI", JSON.stringify(law));
-    localStorage.setItem("bloodZMI", JSON.stringify(blood));
-    localStorage.setItem("wrathZMI", JSON.stringify(wrath));
-
-    localStorage.setItem("elementalZMI", JSON.stringify(elemental));
-    localStorage.setItem("catalyticZMI", JSON.stringify(catalytic));
-
-    localStorage.setItem("extraZMI", JSON.stringify(extra));
-
-    localStorage.setItem("autoclickZMI", JSON.stringify(autoclick));
-    localStorage.setItem("pouchZMI", JSON.stringify(pouch));
-    localStorage.setItem("hatZMI", JSON.stringify(hat));
-    localStorage.setItem("topZMI", JSON.stringify(top));
-    localStorage.setItem("bottomZMI", JSON.stringify(bottom));
-    localStorage.setItem("bootsZMI", JSON.stringify(boots));
-
-    localStorage.setItem("mode", mode);
-
-    localStorage.setItem("primordialZMI", JSON.stringify(primordial));
-    localStorage.setItem("pegasianZMI", JSON.stringify(pegasian));
-    localStorage.setItem("eternalZMI", JSON.stringify(eternal));
-
-    localStorage.setItem("essenceTypeZMI", essenceType);
-    localStorage.setItem("daeyaltZMI", daeyalt);
-    localStorage.setItem("darkZMI", dark);
-
-    notify();
+  const favicon = document.getElementById("favicon");
+  if (mode === "zmi") {
+    favicon.href = zmiIcon;
+  } else if (mode === "ironman") {
+    favicon.href = ironmanIcon;
   }
 
   const handleRadioChange = (event) => {
@@ -487,21 +510,21 @@ const theme = createTheme({
   // Saving progress
   useInterval(() => {
     if (mode === "normal") {
-      save();
-    } else if (mode === "zmi") {
-      saveZMI();
+      save("");
+    } else {
+      save(mode);
     }
   }, 60000);
 
   return (
     <ThemeProvider theme={theme}>
     <div className="App">
-      <ToastContainer />
+    <ToastContainer />
       <Button onClick={() => {
         if (mode === "normal") {
-          save();
-        } else if (mode === "zmi") {
-          saveZMI();
+          save("");
+        } else {
+          save(mode);
         }
       }} sx={{position: "fixed", left: "20px", top: "2px", color: "#B03904"}}>Save</Button>
       <IconButton sx={{ position: "fixed", left: "80px", color: "#B03904"}} component="label" onClick={() => {
@@ -526,7 +549,7 @@ const theme = createTheme({
         <Dialog
         open={open}
         onClose={handleClose}>
-            <DialogTitle>
+            <DialogTitle color="red">
                 {"Reset ALL progress?"}
             </DialogTitle>
             <DialogContent>
@@ -535,23 +558,25 @@ const theme = createTheme({
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose} sx={{color: "white"}}>No</Button>
+                <Button onClick={handleClose} sx={{color: "red"}}>No</Button>
                 <Button onClick={() => {
                     localStorage.clear();
                     window.location.reload(false);
-                }} autoFocus sx={{color: "white"}}>Yes</Button>
+                }} autoFocus sx={{color: "green"}}>Yes</Button>
             </DialogActions>
         </Dialog>
       <TitleSection mode={mode}/>
       <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-      {lvl >= 99 || prestige >= 1 ? <PrestigeSection prestige={prestige} lvl={lvl} elemental={elemental} catalytic={catalytic} setElemental={setElemental} setCatalytic={setCatalytic}
+      {(mode !== "ironman" && (air + earth + water + fire >= 10000 || astral + law + blood + wrath >= 10000 || prestige >= 1)) ? <PrestigeSection prestige={prestige} lvl={lvl} elemental={elemental} catalytic={catalytic} setElemental={setElemental} setCatalytic={setCatalytic}
                                                      air={air} earth={earth} water={water} fire={fire} astral={astral} law={law} blood={blood} wrath={wrath}
                                                      mode={mode} setMode={setMode}
                                                      combination={combination} setCombination={setCombination}
+                                                     autoclick={autoclick}
+                                                     smashing={smashing} setSmashing={setSmashing}
                                                      primordial={primordial} setPrimordial={setPrimordial}
                                                      pegasian={pegasian} setPegasian={setPegasian}
                                                      eternal={eternal} setEternal={setEternal} setEssenceType={setEssenceType}/> : ""}
-      {(prestige < 1 && mode === "normal") ? "" : <ModeSection lvl={lvl} prestige={prestige} mode={mode}></ModeSection> }
+      {<ModeSection lvl={lvl} prestige={prestige} mode={mode} air={air} earth={earth} water={water} fire={fire} astral={astral} law={law} blood={blood} wrath={wrath}></ModeSection> }
       <UpgradesSection lvl={lvl} prestige={prestige} air={air} setAir={setAir} earth={earth} setEarth={setEarth} water={water} setWater={setWater} fire={fire} setFire={setFire} astral={astral} setAstral={setAstral}
                        law={law} setLaw={setLaw} blood={blood} setBlood={setBlood} wrath={wrath} setWrath={setWrath}
                        autoclick={autoclick} setAutoclick={setAutoclick}
@@ -566,16 +591,17 @@ const theme = createTheme({
                        ouraniaAltar={ouraniaAltar} setOuraniaAltar={setOuraniaAltar} mode={mode}/>
       {autoaltar ? <ChooseSection runename={runename} setRunename={setRunename} autoaltar={autoaltar} ouraniaAltar={ouraniaAltar}/> : ""}
       </Grid>
-      <XPSection progress={progress} lvl={lvl} xp={xp} prestige={prestige}/>
+      <XPSection progress={progress} lvl={lvl} xp={xp} prestige={prestige} totalxp={totalxp} nextxp={nextxp} setNextxp={setNextxp}/>
       <RunesSection prestige={prestige} air={air} earth={earth} water={water} fire={fire} astral={astral} law={law} blood={blood} wrath={wrath} 
                     elemental={elemental} catalytic={catalytic}
                     bonus={bonus} hat={hat} top={top} bottom={bottom} boots={boots}/>
-      <ClickSection mute={mute} inventory={inventory} setInventory={setInventory} autoclick={autoclick} pouch={pouch} extra={extra} setExtra={setExtra} essenceType={essenceType}
+      <ClickSection mute={mute} inventory={inventory} setInventory={setInventory} autoclick={autoclick} smashing={smashing} pouch={pouch} extra={extra} setExtra={setExtra} essenceType={essenceType}
                     eternal={eternal} infinv={infinv} setInfinv={setInfinv} primordial={primordial} pegasian={pegasian}
                     air={air} setAir={setAir} earth={earth} setEarth={setEarth} water={water} setWater={setWater} fire={fire} setFire={setFire} astral={astral} setAstral={setAstral}
                     law={law} setLaw={setLaw} blood={blood} setBlood={setBlood} wrath={wrath} setWrath={setWrath}
                     bonus={bonus}/>
-      <RunecraftSection mute={mute} lvl={lvl} setLvl={setLvl} inventory={inventory} setInventory={setInventory} xp={xp} setXp={setXp} progress={progress} setProgress={setProgress}
+      <RunecraftSection mute={mute} lvl={lvl} setLvl={setLvl} prestige={prestige} inventory={inventory} setInventory={setInventory} xp={xp} setXp={setXp} totalxp={totalxp} setTotalxp={setTotalxp} 
+                        progress={progress} setProgress={setProgress}
                         air={air} setAir={setAir} earth={earth} setEarth={setEarth} water={water} setWater={setWater} fire={fire} setFire={setFire} astral={astral} setAstral={setAstral}
                         law={law} setLaw={setLaw} blood={blood} setBlood={setBlood} wrath={wrath} setWrath={setWrath}
                         autoaltar={autoaltar} runename={runename}

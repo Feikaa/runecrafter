@@ -2,7 +2,7 @@ import * as React from 'react';
 import "../styles/TitleSection.scss";
 import { Box, Tooltip, Typography } from "@mui/material";
 import normalMode from "../icons/normal_mode.png";
-import zmiAltar from "../icons/ourania_altar.png";
+import zmiAltar from "../icons/ourania_icon.png";
 import ironLogo from "../icons/ironman_logo.png";
 
 export default function TitleSection(props) {

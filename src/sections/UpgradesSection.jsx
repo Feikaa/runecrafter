@@ -37,6 +37,7 @@ import eyeTop from "../icons/top_of_the_eye.png";
 import eyeBottom from "../icons/bottom_of_the_eye.png";
 import eyeBoots from "../icons/boots_of_the_eye.png";
 import daeyaltEssence from "../icons/daeyalt_essence.png";
+import bloodBoost from "../icons/blood_essence.png";
 import darkEssence from "../icons/dark_essence.webp";
 import zmiAltar from "../icons/ourania_altar.png";
 
@@ -102,6 +103,9 @@ export default function UpgradesSection(props) {
     const setInventory = props.setInventory;
     const setExtra = props.setExtra;
 
+    const bloodEssence = props.bloodEssence;
+    const setBloodEssence = props.setBloodEssence;
+
     const ouraniaAltar = props.ouraniaAltar;
     const setOuraniaAltar = props.setOuraniaAltar;
 
@@ -149,7 +153,7 @@ export default function UpgradesSection(props) {
           <List>
             <Tooltip title={
               <React.Fragment>
-                {autoclick < 8 ? <Typography>Auto mines {Math.round(1 / (Math.round((1 / (autoclick + 1)) * 100) / 100))} essence every second.</Typography> : <Typography>Upgrade MAX.</Typography>} 
+                {autoclick < 8 ? <Typography>Auto mines {Math.round(1 / (Math.round((1 / (autoclick + 1)) * 100) / 100))} essence every second.</Typography> : <Typography>Upgrade MAXED.</Typography>} 
               </React.Fragment>} arrow placement="right">
               <span style={{width: "250px", display: "block"}}>
             <Button key={"auto click"} sx={{border: 1, color: "green"}} disabled={autoclick === 8 ? true : 
@@ -193,7 +197,7 @@ export default function UpgradesSection(props) {
               }
               setAutoclick(autoclick + 1);
             }}>
-              Essence Miner&nbsp; {autoclick < 3 ? "I".repeat(autoclick + 1) : autoclick === 3 ? "IV" : autoclick < 8 ? "V" + "I".repeat(autoclick - 4) : "MAXED"} <img src={pickList[autoclick]} alt="Pic" height="32px" width="32px"></img>
+              Essence Miner&nbsp; {autoclick < 3 ? "I".repeat(autoclick + 1) : autoclick === 3 ? "IV" : autoclick < 8 ? "V" + "I".repeat(autoclick - 4) : "MAX"} <img src={pickList[autoclick]} alt="Pic" height="32px" width="32px"></img>
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
               {
               // Level 1
@@ -345,7 +349,7 @@ export default function UpgradesSection(props) {
             { mode === "zmi" ?
             <Tooltip title={
               <React.Fragment>
-                {autoaltar < 1 ? <Typography>Allows autocrafting runes when your inventory is full.</Typography> : <Typography>Upgrade MAX.</Typography>}
+                {autoaltar < 1 ? <Typography>Allows autocrafting runes when your inventory is full.</Typography> : <Typography>Upgrade MAXED.</Typography>}
               </React.Fragment>} arrow placement="right">
               <span style={{width: "250px", display: "block"}}>
             <Button key={"auto altar"} sx={{border: 1, color: "green", height: "163.5px", width: "250px"}} disabled={autoaltar ? true : air < 500 ? true : earth < 500 ? true :
@@ -407,7 +411,7 @@ export default function UpgradesSection(props) {
             :
             <Tooltip title={
             <React.Fragment>
-                {autoaltar < 8 ? <Typography>Allows autocrafting {nextRune[autoaltar]} runes when your inventory is full.</Typography> : <Typography>Upgrade MAX.</Typography>}
+                {autoaltar < 8 ? <Typography>Allows autocrafting {nextRune[autoaltar]} runes when your inventory is full.</Typography> : <Typography>Upgrade MAXED.</Typography>}
               </React.Fragment>} arrow placement="right">
               <span style={{width: "250px", display: "block"}}>
             <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={autoaltar === 8 ? true : 
@@ -438,7 +442,7 @@ export default function UpgradesSection(props) {
               }
               setAutoaltar(autoaltar + 1);
             }}>
-              Talisman Mysteries&nbsp; {autoaltar < 3 ? "I".repeat(autoaltar + 1) : autoaltar === 3 ? "IV" : autoaltar < 8 ? "V" + "I".repeat(autoaltar - 4) : "MAXED" }<img src={talismanList[autoaltar]} alt="Catalytic Talisman" height="32px" width="32px"></img>
+              Talisman Mysteries&nbsp; {autoaltar < 3 ? "I".repeat(autoaltar + 1) : autoaltar === 3 ? "IV" : autoaltar < 8 ? "V" + "I".repeat(autoaltar - 4) : "MAX" }<img src={talismanList[autoaltar]} alt="Catalytic Talisman" height="32px" width="32px"></img>
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
               {
               // Level 1
@@ -525,7 +529,7 @@ export default function UpgradesSection(props) {
 
             <Tooltip title={
             <React.Fragment>
-                {pouch < 5 ? <Typography>Holds +{nextPouch[pouch]} essence.</Typography> : <Typography>Upgrade MAX.</Typography>}
+                {pouch < 5 ? <Typography>Holds +{nextPouch[pouch]} essence.</Typography> : <Typography>Upgrade MAXED.</Typography>}
               </React.Fragment>} arrow placement="right">
               <span style={{width: "250px", display: "block"}}>
             <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={pouch === 5 ? true : 
@@ -552,7 +556,7 @@ export default function UpgradesSection(props) {
               }
               setPouch(pouch + 1);
             }}>
-              {pouch === 0 ? "Small" : pouch === 1 ? "Medium" : pouch === 2 ? "Large" : pouch === 3 ? "Giant" : pouch === 4 ? "Collosal" : "MAXED"} Pouch <img src={pouchList[pouch]} alt="Pouch" height="32px" width="32px"></img>
+              {pouch === 0 ? "Small" : pouch === 1 ? "Medium" : pouch === 2 ? "Large" : pouch === 3 ? "Giant" : pouch === 4 ? "Collosal" : "MAX"} Pouch&nbsp; <img src={pouchList[pouch]} alt="Pouch" height="32px" width="32px"></img>
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
                 {
                   // Level 1
@@ -805,6 +809,35 @@ export default function UpgradesSection(props) {
 
             <Tooltip title={
             <React.Fragment>
+                <Typography>Gain 50% more blood runes when crafting blood runes (also affects xp).</Typography>
+              </React.Fragment>} arrow placement="right">
+              <span style={{width: "250px", display: "block"}}>
+            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "109px", width: "250px"}} disabled={daeyalt ? true : water < 1000 ? true : blood < 2000 ? true : false} onClick={() => {
+              setWater(water - 1000);
+              setBlood(blood - 2000);
+              setBloodEssence(true);
+            }}>
+              Blood Essence <img src={bloodBoost} alt="Blood essence" height="32px" width="32px"></img>
+              <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
+
+              <Box sx={{border: 1, width: "39px", color: daeyalt ? "black" : water >= 1000 ? "green" : "red"}}>
+                <img src={waterRune} alt="Water Rune Amount"></img>
+                1000
+              </Box>
+
+              <Box sx={{border: 1, width: "39px", color: daeyalt ? "black" : blood >= 1000 ? "green" : "red"}}>
+                <img src={bloodRune} alt="Blood Rune Amount"></img>
+                2000
+              </Box>
+              </Grid>
+            </Button>
+            </span>
+            </Tooltip>
+
+            <br></br>
+
+            <Tooltip title={
+            <React.Fragment>
                 <Typography>Gives 100% extra experience per essence.</Typography>
                 <Typography sx={{color: "red"}}>WARNING: WILL EMPTY YOUR INVENTORY AND POUCH</Typography>
               </React.Fragment>} arrow placement="right">
@@ -941,7 +974,7 @@ export default function UpgradesSection(props) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box sx={{paddingBottom: "15px", mx: "auto", marginRight: autoaltar ? "0.5%" : "auto", marginLeft: lvl >= 99 ? "0.5%" : prestige >= 1 ? "0.5%" : mode !== "normal" ? "0.5%" : "auto"}}>
+            <Box sx={{paddingBottom: "15px", mx: "auto", marginRight: autoaltar ? "0.5%" : "auto", marginLeft: "0.5%"}}>
                 <Button variant="contained" color="upgrade" onClick={toggleDrawer(true)}>Upgrades</Button>
                 <SwipeableDrawer
                 anchor="left"

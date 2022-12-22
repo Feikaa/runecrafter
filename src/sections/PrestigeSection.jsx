@@ -5,6 +5,9 @@ import Prestige from "../icons/prestige.png";
 import zmiAltar from "../icons/ourania_altar.png";
 import ironLogo from "../icons/ironman_logo.png";
 import bindingNecklace from "../icons/binding_necklace.png";
+import Smashing1 from "../icons/smashing1.png";
+import Smashing2 from "../icons/smashing2.png";
+import Smashing3 from "../icons/smashing3.png";
 import elementalStone from "../icons/elemental_stone_small.png";
 import catalyticStone from "../icons/catalytic_stone_small.png";
 import primordialCrystal from "../icons/primordial_crystal.png";
@@ -36,6 +39,9 @@ export default function PrestigeSection(props) {
 
     const combination = props.combination;
     const setCombination = props.setCombination;
+    const autoclick = props.autoclick;
+    const smashing = props.smashing;
+    const setSmashing = props.setSmashing;
     const primordial = props.primordial;
     const setPrimordial = props.setPrimordial;
     const pegasian = props.pegasian;
@@ -109,14 +115,14 @@ export default function PrestigeSection(props) {
           role="presentation"
         >
             <List>
-                {
-                lvl >= 99 ?
                 <Tooltip title={
                     <React.Fragment>
-                        <Typography>Reset back to Lvl 1, converting all your runes into <font color="aqua">elemental</font> and <font color="yellow">catalytic</font> stones.</Typography>
+                        {(air + earth + water + fire >= 10000 || astral + law + blood + wrath >= 10000) ? <Typography>Reset back to Lvl 1, converting all your runes into <font color="aqua">elemental</font> and <font color="yellow">catalytic</font> stones.</Typography>
+                        :
+                        <Typography>You need at least 10k <font color="aqua">elemental</font> or <font color="yellow">catalytic</font> runes.</Typography>}
                         </React.Fragment>} arrow placement="right">
                         <span style={{width: "250px", display: "block"}}>
-                    <Button sx={{border: 2, color: "gold", height: "80px", width: "250px", backgroundColor: "#151111"}} onClick={handleClickOpen}>
+                    <Button sx={{border: 2, color: "gold", height: "80px", width: "250px", backgroundColor: "#151111"}} disabled={(air + earth + water + fire >= 10000 || astral + law + blood + wrath >= 10000) ? false : true} onClick={handleClickOpen}>
                         <b>Prestige</b>&nbsp; <img src={Prestige} alt="Prestige" height="62px" width="32px"></img>
                     </Button>
                     <Dialog
@@ -127,28 +133,25 @@ export default function PrestigeSection(props) {
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText color="white">
-                                You will reset all your progress. All your runes will turn into <font color="aqua">elemental</font> and <font color="yellow">catalytic</font> guardian stones.
+                                You will reset all your progress. For every 10k <font color="aqua">elemental</font>/<font color="yellow">catalytic</font> runes, you will get 1 <font color="aqua">elemental</font>/<font color="yellow">catalytic</font> guardian stones.
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleClose} sx={{color: "white"}}>No</Button>
                             <Button onClick={() => {
                                 var save = prestige;
-                                var newElem = elemental + air + earth + water + fire;
-                                var newCata = catalytic + astral + law + blood + wrath;
+                                var newElem = Math.round((air + earth + water + fire) / 10000);
+                                var newCata = Math.round((astral + law + blood + wrath) / 10000);
                                 window.localStorage.clear();
                                 localStorage.setItem("prestige", save + 1);
-                                localStorage.setItem("elemental", newElem);
-                                localStorage.setItem("catalytic", newCata);
+                                localStorage.setItem("elemental", elemental + newElem);
+                                localStorage.setItem("catalytic", catalytic + newCata);
                                 window.location.reload(false);
                             }} autoFocus sx={{color: "white"}}>Yes</Button>
                         </DialogActions>
                     </Dialog>
                     </span>
                     </Tooltip>
-                :                       
-                ""
-                }
 
                 {
                 prestige > 0 ?
@@ -162,15 +165,21 @@ export default function PrestigeSection(props) {
                         <Typography>Allows you to runecraft two elemental runes from one essence, granting their combined XP. </Typography>
                         </React.Fragment>} arrow placement="right">
                         <span style={{width: "250px", display: "block"}}>
-                    <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={combination ? true : elemental < 100000 ? true : false} onClick={() => {
-                        setElemental(elemental - 100000);
+                    <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={combination ? true : elemental < 1 ? true : catalytic < 1 ? true : false} onClick={() => {
+                        setElemental(elemental - 1);
+                        setCatalytic(catalytic - 1);
                         setCombination(true);
                     }}>
                         Binding Necklace&nbsp; <img src={bindingNecklace} alt="Binding Necklace" height="32px" width="32px"></img>
                         <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-                        <Box sx={{border: 1, width: "39px", color: combination ? "black" : elemental >= 100000 ? "green" : "red"}} width="55px">
+                        <Box sx={{border: 1, width: "39px", color: combination ? "black" : elemental >= 1 ? "green" : "red"}} width="55px">
                         <img src={elementalStone} alt="Elemental stone Amount"></img>
-                        100k
+                        <br></br>1
+                        </Box>
+
+                        <Box sx={{border: 1, width: "39px", color: combination ? "black" : catalytic >= 1 ? "green" : "red"}}>
+                        <img src={catalyticStone} alt="Catalytic stone Amount" width="25px" height="27px"></img>
+                        <br></br>1
                         </Box>
                         </Grid>
                     </Button>
@@ -181,24 +190,67 @@ export default function PrestigeSection(props) {
 
                 <Tooltip title={
                     <React.Fragment>
+                        {autoclick < 8 ? <Typography>Requires Essence Miner MAX.</Typography> : smashing < 3 ? <Typography>Auto mines {10 * (smashing + 1)} essence every second.</Typography> : <Typography>Upgrade MAXED.</Typography>}
+                        </React.Fragment>} arrow placement="right">
+                        <span style={{width: "250px", display: "block"}}>
+                    <Button key={"auto click prestige"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={autoclick < 8 ? true : smashing === 3 ? true :
+                    smashing === 0 ? (elemental < 1 ? true : catalytic < 2 ? true : false) :
+                    smashing === 1 ? (elemental < 2 ? true : catalytic < 3 ? true : false) :
+                    (elemental < 3 ? true : catalytic < 4 ? true : false)} onClick={() => {
+                        if (smashing === 0) {
+                            setElemental(elemental - 1);
+                            setCatalytic(catalytic - 2);
+                        } else if (smashing === 1) {
+                            setElemental(elemental - 2);
+                            setCatalytic(catalytic - 3);
+                        } else if (smashing === 3) {
+                            setElemental(elemental - 3);
+                            setCatalytic(catalytic - 4);
+                        }
+                        setSmashing(smashing + 1);
+                    }}>
+                        Smashing{smashing < 3 ? "!".repeat(smashing + 1) : " MAX"}&nbsp; <img src={Smashing1} alt="Smashing" height="32px" width="32px"></img>
+                        <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
+                        {smashing < 3 ?
+                        <React.Fragment>
+                            <Box sx={{border: 1, width: "39px", color: smashing === 3 ? "black" : elemental >= 1 ? "green" : "red"}} width="55px">
+                            <img src={elementalStone} alt="Elemental stone Amount"></img>
+                            <br></br>{1 + smashing}
+                            </Box>
+
+                            <Box sx={{border: 1, width: "39px", color: smashing === 3 ? "black" : catalytic >= 2 ? "green" : "red"}}>
+                            <img src={catalyticStone} alt="Catalytic stone Amount" width="25px" height="27px"></img>
+                            <br></br>{2 + smashing}
+                            </Box>
+                        </React.Fragment>
+                        : ""}
+                        </Grid>
+                    </Button>
+                    </span>
+                </Tooltip>
+                
+                <br></br>
+
+                <Tooltip title={
+                    <React.Fragment>
                         <Typography>Grants 2 essence per click.</Typography>
                         </React.Fragment>} arrow placement="right">
                         <span style={{width: "250px", display: "block"}}>
-                    <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={primordial ? true : elemental < 50000 ? true : catalytic < 100000 ? true : false} onClick={() => {
-                        setElemental(elemental - 50000);
-                        setCatalytic(catalytic - 100000);
+                    <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={primordial ? true : elemental < 1 ? true : catalytic < 2 ? true : false} onClick={() => {
+                        setElemental(elemental - 1);
+                        setCatalytic(catalytic - 2);
                         setPrimordial(true);
                     }}>
                         Primordial Crystal <img src={primordialCrystal} alt="Primordial Crystal" height="32px" width="32px"></img>
                         <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-                        <Box sx={{border: 1, width: "39px", color: primordial ? "black" : elemental >= 50000 ? "green" : "red"}} width="55px">
+                        <Box sx={{border: 1, width: "39px", color: primordial ? "black" : elemental >= 1 ? "green" : "red"}} width="55px">
                         <img src={elementalStone} alt="Elemental stone Amount"></img>
-                        50k
+                        <br></br>1
                         </Box>
 
-                        <Box sx={{border: 1, width: "39px", color: primordial ? "black" : catalytic >= 100000 ? "green" : "red"}}>
+                        <Box sx={{border: 1, width: "39px", color: primordial ? "black" : catalytic >= 2 ? "green" : "red"}}>
                         <img src={catalyticStone} alt="Catalytic stone Amount" width="25px" height="27px"></img>
-                        100k
+                        <br></br>2
                         </Box>
                         </Grid>
                     </Button>
@@ -212,21 +264,21 @@ export default function PrestigeSection(props) {
                         <Typography>Grants a random rune every time an essence is mined.</Typography>
                         </React.Fragment>} arrow placement="right">
                         <span style={{width: "250px", display: "block"}}>
-                    <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={pegasian ? true : elemental < 100000 ? true : catalytic < 50000 ? true : false} onClick={() => {
-                        setElemental(elemental - 100000);
-                        setCatalytic(catalytic - 50000);
+                    <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={pegasian ? true : elemental < 2 ? true : catalytic < 1 ? true : false} onClick={() => {
+                        setElemental(elemental - 2);
+                        setCatalytic(catalytic - 1);
                         setPegasian(true);
                     }}>
                         Pegasian Crystal <img src={pegasianCrystal} alt="Pegasian Crystal" height="32px" width="32px"></img>
                         <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-                        <Box sx={{border: 1, width: "39px", color: pegasian ? "black" : elemental >= 100000 ? "green" : "red"}} width="55px">
+                        <Box sx={{border: 1, width: "39px", color: pegasian ? "black" : elemental >= 2 ? "green" : "red"}} width="55px">
                         <img src={elementalStone} alt="Elemental stone Amount"></img>
-                        100k
+                        <br></br>2
                         </Box>
 
-                        <Box sx={{border: 1, width: "39px", color: pegasian ? "black" : catalytic >= 50000 ? "green" : "red"}}>
+                        <Box sx={{border: 1, width: "39px", color: pegasian ? "black" : catalytic >= 1 ? "green" : "red"}}>
                         <img src={catalyticStone} alt="Catalytic stone Amount" width="25px" height="27px"></img>
-                        50k
+                        <br></br>1
                         </Box>
                         </Grid>
                     </Button>
@@ -240,21 +292,21 @@ export default function PrestigeSection(props) {
                         <Typography>Allows rune essence <img src={pureEssence} alt="Rune Essence"></img> to be stacked.</Typography>
                         </React.Fragment>} arrow placement="right">
                         <span style={{width: "250px", display: "block"}}>
-                    <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={eternal ? true : elemental < 100000 ? true : catalytic < 100000 ? true : false} onClick={() => {
-                        setElemental(elemental - 100000);
-                        setCatalytic(catalytic - 100000);
+                    <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={eternal ? true : elemental < 5 ? true : catalytic < 5 ? true : false} onClick={() => {
+                        setElemental(elemental - 5);
+                        setCatalytic(catalytic - 5);
                         setEternal(true);
                     }}>
                         Eternal Crystal <img src={eternalCrystal} alt="Eternal Crystal" height="32px" width="32px"></img>
                         <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-                        <Box sx={{border: 1, width: "39px", color: eternal ? "black" : elemental >= 100000 ? "green" : "red"}} width="55px">
+                        <Box sx={{border: 1, width: "39px", color: eternal ? "black" : elemental >= 5 ? "green" : "red"}} width="55px">
                         <img src={elementalStone} alt="Elemental stone Amount"></img>
-                        100k
+                        <br></br>5
                         </Box>
 
-                        <Box sx={{border: 1, width: "39px", color: eternal ? "black" : catalytic >= 100000 ? "green" : "red"}}>
+                        <Box sx={{border: 1, width: "39px", color: eternal ? "black" : catalytic >= 5 ? "green" : "red"}}>
                         <img src={catalyticStone} alt="Catalytic stone Amount" width="25px" height="27px"></img>
-                        100k
+                        <br></br>5
                         </Box>
 
                         </Grid>

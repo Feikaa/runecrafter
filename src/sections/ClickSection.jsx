@@ -25,6 +25,7 @@ export default function ClickSection(props) {
     const [width, setWidth] = useState(0);
 
     const autoclick = props.autoclick;
+    const smashing = props.smashing;
 
     const pouch = props.pouch;
     const extraList = [3, 9, 18, 30, 40];
@@ -90,8 +91,7 @@ export default function ClickSection(props) {
     }
 
     function doClick() {
-        // console.log(inventory);
-        if (pegasian) {
+        if (pegasian && (inventory.length < 28 && pouch < 1) || (extra < extraList[pouch - 1])) {
             craftRune(runes[Math.floor(Math.random() * runes.length)], 1);
         }
         if (eternal && essenceType === "rune_essence") {
@@ -102,10 +102,10 @@ export default function ClickSection(props) {
             } else {
                 setInfinv(infinv + 1);
             }
-        } else if (inventory.length < 24) {
+        } else if (inventory.length < 28) {
             if (!mute) {audio.play();}
             setShake(true)
-            if (primordial && inventory.length + 2 <= 24) {
+            if (primordial && inventory.length + 2 <= 28) {
                 setInventory((inventory) => [...inventory, (<Item key={inventory.length} item={essenceType} />), (<Item key={inventory.length+1} item={essenceType} />)]);
             } else {
                 setInventory((inventory) => [...inventory, (<Item key={inventory.length} item={essenceType} />)]);
@@ -125,7 +125,7 @@ export default function ClickSection(props) {
         if (autoclick) {
             doClick();
         };
-    }, (1000 / autoclick));
+    }, (smashing > 0) ? (1000 / (10 * smashing)) : (1000 / autoclick));
 
     return (
         <Box paddingTop="1%">

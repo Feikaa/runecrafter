@@ -28,10 +28,13 @@ export default function RunecraftSection(props) {
 
     const lvl = props.lvl;
     const setLvl = props.setLvl;
+    const prestige = props.prestige;
     const inventory = props.inventory;
     const setInventory = props.setInventory;
     const xp = props.xp;
     const setXp = props.setXp;
+    const totalxp = props.totalxp;
+    const setTotalxp = props.setTotalxp;
     const progress = props.progress;
     const setProgress = props.setProgress;
 
@@ -136,36 +139,38 @@ export default function RunecraftSection(props) {
         if (rune === "air") {
             xpbase = 5;
             setShowAir(true);
-            setAir(air + Math.floor(amt * bonus));
+            setAir(air + Math.floor(amt * bonus * (1 + prestige/10)));
         } else if (rune === "earth") {
             xpbase = 8;
             setShowEarth(true);
-            setEarth(earth + Math.floor(amt * bonus));
+            setEarth(earth + Math.floor(amt * bonus * (1 + prestige/10)));
         } else if (rune === "water") {
             xpbase = 10;
             setShowWater(true);
-            setWater(water + Math.floor(amt * bonus));
+            setWater(water + Math.floor(amt * bonus * (1 + prestige/10)));
         } else if (rune === "fire") {
             xpbase = 12;
             setShowFire(true);
-            setFire(fire + Math.floor(amt * bonus));
+            setFire(fire + Math.floor(amt * bonus * (1 + prestige/10)));
         } else if (rune === "astral") {
             xpbase = 15;
             setShowAstral(true);
-            setAstral(astral + Math.floor(amt * bonus));
+            setAstral(astral + Math.floor(amt * bonus * (1 + prestige/10)));
         } else if (rune === "law") {
             xpbase = 19;
             setShowLaw(true);
-            setLaw(law + Math.floor(amt * bonus));
+            setLaw(law + Math.floor(amt * bonus * (1 + prestige/10)));
         } else if (rune === "blood") {
             xpbase = 24;
             setShowBlood(true);
-            setBlood(blood + Math.floor(amt * bonus));
+            setBlood(blood + Math.floor(amt * bonus * (1 + prestige/10)));
         } else if (rune === "wrath") {
             xpbase = 30;
             setShowWrath(true);
-            setWrath(wrath + Math.floor(amt * bonus));
+            setWrath(wrath + Math.floor(amt * bonus * (1 + prestige/10)));
         } else if (rune === "ourania") {
+            // Chances of getting certain runes
+            // The higher rc lvl, the more likely you get higher level runes
             var chances = [];
             if (lvl <= 9) {
                 chances = ourania9;
@@ -188,6 +193,7 @@ export default function RunecraftSection(props) {
             } else {
                 chances = ourania99;
             }
+            // Roll the runes
             var runes = [0, 0, 0, 0, 0, 0, 0, 0];
             for (let i = 0; i < amt; i++) {
                 var roll = Math.floor(Math.random() * 10000);
@@ -198,14 +204,14 @@ export default function RunecraftSection(props) {
                     }
                 }
             }
-            setWrath(wrath + Math.floor(runes[0] * bonus));
-            setBlood(blood + Math.floor(runes[1] * bonus));
-            setLaw(law + Math.floor(runes[2] * bonus));
-            setAstral(astral + Math.floor(runes[3] * bonus));
-            setFire(fire + Math.floor(runes[4] * bonus));
-            setWater(water + Math.floor(runes[5] * bonus));
-            setEarth(earth + Math.floor(runes[6] * bonus));
-            setAir(air + Math.floor(runes[7] * bonus));
+            setWrath(wrath + Math.floor(runes[0] * bonus * (1 + prestige/10)));
+            setBlood(blood + Math.floor(runes[1] * bonus * (1 + prestige/10)));
+            setLaw(law + Math.floor(runes[2] * bonus * (1 + prestige/10)));
+            setAstral(astral + Math.floor(runes[3] * bonus * (1 + prestige/10)));
+            setFire(fire + Math.floor(runes[4] * bonus * (1 + prestige/10)));
+            setWater(water + Math.floor(runes[5] * bonus * (1 + prestige/10)));
+            setEarth(earth + Math.floor(runes[6] * bonus * (1 + prestige/10)));
+            setAir(air + Math.floor(runes[7] * bonus * (1 + prestige/10)));
 
             setShowOurania(true);
             setXpgain(Math.floor(((30 * runes[0]) + (24 * runes[1]) + (19 * runes[2]) + (15 * runes[3]) + (12 * runes[4]) + (10 * runes[5]) + (8 * runes[6]) + (5 * runes[7])) * boost * 1.7));
@@ -217,18 +223,12 @@ export default function RunecraftSection(props) {
     }
 
     function calcXp(base) {
-        if (xp + xpgain >= (1/4 * Math.floor(lvl + 300 * (Math.pow(2, (lvl) / 7))))) {
-            calcLevel(xp+xpgain, 0, base)
-            // setCarryover(Math.floor(xp+xpgain - (1/4 * Math.floor(lvl + 300 * (Math.pow(2, (lvl) / 7))))));
-            // var leftover = Math.floor(carryover / base);
-            // // console.log("carryover: " + carryover);
-            // // console.log("leftover: " + leftover);
-            // // console.log("Lvl: " + lvl);
-            // setXp(0 + carryover);
-            // setProgress(0 + leftover);
+        setTotalxp((totalxp + Math.round(xpgain * (1 + prestige/10))))
+        if (xp + Math.round(xpgain * (1 + prestige/10)) >= (1/4 * Math.floor(lvl + 300 * (Math.pow(2, (lvl) / 7))))) {
+            calcLevel(xp + Math.round(xpgain * (1 + prestige/10)), 0, base)
         } else {
-            setXp(xp + xpgain);
-            setProgress(Math.floor((xp + xpgain) / (1/4 * Math.floor(lvl + 300 * (Math.pow(2, (lvl) / 7)))) * 100));
+            setXp(xp + Math.round(xpgain * (1 + prestige/10)));
+            setProgress(Math.floor((xp + Math.round(xpgain * (1 + prestige/10))) / (1/4 * Math.floor(lvl + 300 * (Math.pow(2, (lvl) / 7)))) * 100));
         }
     }
 
@@ -275,6 +275,7 @@ export default function RunecraftSection(props) {
             setFire(fire + Math.floor(amt * bonus));
         } else if (rune === "steam") {
             xpbase = 22;
+            setShowSteam(true);
             setWater(water + Math.floor(amt * bonus));
             setFire(fire + Math.floor(amt * bonus));
         } else if (rune === "lava") {
@@ -299,7 +300,7 @@ export default function RunecraftSection(props) {
     }, [xpgain]);
 
     useEffect(() => {
-        if (autoaltar && inventory.length === 24 && (!pouch || extra === extraList[pouch - 1]) && runename !== "none") {
+        if (autoaltar && inventory.length === 28 && (!pouch || extra === extraList[pouch - 1]) && runename !== "none") {
             craftRune(runename, inventory.length + extra);
         }
     }, [inventory, runename, extra]);
@@ -317,7 +318,7 @@ export default function RunecraftSection(props) {
                 <React.Fragment>
                 <Grid item xs>
                 <div style={{visibility: showAir ? '' : "hidden", color: "green", fontSize: "20px"}} className={showAir ? "slide" : ""} onAnimationEnd={() => {setShowAir(false); setXpgain(0);}}>
-                    +{xpgain}
+                    +{Math.round(xpgain * (1 + prestige/10))}
                 </div>
                     <Button variant="contained" color="success" onClick={() => {
                         if (eternal && essenceType === "rune_essence" && infinv > 0) {
@@ -336,7 +337,7 @@ export default function RunecraftSection(props) {
 
                 <Grid item xs>
                     <div style={{visibility: showEarth ? '' : "hidden", color: "green", fontSize: "20px"}} className={showEarth ? "slide" : ""} onAnimationEnd={() => {setShowEarth(false); setXpgain(0);}}>
-                        +{xpgain}
+                        +{Math.round(xpgain * (1 + prestige/10))}
                     </div>
                     <Button variant="contained" color={lvl >= 9 ? "success" : "error"} disabled={lvl >= 9 ? false : true} onClick={() => {
                         if (eternal && essenceType === "rune_essence" && infinv > 0) {
@@ -355,7 +356,7 @@ export default function RunecraftSection(props) {
 
                 <Grid item xs>
                     <div style={{visibility: showWater ? '' : "hidden", color: "green", fontSize: "20px"}} className={showWater ? "slide" : ""} onAnimationEnd={() => {setShowWater(false); setXpgain(0);}}>
-                        +{xpgain}
+                        +{Math.round(xpgain * (1 + prestige/10))}
                     </div>
                     <Button variant="contained" color={lvl >= 14 ? "success" : "error"} disabled={lvl >= 14 ? false : true} onClick={() => {
                         if (eternal && essenceType === "rune_essence" && infinv > 0) {
@@ -374,7 +375,7 @@ export default function RunecraftSection(props) {
 
                 <Grid item xs>
                     <div style={{visibility: showFire ? '' : "hidden", color: "green", fontSize: "20px"}} className={showFire ? "slide" : ""} onAnimationEnd={() => {setShowFire(false); setXpgain(0);}}>
-                        +{xpgain}
+                        +{Math.round(xpgain * (1 + prestige/10))}
                     </div>
                     <Button variant="contained" color={lvl >= 27 ? "success" : "error"} disabled={lvl >= 27 ? false : true} onClick={() => {
                         if (eternal && essenceType === "rune_essence" && infinv > 0) {
@@ -400,7 +401,7 @@ export default function RunecraftSection(props) {
                     </React.Fragment>} arrow placement="right" disableInteractive>
                 <Grid item xs>
                 <div style={{visibility: showDust ? '' : "hidden", color: "green", fontSize: "20px"}} className={showDust ? "slide" : ""} onAnimationEnd={() => {setShowDust(false); setXpgain(0);}}>
-                    +{xpgain}
+                    +{Math.round(xpgain * (1 + prestige/10))}
                 </div>
                     <Button variant="contained" color="success" onClick={() => {
                         if (eternal && essenceType === "rune_essence" && infinv > 0) {
@@ -424,7 +425,7 @@ export default function RunecraftSection(props) {
                     </React.Fragment>} arrow placement="right" disableInteractive>
                 <Grid item xs>
                     <div style={{visibility: showMist ? '' : "hidden", color: "green", fontSize: "20px"}} className={showMist ? "slide" : ""} onAnimationEnd={() => {setShowMist(false); setXpgain(0);}}>
-                        +{xpgain}
+                        +{Math.round(xpgain * (1 + prestige/10))}
                     </div>
                     <Button variant="contained" color={lvl >= 8 ? "success" : "error"} disabled={lvl >= 8 ? false : true} onClick={() => {
                         if (eternal && essenceType === "rune_essence" && infinv > 0) {
@@ -448,7 +449,7 @@ export default function RunecraftSection(props) {
                     </React.Fragment>} arrow placement="right" disableInteractive>
                 <Grid item xs>
                     <div style={{visibility: showMud ? '' : "hidden", color: "green", fontSize: "20px"}} className={showMud ? "slide" : ""} onAnimationEnd={() => {setShowMud(false); setXpgain(0);}}>
-                        +{xpgain}
+                        +{Math.round(xpgain * (1 + prestige/10))}
                     </div>
                     <Button variant="contained" color={lvl >= 13 ? "success" : "error"} disabled={lvl >= 13 ? false : true} onClick={() => {
                         if (eternal && essenceType === "rune_essence" && infinv > 0) {
@@ -472,7 +473,7 @@ export default function RunecraftSection(props) {
                     </React.Fragment>} arrow placement="right" disableInteractive>
                 <Grid item xs>
                     <div style={{visibility: showSmoke ? '' : "hidden", color: "green", fontSize: "20px"}} className={showSmoke ? "slide" : ""} onAnimationEnd={() => {setShowSmoke(false); setXpgain(0);}}>
-                        +{xpgain}
+                        +{Math.round(xpgain * (1 + prestige/10))}
                     </div>
                     <Button variant="contained" color={lvl >= 15 ? "success" : "error"} disabled={lvl >= 15 ? false : true} onClick={() => {
                         if (eternal && essenceType === "rune_essence" && infinv > 0) {
@@ -496,7 +497,7 @@ export default function RunecraftSection(props) {
                     </React.Fragment>} arrow placement="right" disableInteractive>
                 <Grid item xs>
                     <div style={{visibility: showLava ? '' : "hidden", color: "green", fontSize: "20px"}} className={showLava ? "slide" : ""} onAnimationEnd={() => {setShowLava(false); setXpgain(0);}}>
-                        +{xpgain}
+                        +{Math.round(xpgain * (1 + prestige/10))}
                     </div>
                     <Button variant="contained" color={lvl >= 19 ? "success" : "error"} disabled={lvl >= 19 ? false : true} onClick={() => {
                         if (eternal && essenceType === "rune_essence" && infinv > 0) {
@@ -520,7 +521,7 @@ export default function RunecraftSection(props) {
                     </React.Fragment>} arrow placement="right" disableInteractive>
                 <Grid item xs>
                     <div style={{visibility: showSteam ? '' : "hidden", color: "green", fontSize: "20px"}} className={showSteam ? "slide" : ""} onAnimationEnd={() => {setShowSteam(false); setXpgain(0);}}>
-                        +{xpgain}
+                        +{Math.round(xpgain * (1 + prestige/10))}
                     </div>
                     <Button variant="contained" color={lvl >= 23 ? "success" : "error"} disabled={lvl >= 23 ? false : true} onClick={() => {
                         if (eternal && essenceType === "rune_essence" && infinv > 0) {
@@ -545,7 +546,7 @@ export default function RunecraftSection(props) {
                 <React.Fragment>
                 <Grid item xs>
                     <div style={{visibility: showAstral ? '' : "hidden", color: "green", fontSize: "20px"}} className={showAstral ? "slide" : ""} onAnimationEnd={() => {setShowAstral(false); setXpgain(0);}}>
-                        +{xpgain}
+                        +{Math.round(xpgain * (1 + prestige/10))}
                     </div>
                     <Button variant="contained" color={lvl >= 40 ? "success" : "error"} disabled={lvl >= 40 ? false : true} onClick={() => {
                         if (eternal && essenceType === "rune_essence" && infinv > 0) {
@@ -564,7 +565,7 @@ export default function RunecraftSection(props) {
 
                 <Grid item xs>
                     <div style={{visibility: showLaw ? '' : "hidden", color: "green", fontSize: "20px"}} className={showLaw ? "slide" : ""} onAnimationEnd={() => {setShowLaw(false); setXpgain(0);}}>
-                        +{xpgain}
+                        +{Math.round(xpgain * (1 + prestige/10))}
                     </div>
                     <Button variant="contained" color={lvl >= 54 ? "success" : "error"} disabled={lvl >= 54 ? false : true} onClick={() => {
                         if (eternal && essenceType === "rune_essence" && infinv > 0) {
@@ -583,7 +584,7 @@ export default function RunecraftSection(props) {
 
                 <Grid item xs>
                     <div style={{visibility: showBlood ? '' : "hidden", color: "green", fontSize: "20px"}} className={showBlood ? "slide" : ""} onAnimationEnd={() => {setShowBlood(false); setXpgain(0);}}>
-                        +{xpgain}
+                        +{Math.round(xpgain * (1 + prestige/10))}
                     </div>
                     <Button variant="contained" color={lvl >= 77 ? "success" : "error"} disabled={lvl >= 77 ? false : true} onClick={() => {
                         if (eternal && essenceType === "rune_essence" && infinv > 0) {
@@ -602,7 +603,7 @@ export default function RunecraftSection(props) {
 
                 <Grid item xs>
                     <div style={{visibility: showWrath ? '' : "hidden", color: "green", fontSize: "20px"}} className={showWrath ? "slide" : ""} onAnimationEnd={() => {setShowWrath(false); setXpgain(0);}}>
-                        +{xpgain}
+                        +{Math.round(xpgain * (1 + prestige/10))}
                     </div>
                     <Button variant="contained" color={lvl >= 95 ? "success" : "error"} disabled={lvl >= 95 ? false : true} onClick={() => {
                         if (eternal && essenceType === "rune_essence" && infinv > 0) {
@@ -623,10 +624,10 @@ export default function RunecraftSection(props) {
                 {ouraniaAltar ? 
                 <Grid item xs>
                     <div style={{visibility: showOurania ? '' : "hidden", color: "green", fontSize: "20px"}} className={showOurania ? "slide" : ""} onAnimationEnd={() => {setShowOurania(false); setXpgain(0);}}>
-                        +{xpgain}
+                        +{Math.round(xpgain * (1 + prestige/10))}
                     </div>
                     <Button variant="contained" color="success" onClick={() => {
-                        if (eternal) {
+                        if (eternal && essenceType === "rune_essence") {
                             craftRune("ourania", infinv);
                         }
                         else if (inventory.length > 0) {
