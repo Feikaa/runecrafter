@@ -91,7 +91,7 @@ export default function ClickSection(props) {
     }
 
     function doClick() {
-        if (pegasian && (inventory.length < 28 && pouch < 1) || (extra < extraList[pouch - 1])) {
+        if (pegasian && ((inventory.length < 28 && pouch < 1) || (extra < extraList[pouch - 1]))) {
             craftRune(runes[Math.floor(Math.random() * runes.length)], 1);
         }
         if (eternal && essenceType === "rune_essence") {
