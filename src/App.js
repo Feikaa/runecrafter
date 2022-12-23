@@ -27,7 +27,7 @@ function App() {
   const notify = () => {
     if (currentToast.length < 1) {
       const id = toast.success("Progress Saved!", {
-        position: toast.POSITION.BOTTOM_CENTER,
+        position: "top-left",
         pauseOnFocusLoss: false,
         pauseOnHover: false,
         autoClose: 2000,
