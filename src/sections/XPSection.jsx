@@ -9,6 +9,7 @@ export default function XPSection(props) {
     const progress = props.progress;
     const lvl = props.lvl;
     const prestige = props.prestige;
+    const pBoost = props.pBoost;
     const xp = props.xp;
     const totalxp = props.totalxp;
     const nextxp = props.nextxp;
@@ -28,7 +29,7 @@ export default function XPSection(props) {
 
     return (
         <Box sx={{ width: '50%', mx: 'auto', color: 'green' }}>
-            Lvl: {lvl} {prestige >= 1 ? <Typography><font color="gold">&nbsp;Prestige: {prestige}</font> <font color="orange">(+{prestige}% XP & Runes)</font></Typography>: ""}
+            Lvl: {lvl} {prestige >= 1 ? <Typography><font color="gold">&nbsp;Prestige: {prestige}</font> <font color="orange">(+{pBoost}% XP & Runes)</font></Typography>: ""}
             <Tooltip title={
                 <Box sx={{fontSize: "20px"}}>
                     <Typography>

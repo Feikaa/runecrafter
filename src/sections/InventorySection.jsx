@@ -13,13 +13,9 @@ import runeEssence from "../icons/rune_essence.png";
 export default function InventorySection(props) {
 
     const inventory = props.inventory;
-    const infinv = props.infinv;
     const pouch = props.pouch;
     const pouchList = [pouch1, pouch2, pouch3, pouch4, pouch5, pouch5];
     const extra = props.extra;
-
-    const eternal = props.eternal;
-    const essenceType = props.essenceType;
 
     const [width, setWidth] = useState(0);
 
@@ -41,14 +37,7 @@ export default function InventorySection(props) {
             {pouch ? " x" + extra : ""}
             {width > 1110 ?
             <Box className="inventory" sx={{backgroundColor: "black"}}>
-                {eternal && essenceType === "rune_essence" ? <React.Fragment>
-                    <img src={runeEssence} alt="Rune essence" width="48px" height="48px" />
-                    <Box color="white" sx={{ position: "absolute", top: "21px", fontSize: "20px", textAlign: "right", width: "48px" }}>
-                        {infinv}
-                    </Box>
-                    </React.Fragment>
-                    :
-                    inventory}
+                {inventory}
             </Box>
             : <Item item="rune_essence"></Item>}
             {width < 1110 ? " x" + inventory.length : ""}

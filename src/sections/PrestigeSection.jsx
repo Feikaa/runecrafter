@@ -20,6 +20,7 @@ export default function PrestigeSection(props) {
 
     const lvl = props.lvl;
     const prestige = props.prestige;
+    const pBoost = props.pBoost;
     const mode = props.mode;
     const setMode = props.setMode;
 
@@ -146,6 +147,7 @@ export default function PrestigeSection(props) {
                                 localStorage.setItem("prestige", save + 1);
                                 localStorage.setItem("elemental", elemental + newElem);
                                 localStorage.setItem("catalytic", catalytic + newCata);
+                                localStorage.setItem("pBoost", pBoost + newElem + newCata);
                                 window.location.reload(false);
                             }} autoFocus sx={{color: "white"}}>Yes</Button>
                         </DialogActions>
@@ -289,24 +291,24 @@ export default function PrestigeSection(props) {
 
                 <Tooltip title={
                     <React.Fragment>
-                        <Typography>Allows rune essence <img src={pureEssence} alt="Rune Essence"></img> to be stacked.</Typography>
+                        <Typography>Grants double XP when runecrafting.</Typography>
                         </React.Fragment>} arrow placement="right">
                         <span style={{width: "250px", display: "block"}}>
-                    <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={eternal ? true : elemental < 5 ? true : catalytic < 5 ? true : false} onClick={() => {
-                        setElemental(elemental - 5);
-                        setCatalytic(catalytic - 5);
+                    <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={eternal ? true : elemental < 2 ? true : catalytic < 2 ? true : false} onClick={() => {
+                        setElemental(elemental - 2);
+                        setCatalytic(catalytic - 2);
                         setEternal(true);
                     }}>
                         Eternal Crystal <img src={eternalCrystal} alt="Eternal Crystal" height="32px" width="32px"></img>
                         <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-                        <Box sx={{border: 1, width: "39px", color: eternal ? "black" : elemental >= 5 ? "green" : "red"}} width="55px">
+                        <Box sx={{border: 1, width: "39px", color: eternal ? "black" : elemental >= 2 ? "green" : "red"}} width="55px">
                         <img src={elementalStone} alt="Elemental stone Amount"></img>
-                        <br></br>5
+                        <br></br>2
                         </Box>
 
-                        <Box sx={{border: 1, width: "39px", color: eternal ? "black" : catalytic >= 5 ? "green" : "red"}}>
+                        <Box sx={{border: 1, width: "39px", color: eternal ? "black" : catalytic >= 2 ? "green" : "red"}}>
                         <img src={catalyticStone} alt="Catalytic stone Amount" width="25px" height="27px"></img>
-                        <br></br>5
+                        <br></br>2
                         </Box>
 
                         </Grid>

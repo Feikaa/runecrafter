@@ -56,16 +56,6 @@ function App() {
     }
     return inv || []
   });
-  const [infinv, setInfinv] = useState(() => {
-    var saved;
-    if (mode === "normal") {
-      saved = localStorage.getItem("infinv");
-    } else {
-      saved = localStorage.getItem("infinv" + mode);
-    }
-    const value = JSON.parse(saved);
-    return value || 0
-  })
   const [progress, setProgress] = useState(() => {
     var saved;
     if (mode === "normal") {
@@ -92,6 +82,16 @@ function App() {
       saved = localStorage.getItem("prestige");
     } else {
       saved = localStorage.getItem("prestige" + mode);
+    }
+    const value = JSON.parse(saved);
+    return value || 0
+  })
+  const [pBoost, setPBoost] = useState(() => {
+    var saved;
+    if (mode === "normal") {
+      saved = localStorage.getItem("pBoost");
+    } else {
+      saved = localStorage.getItem("pBoost" + mode);
     }
     const value = JSON.parse(saved);
     return value || 0
@@ -445,10 +445,10 @@ const theme = createTheme({
 
   function save(currentMode) {
     localStorage.setItem("inventory" + currentMode, inventory.length);
-    localStorage.setItem("infinv" + currentMode, JSON.stringify(infinv));
     localStorage.setItem("progress" + currentMode, JSON.stringify(progress));
     localStorage.setItem("lvl" + currentMode, JSON.stringify(lvl));
     localStorage.setItem("prestige" + currentMode, JSON.stringify(prestige));
+    localStorage.setItem("pBoost" + currentMode, JSON.stringify(pBoost));
     localStorage.setItem("xp" + currentMode, JSON.stringify(xp));
     localStorage.setItem("totalxp" + currentMode, JSON.stringify(totalxp));
 
@@ -567,7 +567,7 @@ const theme = createTheme({
         </Dialog>
       <TitleSection mode={mode}/>
       <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-      {(mode !== "ironman" && (air + earth + water + fire >= 10000 || astral + law + blood + wrath >= 10000 || prestige >= 1)) ? <PrestigeSection prestige={prestige} lvl={lvl} elemental={elemental} catalytic={catalytic} setElemental={setElemental} setCatalytic={setCatalytic}
+      {(mode !== "ironman" && (air + earth + water + fire >= 10000 || astral + law + blood + wrath >= 10000 || prestige >= 1)) ? <PrestigeSection prestige={prestige} pBoost={pBoost} lvl={lvl} elemental={elemental} catalytic={catalytic} setElemental={setElemental} setCatalytic={setCatalytic}
                                                      air={air} earth={earth} water={water} fire={fire} astral={astral} law={law} blood={blood} wrath={wrath}
                                                      mode={mode} setMode={setMode}
                                                      combination={combination} setCombination={setCombination}
@@ -587,20 +587,20 @@ const theme = createTheme({
                        top={top} setTop={setTop}
                        bottom={bottom} setBottom={setBottom}
                        boots={boots} setBoots={setBoots}
-                       essenceType={essenceType} setEssenceType={setEssenceType} eternal={eternal} setInventory={setInventory} setExtra={setExtra}
+                       essenceType={essenceType} setEssenceType={setEssenceType} setInventory={setInventory} setExtra={setExtra}
                        ouraniaAltar={ouraniaAltar} setOuraniaAltar={setOuraniaAltar} mode={mode}/>
       {autoaltar ? <ChooseSection runename={runename} setRunename={setRunename} autoaltar={autoaltar} ouraniaAltar={ouraniaAltar}/> : ""}
       </Grid>
-      <XPSection progress={progress} lvl={lvl} xp={xp} prestige={prestige} totalxp={totalxp} nextxp={nextxp} setNextxp={setNextxp}/>
+      <XPSection progress={progress} lvl={lvl} xp={xp} prestige={prestige} pBoost={pBoost} totalxp={totalxp} nextxp={nextxp} setNextxp={setNextxp}/>
       <RunesSection prestige={prestige} air={air} earth={earth} water={water} fire={fire} astral={astral} law={law} blood={blood} wrath={wrath} 
                     elemental={elemental} catalytic={catalytic}
                     bonus={bonus} hat={hat} top={top} bottom={bottom} boots={boots}/>
       <ClickSection mute={mute} inventory={inventory} setInventory={setInventory} autoclick={autoclick} smashing={smashing} pouch={pouch} extra={extra} setExtra={setExtra} essenceType={essenceType}
-                    eternal={eternal} infinv={infinv} setInfinv={setInfinv} primordial={primordial} pegasian={pegasian}
+                    primordial={primordial} pegasian={pegasian}
                     air={air} setAir={setAir} earth={earth} setEarth={setEarth} water={water} setWater={setWater} fire={fire} setFire={setFire} astral={astral} setAstral={setAstral}
                     law={law} setLaw={setLaw} blood={blood} setBlood={setBlood} wrath={wrath} setWrath={setWrath}
                     bonus={bonus}/>
-      <RunecraftSection mute={mute} lvl={lvl} setLvl={setLvl} prestige={prestige} inventory={inventory} setInventory={setInventory} xp={xp} setXp={setXp} totalxp={totalxp} setTotalxp={setTotalxp} 
+      <RunecraftSection mute={mute} lvl={lvl} setLvl={setLvl} prestige={prestige} pBoost={pBoost} inventory={inventory} setInventory={setInventory} xp={xp} setXp={setXp} totalxp={totalxp} setTotalxp={setTotalxp} 
                         progress={progress} setProgress={setProgress}
                         air={air} setAir={setAir} earth={earth} setEarth={setEarth} water={water} setWater={setWater} fire={fire} setFire={setFire} astral={astral} setAstral={setAstral}
                         law={law} setLaw={setLaw} blood={blood} setBlood={setBlood} wrath={wrath} setWrath={setWrath}
@@ -608,9 +608,9 @@ const theme = createTheme({
                         pouch={pouch} extra={extra} setExtra={setExtra}
                         hat={hat} top={top} bottom={bottom} boots={boots} bonus={bonus} setBonus={setBonus}
                         essenceType={essenceType} ouraniaAltar={ouraniaAltar}
-                        eternal={eternal} infinv={infinv} setInfinv={setInfinv}
+                        eternal={eternal}
                         combination={combination} mode={mode}/>
-      <InventorySection inventory={inventory} extra={extra} pouch={pouch} infinv={infinv} eternal={eternal} essenceType={essenceType}/>
+      <InventorySection inventory={inventory} extra={extra} pouch={pouch}/>
     </div>
     </ThemeProvider>
   );

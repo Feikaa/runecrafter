@@ -99,7 +99,6 @@ export default function UpgradesSection(props) {
 
     const essenceType = props.essenceType;
     const setEssenceType = props.setEssenceType;
-    const eternal = props.eternal;
     const setInventory = props.setInventory;
     const setExtra = props.setExtra;
 

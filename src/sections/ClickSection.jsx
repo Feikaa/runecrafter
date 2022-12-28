@@ -16,9 +16,6 @@ export default function ClickSection(props) {
     const inventory = props.inventory;
     const setInventory = props.setInventory;
 
-    const infinv = props.infinv;
-    const setInfinv = props.setInfinv;
-
     const audio = new Audio(clickAudio);
     audio.volume = 0.1;
     const [shake, setShake] = useState(false);
@@ -32,7 +29,6 @@ export default function ClickSection(props) {
     const extra = props.extra;
     const setExtra = props.setExtra;
 
-    const eternal = props.eternal;
     const primordial = props.primordial;
     const pegasian = props.pegasian;
     const runes = ["air", "earth", "water", "fire", "astral", "law", "blood", "wrath"];
@@ -94,15 +90,7 @@ export default function ClickSection(props) {
         if (pegasian && ((inventory.length < 28 && pouch < 1) || (extra < extraList[pouch - 1]))) {
             craftRune(runes[Math.floor(Math.random() * runes.length)], 1);
         }
-        if (eternal && essenceType === "rune_essence") {
-            if (!mute) {audio.play();}
-            setShake(true)
-            if (primordial) {
-                setInfinv(infinv + 2);
-            } else {
-                setInfinv(infinv + 1);
-            }
-        } else if (inventory.length < 28) {
+        if (inventory.length < 28) {
             if (!mute) {audio.play();}
             setShake(true)
             if (primordial && inventory.length + 2 <= 28) {
