@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/runecrafter/static/css/main.d4afe60a.css",
-    "main.js": "/runecrafter/static/js/main.aec73d8b.js",
+    "main.js": "/runecrafter/static/js/main.edaac42e.js",
     "static/js/787.132333bb.chunk.js": "/runecrafter/static/js/787.132333bb.chunk.js",
     "static/media/dark_essence_click.png": "/runecrafter/static/media/dark_essence_click.868021d629f123f222da.png",
     "static/media/craft.wav": "/runecrafter/static/media/craft.924d55b5e627cf4bac3d.wav",
@@ -85,11 +85,11 @@
     "index.html": "/runecrafter/index.html",
     "static/media/zmi.ico": "/runecrafter/static/media/zmi.a07d785c883f7fab9068.ico",
     "main.d4afe60a.css.map": "/runecrafter/static/css/main.d4afe60a.css.map",
-    "main.aec73d8b.js.map": "/runecrafter/static/js/main.aec73d8b.js.map",
+    "main.edaac42e.js.map": "/runecrafter/static/js/main.edaac42e.js.map",
     "787.132333bb.chunk.js.map": "/runecrafter/static/js/787.132333bb.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d4afe60a.css",
-    "static/js/main.aec73d8b.js"
+    "static/js/main.edaac42e.js"
   ]
 }
