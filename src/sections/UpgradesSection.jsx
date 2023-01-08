@@ -466,7 +466,7 @@ export default function UpgradesSection(props) {
               }
               setAirLvl(airLvl + 1);
             }}>
-              Air Enchant&nbsp; {"I".repeat(airLvl + 1)} <img src={airEnchant} alt="Air Enchant" height="32px" width="32px"></img>
+              Air Enchant&nbsp; {airLvl < 3 ? "I".repeat(airLvl + 1) : airLvl === 3 ? "IV" : airLvl < 7 ? "V" + "I".repeat(airLvl - 4) : "MAX" } <img src={airEnchant} alt="Air Enchant" height="32px" width="32px"></img>
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
 
               {airLvl === 0 ?
@@ -826,7 +826,7 @@ export default function UpgradesSection(props) {
               }
               setEarthLvl(earthLvl + 1);
             }}>
-              Earth Enchant&nbsp; {"I".repeat(earthLvl + 1)} <img src={earthEnchant} alt="Earth Enchant" height="32px" width="32px"></img>
+              Earth Enchant&nbsp; {earthLvl < 3 ? "I".repeat(earthLvl + 1) : earthLvl === 3 ? "IV" : earthLvl < 6 ? "V" + "I".repeat(earthLvl - 4) : "MAX" } <img src={earthEnchant} alt="Earth Enchant" height="32px" width="32px"></img>
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
 
               {earthLvl === 0 ?
@@ -1083,7 +1083,7 @@ export default function UpgradesSection(props) {
               }
               setWaterLvl(waterLvl + 1);
             }}>
-              Water Enchant&nbsp; {"I".repeat(waterLvl + 1)} <img src={waterEnchant} alt="Water Enchant" height="32px" width="32px"></img>
+              Water Enchant&nbsp; {waterLvl < 3 ? "I".repeat(waterLvl + 1) : waterLvl === 3 ? "IV" : waterLvl < 5 ? "V" + "I".repeat(waterLvl - 4) : "MAX" } <img src={waterEnchant} alt="Water Enchant" height="32px" width="32px"></img>
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
 
               {waterLvl === 0 ?
@@ -1446,7 +1446,7 @@ export default function UpgradesSection(props) {
               }
               setFireLvl(fireLvl + 1);
             }}>
-              Fire Enchant&nbsp; {"I".repeat(fireLvl + 1)} <img src={fireEnchant} alt="Fire Enchant" height="32px" width="32px"></img>
+              Fire Enchant&nbsp; {fireLvl < 3 ? "I".repeat(fireLvl + 1) : fireLvl === 3 ? "IV" : "MAX" } <img src={fireEnchant} alt="Fire Enchant" height="32px" width="32px"></img>
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
 
               {fireLvl === 0 ?

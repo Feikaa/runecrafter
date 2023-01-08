@@ -561,6 +561,8 @@ export default function RunecraftSection(props) {
     useEffect(() => {
         if (autoaltar && inventory.length === 28 && (!pouch || extra === extraList[pouch - 1]) && runename !== "none") {
             craftRune(runename, inventory.length + extra);
+            setInventory([]);
+            setExtra(0);
         }
     }, [inventory, runename, extra]);
 

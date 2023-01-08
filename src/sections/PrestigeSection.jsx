@@ -207,8 +207,6 @@ export default function PrestigeSection(props) {
                     </span>
                     </Tooltip>
 
-                {
-                prestige > 0 ?
                 <React.Fragment>
                 <br></br>
                 <Box>
@@ -692,9 +690,6 @@ export default function PrestigeSection(props) {
                 ""}
 
                 </React.Fragment>
-                :
-                ""
-                }
             </List>
         </Box>
             )
