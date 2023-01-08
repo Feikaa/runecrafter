@@ -922,8 +922,8 @@ export default function UpgradesSection(props) {
               <span style={{width: "250px", display: "block"}}>
             <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={pouch === 5 ? true : 
               pouch === 0 ? (air < 100 ? true : earth >= 100 ? false : true) :
-              pouch === 1 ? (earth < 500 ? true : fire >= 100 ? false : true) :
-              pouch === 2 ? (fire < 500 ? true : astral >= 100 ? false : true) :
+              pouch === 1 ? (earth < 500 ? true : water >= 100 ? false : true) :
+              pouch === 2 ? (water < 500 ? true : fire < 100 ? false : astral < 100 ? false : true) :
               pouch === 3 ? (astral < 500 ? true : law >= 100 ? false : true) :
               (law < 500 ? true : blood >= 100 ? false : true)} onClick={() => {
               if (pouch === 0) {
@@ -931,9 +931,10 @@ export default function UpgradesSection(props) {
                 setEarth(earth - 100);
               } else if (pouch === 1) {
                 setEarth(earth - 500);
-                setFire(fire - 100);
+                setWater(water - 100);
               } else if (pouch === 2) {
-                setFire(fire - 500);
+                setWater(water - 500);
+                setFire(fire - 100);
                 setAstral(astral - 100);
               } else if (pouch === 3) {
                 setAstral(astral - 500);
@@ -969,8 +970,8 @@ export default function UpgradesSection(props) {
                     500
                   </Box>
 
-                  <Box sx={{border: 1, width: "39px", color: fire >= 100 ? "green" : "red"}}>
-                    <img src={fireRune} alt="Fire Rune Amount"></img>
+                  <Box sx={{border: 1, width: "39px", color: water >= 100 ? "green" : "red"}}>
+                    <img src={waterRune} alt="Water Rune Amount"></img>
                     100
                   </Box>
                   </React.Fragment>
@@ -978,9 +979,14 @@ export default function UpgradesSection(props) {
                   // Level 3
                   pouch === 2 ? 
                   <React.Fragment>
-                  <Box sx={{border: 1, width: "39px", color: fire >= 500 ? "green" : "red"}}>
-                    <img src={fireRune} alt="Fire Rune Amount"></img>
+                  <Box sx={{border: 1, width: "39px", color: water >= 500 ? "green" : "red"}}>
+                    <img src={waterRune} alt="Water Rune Amount"></img>
                     500
+                  </Box>
+
+                  <Box sx={{border: 1, width: "39px", color: fire >= 100 ? "green" : "red"}}>
+                    <img src={fireRune} alt="Fire Rune Amount"></img>
+                    100
                   </Box>
 
                   <Box sx={{border: 1, width: "39px", color: astral >= 100 ? "green" : "red"}}>
