@@ -923,7 +923,7 @@ export default function UpgradesSection(props) {
             <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={pouch === 5 ? true : 
               pouch === 0 ? (air < 100 ? true : earth >= 100 ? false : true) :
               pouch === 1 ? (earth < 500 ? true : water >= 100 ? false : true) :
-              pouch === 2 ? (water < 500 ? true : fire < 100 ? false : astral < 100 ? false : true) :
+              pouch === 2 ? (water < 500 ? true : fire < 100 ? true : astral < 100 ? true : false) :
               pouch === 3 ? (astral < 500 ? true : law >= 100 ? false : true) :
               (law < 500 ? true : blood >= 100 ? false : true)} onClick={() => {
               if (pouch === 0) {
