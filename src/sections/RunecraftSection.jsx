@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Tooltip, Typography } from "@mui/material";
 import airRune from "../icons/air_rune.png";
 import earthRune from "../icons/earth_rune.png";
 import waterRune from "../icons/water_rune.png";
@@ -13,13 +13,23 @@ import mudRune from "../icons/mud_rune.png";
 import smokeRune from "../icons/smoke_rune.png";
 import steamRune from "../icons/steam_rune.png";
 import lavaRune from "../icons/lava_rune.png";
+import AirOrb from "../icons/air_orb.png";
+import EarthOrb from "../icons/earth_orb.png";
+import WaterOrb from "../icons/water_orb.png";
+import FireOrb from "../icons/fire_orb.png";
+import AstralOrb from "../icons/astral_orb.png";
+import LawOrb from "../icons/law_orb.png";
+import BloodOrb from "../icons/blood_orb.png";
+import WrathOrb from "../icons/wrath_orb.png";
 import zmiAltar from "../icons/ourania_altar.png";
+import Battlestaff from "../icons/battlestaff.png";
 import craftAudio from "../audio/craft.wav";
 import React, { useState } from "react";
 import "../styles/RunecraftSection.scss";
 import { useEffect } from "react";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
+import { toast } from 'react-toastify';
 
 export default function RunecraftSection(props) {
 
@@ -60,14 +70,41 @@ export default function RunecraftSection(props) {
     const setBlood = props.setBlood;
     const setWrath = props.setWrath;
 
+    const battlestaff = props.battlestaff;
+    const setBattlestaff = props.setBattlestaff;
+
+    const airLvl = props.airLvl;
+    const earthLvl = props.earthLvl;
+    const waterLvl = props.waterLvl;
+    const fireLvl = props.fireLvl;
+    const astralLvl = props.astralLvl;
+    const lawLvl = props.lawLvl;
+    const bloodLvl = props.bloodLvl;
+    const wrathLvl = props.wrathLvl;
+
     const autoaltar = props.autoaltar;
     const runename = props.runename;
     const ouraniaAltar = props.ouraniaAltar;
+    const bloodEssence = props.bloodEssence;
+    const setBloodEssence = props.setBloodEssence;
 
     const pouch = props.pouch;
     const extraList = [3, 9, 18, 30, 40];
     const extra = props.extra;
     const setExtra = props.setExtra;
+
+    const airGloves = props.airGloves;
+    const setAirGloves = props.setAirGloves;
+    const earthGloves = props.earthGloves;
+    const setEarthGloves = props.setEarthGloves;
+    const waterGloves = props.waterGloves;
+    const setWaterGloves = props.setWaterGloves;
+    const fireGloves = props.fireGloves;
+    const setFireGloves = props.setFireGloves;
+
+    const ringofElements = props.ringofElements;
+    const ringCharge = props.ringCharge;
+    const setRingCharge = props.setRingCharge;
 
     const hat = props.hat;
     const top = props.top;
@@ -75,6 +112,25 @@ export default function RunecraftSection(props) {
     const boots = props.boots;
     const bonus = props.bonus;
     const setBonus = props.setBonus;
+
+    const lawOutfit = props.lawOutfit;
+    const bloodOutfit = props.bloodOutfit;
+    const wrathOutfit = props.wrathOutfit;
+    const infinityOutfit = props.infinityOutfit;
+
+    const airOrb = props.airOrb;
+    const earthOrb = props.earthOrb;
+    const waterOrb = props.waterOrb;
+    const fireOrb = props.fireOrb;
+    const astralOrb = props.astralOrb;
+    const lawOrb = props.lawOrb;
+    const bloodOrb = props.bloodOrb;
+    const wrathOrb = props.wrathOrb;
+
+    const staff = props.staff;
+    const setStaff = props.setStaff;
+
+    const runecraftCape = props.runecraftCape;
 
     const combination = props.combination;
 
@@ -115,22 +171,63 @@ export default function RunecraftSection(props) {
 
     var xpbase = 0;
 
+    const [currentToastBS, setCurrentToastBS] = useState([]);
+
+    const notifyBS = () => {
+      if (currentToastBS.length < 5) {
+        const id = toast.success("You found a Battlestaff!", {
+          icon: <img src={Battlestaff} height="32px" width="32px"></img>,
+          position: "bottom-center",
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          autoClose: 2000,
+          onClose: () => {setCurrentToastBS([]);}
+        });
+        setCurrentToastBS([id]);
+      }
+    }
+
     const theme = createTheme({
         palette: {
             action: {
                 disabled: "red"
             }
+        },
+        components: {
+            MuiDialog: {
+                styleOverrides: {
+                    paper: {
+                        backgroundColor: "var(--bs-body-color)",
+                        color: "white",
+                    }
+                }
+            }
         }
     })
 
+    const [open, setOpen] = useState(false);
+    const [type, setType] = useState("");
+
+    const handleClickOpen = (rune) => {
+        setType(rune);
+        setOpen(true);
+    }
+    const handleClose = () => {
+        setOpen(false);
+    }
+
     useEffect(() => {
-        setBonus(1 + ([hat, top, bottom, boots].reduce((a, f) => a + f, 0) / 10))
-        if (hat && top && bottom && boots) {
+        setBonus(1 + ([hat, top, bottom, boots].reduce((a, f) => a + Math.ceil(f/2), 0) / 10))
+        if (hat > 0 && top > 0 && bottom > 0 && boots > 0) {
             setBonus(1.6)
         }
     }, [hat, top, bottom, boots])
 
     function craftRune(rune, amt) {
+        if (Math.random() < 0.001 || (infinityOutfit === 5 && Math.random() < 0.001)) {
+            setBattlestaff(battlestaff + 1);
+            notifyBS();
+        }
         if (!mute) {audio.play();}
         var boost = 1;
         if (essenceType === "daeyalt_essence") {
@@ -141,39 +238,152 @@ export default function RunecraftSection(props) {
         if (eternal) {
             boost *= 2;
         }
+        if (ringofElements && (rune === "air" || rune === "earth" || rune === "water" || rune === "fire")) {
+            if (ringCharge >= amt) {
+                boost *= 2;
+            } else if (ringCharge < amt) {
+                boost *= (1 + ((1 / amt) * ringCharge));
+            }
+        }
 
         if (rune === "air") {
-            xpbase = 5;
+            if (airGloves === 0) {
+                xpbase = 5;
+            } else if (airGloves >= amt) {
+                xpbase = 5 * 2;
+                setAirGloves(airGloves - amt);
+            } else {
+                xpbase = 5 * (1 + ((1 / amt) * airGloves));
+                setAirGloves(0);
+            }
+            if (ringofElements) {
+                if (ringCharge >= amt) {
+                    setAir(air + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * airLvl)) * 2));
+                    setRingCharge(ringCharge - amt);
+                } else if (ringCharge < amt) {
+                    setAir(air + (Math.floor(ringCharge * bonus * (1 + pBoost/10)) * (1 + (0.1 * airLvl)) * 2) + (Math.floor((amt - ringCharge) * bonus * (1 + pBoost/10)) * (1 + (0.1 * airLvl))));
+                    setRingCharge(0);
+                }
+            } else {
+                setAir(air + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * airLvl))));
+            }
             setShowAir(true);
-            setAir(air + Math.floor(amt * bonus * (1 + pBoost/10)));
         } else if (rune === "earth") {
-            xpbase = 8;
+            if (earthGloves === 0) {
+                xpbase = 8;
+            } else if (earthGloves >= amt) {
+                xpbase = 8 * 2;
+                setEarthGloves(earthGloves - amt);
+            } else {
+                xpbase = 8 * (1 + ((1 / amt) * earthGloves));
+                setEarthGloves(0);
+            }
+            if (ringofElements) {
+                if (ringCharge >= amt) {
+                    setEarth(earth + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * earthLvl)) * 2));
+                    setRingCharge(ringCharge - amt);
+                } else if (ringCharge < amt) {
+                    setEarth(earth + (Math.floor(ringCharge * bonus * (1 + pBoost/10)) * (1 + (0.1 * earthLvl)) * 2) + (Math.floor((amt - ringCharge) * bonus * (1 + pBoost/10)) * (1 + (0.1 * earthLvl))));
+                }
+            } else {
+                setEarth(earth + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * earthLvl))));
+            }
             setShowEarth(true);
-            setEarth(earth + Math.floor(amt * bonus * (1 + pBoost/10)));
         } else if (rune === "water") {
-            xpbase = 10;
+            if (waterGloves === 0) {
+                xpbase = 10;
+            } else if (waterGloves >= amt) {
+                xpbase = 10 * 2;
+                setWaterGloves(waterGloves - amt);
+            } else {
+                xpbase = 10 * (1 + ((1 / amt) * waterGloves));
+                setWaterGloves(0);
+            }
+            if (ringofElements) {
+                if (ringCharge >= amt) {
+                    setWater(water + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * waterLvl)) * 2));
+                    setRingCharge(ringCharge - amt);
+                } else if (ringCharge < amt) {
+                    setWater(water + Math.floor(ringCharge * bonus * (1 + pBoost/10) * (1 + (0.1 * waterLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/10) * (1 + (0.1 * waterLvl))));
+                    setRingCharge(0);
+                }
+            } else {
+                setWater(water + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * waterLvl))));
+            }
             setShowWater(true);
-            setWater(water + Math.floor(amt * bonus * (1 + pBoost/10)));
         } else if (rune === "fire") {
-            xpbase = 12;
+            if (fireGloves === 0) {
+                xpbase = 12;
+            } else if (fireGloves >= amt) {
+                xpbase = 12 * 2;
+                setFireGloves(fireGloves - amt);
+            } else {
+                xpbase = 12 * (1 + ((1 / amt) * fireGloves));
+                setFireGloves(0);
+            }
+            if (ringofElements) {
+                if (ringCharge >= amt) {
+                    setFire(fire + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * fireLvl)) * 2));
+                    setRingCharge(ringCharge - amt);
+                } else if (ringCharge < amt) {
+                    setFire(fire + Math.floor(ringCharge * bonus * (1 + pBoost/10) * (1 + (0.1 * fireLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/10) * (1 + (0.1 * fireLvl))));
+                    setRingCharge(0);
+                }
+            } else {
+                setFire(fire + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * fireLvl))));
+            }
             setShowFire(true);
-            setFire(fire + Math.floor(amt * bonus * (1 + pBoost/10)));
         } else if (rune === "astral") {
             xpbase = 15;
             setShowAstral(true);
-            setAstral(astral + Math.floor(amt * bonus * (1 + pBoost/10)));
+            setAstral(astral + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * astralLvl))));
         } else if (rune === "law") {
-            xpbase = 19;
+            if ((infinityOutfit === 5 && Math.random() < 0.07) || (lawOutfit === 5 && Math.random() < 0.1)) {
+                xpbase = 38;
+                setLaw(law + (Math.floor(amt * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * lawLvl))));
+            } else {
+                xpbase = 19;
+                setLaw(law + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * lawLvl))));
+            }
             setShowLaw(true);
-            setLaw(law + Math.floor(amt * bonus * (1 + pBoost/10)));
         } else if (rune === "blood") {
-            xpbase = 24;
+            if ((infinityOutfit === 5 && Math.random() < 0.07) || (bloodOutfit === 5 && Math.random() < 0.05)) {
+                if (bloodEssence === 0) {
+                    xpbase = 48;
+                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * bloodLvl))));
+                } else if (bloodEssence >= amt) {
+                    xpbase = 48 * 1.5;
+                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * bloodLvl)) * 1.5));
+                    setBloodEssence(bloodEssence - amt);
+                } else {
+                    xpbase = 48 * (1 + ((0.5 / amt) * bloodEssence));
+                    setBlood(blood + (Math.floor(bloodEssence * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * bloodLvl)) * 1.5) + (Math.floor((amt - bloodEssence) * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * bloodLvl))));
+                    setBloodEssence(0);
+                }
+            } else {
+                if (bloodEssence === 0) {
+                    xpbase = 24;
+                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/10)) * (1 + (0.1 * bloodLvl))));
+                } else if (bloodEssence >= amt) {
+                    xpbase = 24 * 1.5;
+                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/10)) * (1 + (0.1 * bloodLvl)) * 1.5));
+                    setBloodEssence(bloodEssence - amt);
+                } else {
+                    xpbase = 24 * (1 + ((0.5 / amt) * bloodEssence));
+                    setBlood(blood + (Math.floor(bloodEssence * bonus * (1 + pBoost/10)) * (1 + (0.1 * bloodLvl)) * 1.5) + (Math.floor((amt - bloodEssence) * bonus * (1 + pBoost/10)) * (1 + (0.1 * bloodLvl))));
+                    setBloodEssence(0);
+                }
+            }
             setShowBlood(true);
-            setBlood(blood + Math.floor(amt * bonus * (1 + pBoost/10)));
         } else if (rune === "wrath") {
-            xpbase = 30;
+            if ((infinityOutfit === 5 && Math.random() < 0.07) || (wrathOutfit === 5 && Math.random() < 0.05)) {
+                xpbase = 60;
+                setWrath(wrath + (Math.floor(amt * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * wrathLvl))));
+            } else {
+                xpbase = 30;
+                setWrath(wrath + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * wrathLvl))));
+            }
             setShowWrath(true);
-            setWrath(wrath + Math.floor(amt * bonus * (1 + pBoost/10)));
         } else if (rune === "ourania") {
             // Chances of getting certain runes
             // The higher rc lvl, the more likely you get higher level runes
@@ -210,21 +420,54 @@ export default function RunecraftSection(props) {
                     }
                 }
             }
-            setWrath(wrath + Math.floor(runes[0] * bonus * (1 + pBoost/10)));
-            setBlood(blood + Math.floor(runes[1] * bonus * (1 + pBoost/10)));
-            setLaw(law + Math.floor(runes[2] * bonus * (1 + pBoost/10)));
-            setAstral(astral + Math.floor(runes[3] * bonus * (1 + pBoost/10)));
-            setFire(fire + Math.floor(runes[4] * bonus * (1 + pBoost/10)));
-            setWater(water + Math.floor(runes[5] * bonus * (1 + pBoost/10)));
-            setEarth(earth + Math.floor(runes[6] * bonus * (1 + pBoost/10)));
-            setAir(air + Math.floor(runes[7] * bonus * (1 + pBoost/10)));
+            setWrath(wrath + Math.floor(runes[0] * bonus * (1 + pBoost/10) * (1 + (0.1 * wrathLvl))));
+            if (bloodEssence === 0) {
+                setBlood(blood + Math.floor(runes[1] * bonus * (1 + pBoost/10) * (1 + (0.1 * bloodLvl))));
+            } else if (bloodEssence >= runes[1]) {
+                setBlood(blood + (Math.floor(runes[1] * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * bloodLvl)) * 1.5));
+            } else {
+                setBlood(blood + (Math.floor(bloodEssence * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * bloodLvl)) * 1.5) + (Math.floor((runes[1] - bloodEssence) * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * bloodLvl))));
+            }
+            setLaw(law + Math.floor(runes[2] * bonus * (1 + pBoost/10) * (1 + (0.1 * lawLvl))));
+            setAstral(astral + Math.floor(runes[3] * bonus * (1 + pBoost/10) * (1 + (0.1 * astralLvl))));
+            setFire(fire + Math.floor(runes[4] * bonus * (1 + pBoost/10) * (1 + (0.1 * fireLvl))));
+            setWater(water + Math.floor(runes[5] * bonus * (1 + pBoost/10) * (1 + (0.1 * waterLvl))));
+            setEarth(earth + Math.floor(runes[6] * bonus * (1 + pBoost/10) * (1 + (0.1 * earthLvl))));
+            setAir(air + Math.floor(runes[7] * bonus * (1 + pBoost/10) * (1 + (0.1 * airLvl))));
 
             setShowOurania(true);
-            setXpgain(Math.floor(((30 * runes[0]) + (24 * runes[1]) + (19 * runes[2]) + (15 * runes[3]) + (12 * runes[4]) + (10 * runes[5]) + (8 * runes[6]) + (5 * runes[7])) * boost * 1.7 * (1 + pBoost/10)));
+            var bloodxp = 24;
+            if (bloodEssence >= runes[1]) {
+                bloodxp = 24 * 1.5;
+                setBloodEssence(bloodEssence - runes[1]);
+            } else if (bloodEssence < runes[1]) {
+                bloodxp = 24 * (1 + ((0.5 / runes[1]) * bloodEssence));
+                setBloodEssence(0);
+            }
+            if (hat > 1 && top > 1 && bottom > 1 && boots > 1) {
+                setXpgain(Math.floor(((30 * runes[0]) + (bloodxp * runes[1]) + (19 * runes[2]) + (15 * runes[3]) + (12 * runes[4]) + (10 * runes[5]) + (8 * runes[6]) + (5 * runes[7])) * boost * 1.7 * (1 + pBoost/10) * 1.5));
+            } else {
+                setXpgain(Math.floor(((30 * runes[0]) + (bloodxp * runes[1]) + (19 * runes[2]) + (15 * runes[3]) + (12 * runes[4]) + (10 * runes[5]) + (8 * runes[6]) + (5 * runes[7])) * boost * 1.7 * (1 + pBoost/10) * (1 + ([hat, top, bottom, boots].reduce((a, f) => a + Math.floor(f/2), 0) / 10))));
+            }
+        }
+
+        // 10% of runes crafted turn into law, blood and wrath if you have the outfits
+        if (lawOutfit === 5 & rune !== "law") {
+            setLaw(law + Math.floor((amt * bonus * (1 + pBoost/10)) * 0.1));
+        }
+        if (bloodOutfit === 5 && rune !== "blood") {
+            setBlood(blood + Math.floor((amt * bonus * (1 + pBoost/10)) * 0.1));
+        }
+        if (wrathOutfit === 5 && rune !== "wrath") {
+            setWrath(wrath + Math.floor((amt * bonus * (1 + pBoost/10)) * 0.1));
         }
 
         if (rune !== "ourania") {
-            setXpgain(Math.floor(xpbase * amt * boost * (1 + pBoost/10)));
+            if (hat > 1 && top > 1 && bottom > 1 && boots > 1) {
+                setXpgain(Math.floor(xpbase * amt * boost * (1 + pBoost/10) * 1.5));
+            } else {
+                setXpgain(Math.floor(xpbase * amt * boost * (1 + pBoost/10) * (1 + ([hat, top, bottom, boots].reduce((a, f) => a + Math.floor(f/2), 0) / 10))));
+            }
         }
     }
 
@@ -237,6 +480,10 @@ export default function RunecraftSection(props) {
     }
 
     function craftCombination(rune, amt) {
+        if (Math.random() < 0.001 || (infinityOutfit === 5 && Math.random() < 0.001)) {
+            setBattlestaff(battlestaff + 1);
+            notifyBS();
+        }
         if (!mute) {audio.play();}
         var boost = 1;
         if (essenceType === "daeyalt_essence") {
@@ -244,36 +491,50 @@ export default function RunecraftSection(props) {
         } else if (essenceType === "dark_essence") {
             boost = 2;
         }
+        if (eternal) {
+            boost *= 2;
+        }
+
+        if (ringofElements) {
+            if (ringCharge >= amt) {
+                boost *= 2;
+                setRingCharge(ringCharge - amt);
+            } else if (ringCharge < amt) {
+                boost *= (1 + ((1 / amt) * ringCharge));
+                setRingCharge(0);
+            }
+        }
 
         if (rune === "dust") {
             xpbase = 13;
             setShowDust(true);
-            setAir(air + Math.floor(amt * bonus));
-            setEarth(earth + Math.floor(amt * bonus));
+            setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
+            setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
         } else if (rune === "mist") {
             xpbase = 15;
             setShowMist(true);
-            setAir(air + Math.floor(amt * bonus));
-            setWater(water + Math.floor(amt * bonus));
+            setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
+            setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
         } else if (rune === "mud") {
             xpbase = 18;
             setShowMud(true);
-            setEarth(earth + Math.floor(amt * bonus));
-            setWater(water + Math.floor(amt * bonus));
+            setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
+            setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
         } else if (rune === "smoke") {
             xpbase = 17;
             setShowSmoke(true);
-            setAir(air + Math.floor(amt * bonus));
-            setFire(fire + Math.floor(amt * bonus));
+            setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
+            setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
         } else if (rune === "steam") {
             xpbase = 22;
             setShowSteam(true);
-            setWater(water + Math.floor(amt * bonus));
-            setFire(fire + Math.floor(amt * bonus));
+            setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
+            setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
         } else if (rune === "lava") {
             xpbase = 20;
-            setEarth(earth + Math.floor(amt * bonus));
-            setFire(fire + Math.floor(amt * bonus));
+            setShowLava(true);
+            setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
+            setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
         }
 
         setXpgain(Math.floor(xpbase * amt * boost));
@@ -282,8 +543,6 @@ export default function RunecraftSection(props) {
     useEffect(() => {
         if (xpgain > 0) {
             setTotalxp((totalxp + Math.round(xpgain)))
-            setInventory([]);
-            setExtra(0);
         }
     }, [xpgain]);
 
@@ -305,12 +564,29 @@ export default function RunecraftSection(props) {
         }
     }, [inventory, runename, extra]);
 
+    useEffect(() => {
+        if (staff === "air") {
+            setAir(9999);
+        } else if (staff === "earth") {
+            setEarth(9999);
+        } else if (staff === "water") {
+            setWater(9999);
+        } else if (staff === "fire") {
+            setFire(9999);
+        } else if (staff === "astral") {
+            setAstral(9999);
+        } else if (staff === "law") {
+            setLaw(9999);
+        } else if (staff === "blood") {
+            setBlood(9999);
+        } else if (staff === "wrath") {
+            setWrath(9999);
+        }
+    }, [air, earth, water, fire, astral, law, blood, wrath]);
+
     return (
         <ThemeProvider theme={theme}>
         <Box sx={{width: "80%"}}>
-            {/* XP: {xp}
-            <br></br>
-            Next Lvl: {(1/4 * Math.floor(lvl + 300 * (Math.pow(2, (lvl) / 7))))} */}
             <Grid container spacing={3} sx={{ marginLeft: "0px"}}>
                 {mode === "zmi" ? ""
                 :
@@ -323,191 +599,395 @@ export default function RunecraftSection(props) {
                     <Button variant="contained" color="success" onClick={() => {
                         if (inventory.length > 0 || extra > 0) { // this if should be in the function btw
                             craftRune("air", inventory.length + extra);
+                            setInventory([]);
+                            if (infinityOutfit === 5 && Math.random() < 0.95) {
+                                setExtra(0);
+                            } else if (infinityOutfit !== 5) {
+                                setExtra(0);
+                            }
                         }
                     }}>
                         Craft Air Rune&nbsp;
                         <img src={airRune} alt="Craft Air" width="50px" height="50px"></img>
                     </Button>
                     <br></br>
-                    Lvl: 1
+
+                    <br></br>
+                    {airOrb && staff !== "air" ?
+                    <React.Fragment>
+                    <Tooltip arrow title={battlestaff > 0 ? "" :
+                        <React.Fragment>
+                        <Typography><font color="white">You need a battlestaff to craft this!</font></Typography>
+                        </React.Fragment>
+                    } placement="top">
+                        <Box>
+                        <Button variant="contained" color="success" disabled={battlestaff > 0 ? false : true} onClick={() => {
+                            handleClickOpen("air")
+                        }}>
+                            Craft Air Staff&nbsp;
+                            <img src={AirOrb} alt="Craft Air" width="50px" height="50px"></img>
+                        </Button>
+                        </Box>
+                    </Tooltip>
+                    </React.Fragment> : ""}
                 </Grid>
 
                 <Grid item xs>
                     <div style={{visibility: showEarth ? '' : "hidden", color: "green", fontSize: "20px"}} className={showEarth ? "slide" : ""} onAnimationEnd={() => {setShowEarth(false); setXpgain(0);}}>
                         +{Math.round(xpgain)}
                     </div>
-                    <Button variant="contained" color={lvl >= 9 ? "success" : "error"} disabled={lvl >= 9 ? false : true} onClick={() => {
+                    <Button variant="contained" color={lvl >= 9 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 8 ? "success" : "error"} disabled={lvl >= 9 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 8 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftRune("earth", inventory.length + extra);
+                            setInventory([]);
+                            if (infinityOutfit === 5 && Math.random() < 0.95) {
+                                setExtra(0);
+                            } else if (infinityOutfit !== 5) {
+                                setExtra(0);
+                            }
                         }
                     }}>
                         Craft Earth Rune&nbsp;
                         <img src={earthRune} alt="Craft Earth" width="50px" height="50px"></img>
                     </Button>
                     <br></br>
-                    Lvl: 9
+                    {runecraftCape === 2 ? "" : "Lvl: 9"}
+                    <br></br>
+                    {earthOrb && staff !== "earth" ?
+                    <React.Fragment>
+                    <Tooltip arrow title={battlestaff > 0 ? "" :
+                        <React.Fragment>
+                        <Typography><font color="white">You need a battlestaff to craft this!</font></Typography>
+                        </React.Fragment>
+                    } placement="top">
+                        <Box>
+                        <Button variant="contained" color="success" disabled={battlestaff > 0 ? false : true} onClick={() => {
+                            handleClickOpen("earth")
+                        }}>
+                            Craft Earth Staff&nbsp;
+                            <img src={EarthOrb} alt="Craft Earth" width="50px" height="50px"></img>
+                        </Button>
+                        </Box>
+                    </Tooltip>
+                    </React.Fragment> : ""}
                 </Grid>
 
                 <Grid item xs>
                     <div style={{visibility: showWater ? '' : "hidden", color: "green", fontSize: "20px"}} className={showWater ? "slide" : ""} onAnimationEnd={() => {setShowWater(false); setXpgain(0);}}>
                         +{Math.round(xpgain)}
                     </div>
-                    <Button variant="contained" color={lvl >= 14 ? "success" : "error"} disabled={lvl >= 14 ? false : true} onClick={() => {
+                    <Button variant="contained" color={lvl >= 14 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 13 ? "success" : "error"} disabled={lvl >= 14 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 13 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftRune("water", inventory.length + extra);
+                            setInventory([]);
+                            if (infinityOutfit === 5 && Math.random() < 0.95) {
+                                setExtra(0);
+                            } else if (infinityOutfit !== 5) {
+                                setExtra(0);
+                            }
                         }
                     }}>
                         Craft Water Rune&nbsp;
                         <img src={waterRune} alt="Craft Water" width="50px" height="50px"></img>
                     </Button>
                     <br></br>
-                    Lvl: 14
+                    {runecraftCape === 2 ? "" : "Lvl: 14"}
+                    <br></br>
+                    {waterOrb && staff !== "water" ?
+                    <React.Fragment>
+                    <Tooltip arrow title={battlestaff > 0 ? "" :
+                        <React.Fragment>
+                        <Typography><font color="white">You need a battlestaff to craft this!</font></Typography>
+                        </React.Fragment>
+                    } placement="top">
+                        <Box>
+                        <Button variant="contained" color="success" disabled={battlestaff > 0 ? false : true} onClick={() => {
+                            handleClickOpen("water")
+                        }}>
+                            Craft Water Staff&nbsp;
+                            <img src={WaterOrb} alt="Craft Water" width="50px" height="50px"></img>
+                        </Button>
+                        </Box>
+                    </Tooltip>
+                    </React.Fragment> : ""}
                 </Grid>
 
                 <Grid item xs>
                     <div style={{visibility: showFire ? '' : "hidden", color: "green", fontSize: "20px"}} className={showFire ? "slide" : ""} onAnimationEnd={() => {setShowFire(false); setXpgain(0);}}>
                         +{Math.round(xpgain)}
                     </div>
-                    <Button variant="contained" color={lvl >= 27 ? "success" : "error"} disabled={lvl >= 27 ? false : true} onClick={() => {
+                    <Button variant="contained" color={lvl >= 27 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 26 ? "success" : "error"} disabled={lvl >= 27 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 26 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftRune("fire", inventory.length + extra);
+                            setInventory([]);
+                            if (infinityOutfit === 5 && Math.random() < 0.95) {
+                                setExtra(0);
+                            } else if (infinityOutfit !== 5) {
+                                setExtra(0);
+                            }
                         }
                     }}>
                         Craft Fire Rune&nbsp;
                         <img src={fireRune} alt="Craft Fire" width="50px" height="50px"></img>
                     </Button>
                     <br></br>
-                    Lvl: 27
+                    {runecraftCape === 2 ? "" : "Lvl: 27"}
+                    <br></br>
+                    {fireOrb && staff !== "fire" ?
+                    <React.Fragment>
+                    <Tooltip arrow title={battlestaff > 0 ? "" :
+                        <React.Fragment>
+                        <Typography><font color="white">You need a battlestaff to craft this!</font></Typography>
+                        </React.Fragment>
+                    } placement="top">
+                        <Box>
+                        <Button variant="contained" color="success" disabled={battlestaff > 0 ? false : true} onClick={() => {
+                            handleClickOpen("fire")
+                        }}>
+                            Craft Fire Staff&nbsp;
+                            <img src={FireOrb} alt="Craft Fire" width="50px" height="50px"></img>
+                        </Button>
+                        </Box>
+                    </Tooltip>
+                    </React.Fragment> : ""}
                 </Grid>
                 </React.Fragment>
                 :
                 // Combinations
                 <React.Fragment>
-                <Tooltip title={
-                    <React.Fragment>
-                        <Typography>Combination: <img src={airRune} width="36px" height="36px" alt="Air Rune"></img><img src={earthRune} width="36px" height="36px" alt="Earth Rune"></img></Typography>
-                    </React.Fragment>} arrow placement="right" disableInteractive>
                 <Grid item xs>
                 <div style={{visibility: showDust ? '' : "hidden", color: "green", fontSize: "20px"}} className={showDust ? "slide" : ""} onAnimationEnd={() => {setShowDust(false); setXpgain(0);}}>
                     +{Math.round(xpgain)}
                 </div>
+                <Tooltip title={
+                    <React.Fragment>
+                        <Typography>Combination: <img src={airRune} width="36px" height="36px" alt="Air Rune"></img><img src={earthRune} width="36px" height="36px" alt="Earth Rune"></img></Typography>
+                    </React.Fragment>} arrow placement="top" disableInteractive>
                     <Button variant="contained" color="success" onClick={() => {
                         if (inventory.length > 0 || extra > 0) { // this if should be in the function btw
                             craftCombination("dust", inventory.length + extra);
+                            setInventory([]);
+                            if (infinityOutfit === 5 && Math.random() < 0.95) {
+                                setExtra(0);
+                            } else if (infinityOutfit !== 5) {
+                                setExtra(0);
+                            }
                         }
                     }}>
                         Craft Dust Rune&nbsp;
                         <img src={dustRune} alt="Craft Dust" width="50px" height="50px"></img>
                     </Button>
+                    </Tooltip>
                     <br></br>
-                    Lvl: 1
-                </Grid>
-                </Tooltip>
-
-                <Tooltip title={
+                    <br></br>
+                    {airOrb && staff !== "air" ?
                     <React.Fragment>
-                        <Typography>Combination: <img src={airRune} width="36px" height="36px" alt="Air Rune"></img><img src={waterRune} width="36px" height="36px" alt="Water Rune"></img></Typography>
-                    </React.Fragment>} arrow placement="right" disableInteractive>
+                    <Tooltip arrow title={battlestaff > 0 ? "" :
+                        <React.Fragment>
+                        <Typography><font color="white">You need a battlestaff to craft this!</font></Typography>
+                        </React.Fragment>
+                    } placement="top">
+                        <Box>
+                        <Button variant="contained" color="success" disabled={battlestaff > 0 ? false : true} onClick={() => {
+                            handleClickOpen("air")
+                        }}>
+                            Craft Air Staff&nbsp;
+                            <img src={AirOrb} alt="Craft Air" width="50px" height="50px"></img>
+                        </Button>
+                        </Box>
+                    </Tooltip>
+                    </React.Fragment> : ""}
+
+                </Grid>
+
                 <Grid item xs>
                     <div style={{visibility: showMist ? '' : "hidden", color: "green", fontSize: "20px"}} className={showMist ? "slide" : ""} onAnimationEnd={() => {setShowMist(false); setXpgain(0);}}>
                         +{Math.round(xpgain)}
                     </div>
-                    <Button variant="contained" color={lvl >= 8 ? "success" : "error"} disabled={lvl >= 8 ? false : true} onClick={() => {
+                    <Tooltip title={
+                    <React.Fragment>
+                        <Typography>Combination: <img src={airRune} width="36px" height="36px" alt="Air Rune"></img><img src={waterRune} width="36px" height="36px" alt="Water Rune"></img></Typography>
+                    </React.Fragment>} arrow placement="top" disableInteractive>
+                    <Button variant="contained" color={lvl >= 8 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 7 ? "success" : "error"} disabled={lvl >= 8 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 7 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftCombination("mist", inventory.length + extra);
+                            setInventory([]);
+                            if (infinityOutfit === 5 && Math.random() < 0.95) {
+                                setExtra(0);
+                            } else if (infinityOutfit !== 5) {
+                                setExtra(0);
+                            }
                         }
                     }}>
                         Craft Mist Rune&nbsp;
                         <img src={mistRune} alt="Craft Mist" width="50px" height="50px"></img>
                     </Button>
+                    </Tooltip>
                     <br></br>
-                    Lvl: 8
-                </Grid>
-                </Tooltip>
-
-                <Tooltip title={
+                    {runecraftCape === 2 ? "" : "Lvl: 8"}
+                    <br></br>
+                    {waterOrb && staff !== "water" ?
                     <React.Fragment>
-                        <Typography>Combination: <img src={waterRune} width="36px" height="36px" alt="Water Rune"></img><img src={earthRune} width="36px" height="36px" alt="Earth Rune"></img></Typography>
-                    </React.Fragment>} arrow placement="right" disableInteractive>
+                    <Tooltip arrow title={battlestaff > 0 ? "" :
+                        <React.Fragment>
+                        <Typography><font color="white">You need a battlestaff to craft this!</font></Typography>
+                        </React.Fragment>
+                    } placement="top">
+                        <Box>
+                        <Button variant="contained" color="success" disabled={battlestaff > 0 ? false : true} onClick={() => {
+                            handleClickOpen("water")
+                        }}>
+                            Craft Water Staff&nbsp;
+                            <img src={WaterOrb} alt="Craft Water" width="50px" height="50px"></img>
+                        </Button>
+                        </Box>
+                    </Tooltip>
+                    </React.Fragment> : ""}
+                </Grid>
+
                 <Grid item xs>
                     <div style={{visibility: showMud ? '' : "hidden", color: "green", fontSize: "20px"}} className={showMud ? "slide" : ""} onAnimationEnd={() => {setShowMud(false); setXpgain(0);}}>
                         +{Math.round(xpgain)}
                     </div>
-                    <Button variant="contained" color={lvl >= 13 ? "success" : "error"} disabled={lvl >= 13 ? false : true} onClick={() => {
+                    <Tooltip title={
+                    <React.Fragment>
+                        <Typography>Combination: <img src={waterRune} width="36px" height="36px" alt="Water Rune"></img><img src={earthRune} width="36px" height="36px" alt="Earth Rune"></img></Typography>
+                    </React.Fragment>} arrow placement="top" disableInteractive>
+                    <Button variant="contained" color={lvl >= 13 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 12 ? "success" : "error"} disabled={lvl >= 13 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 12 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftCombination("mud", inventory.length + extra);
+                            setInventory([]);
+                            if (infinityOutfit === 5 && Math.random() < 0.95) {
+                                setExtra(0);
+                            } else if (infinityOutfit !== 5) {
+                                setExtra(0);
+                            }
                         }
                     }}>
                         Craft Mud Rune&nbsp;
                         <img src={mudRune} alt="Craft Mud" width="50px" height="50px"></img>
                     </Button>
+                    </Tooltip>
                     <br></br>
-                    Lvl: 13
-                </Grid>
-                </Tooltip>
-
-                <Tooltip title={
+                    {runecraftCape === 2 ? "" : "Lvl: 13"}
+                    <br></br>
+                    {earthOrb && staff !== "earth" ?
                     <React.Fragment>
-                        <Typography>Combination: <img src={airRune} width="36px" height="36px" alt="Air Rune"></img><img src={fireRune} width="36px" height="36px" alt="Fire Rune"></img></Typography>
-                    </React.Fragment>} arrow placement="right" disableInteractive>
+                    <Tooltip arrow title={battlestaff > 0 ? "" :
+                        <React.Fragment>
+                        <Typography><font color="white">You need a battlestaff to craft this!</font></Typography>
+                        </React.Fragment>
+                    } placement="top">
+                        <Box>
+                        <Button variant="contained" color="success" disabled={battlestaff > 0 ? false : true} onClick={() => {
+                            handleClickOpen("earth")
+                        }}>
+                            Craft Earth Staff&nbsp;
+                            <img src={EarthOrb} alt="Craft Earth" width="50px" height="50px"></img>
+                        </Button>
+                        </Box>
+                    </Tooltip>
+                    </React.Fragment> : ""}
+                </Grid>
+
                 <Grid item xs>
                     <div style={{visibility: showSmoke ? '' : "hidden", color: "green", fontSize: "20px"}} className={showSmoke ? "slide" : ""} onAnimationEnd={() => {setShowSmoke(false); setXpgain(0);}}>
                         +{Math.round(xpgain)}
                     </div>
-                    <Button variant="contained" color={lvl >= 15 ? "success" : "error"} disabled={lvl >= 15 ? false : true} onClick={() => {
+                    <Tooltip title={
+                    <React.Fragment>
+                        <Typography>Combination: <img src={airRune} width="36px" height="36px" alt="Air Rune"></img><img src={fireRune} width="36px" height="36px" alt="Fire Rune"></img></Typography>
+                    </React.Fragment>} arrow placement="top" disableInteractive>
+                    <Button variant="contained" color={lvl >= 15 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 14 ? "success" : "error"} disabled={lvl >= 15 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 14 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftCombination("smoke", inventory.length + extra);
+                            setInventory([]);
+                            if (infinityOutfit === 5 && Math.random() < 0.95) {
+                                setExtra(0);
+                            } else if (infinityOutfit !== 5) {
+                                setExtra(0);
+                            }
                         }
                     }}>
                         Craft Smoke Rune&nbsp;
                         <img src={smokeRune} alt="Craft Smoke" width="50px" height="50px"></img>
                     </Button>
+                    </Tooltip>
                     <br></br>
-                    Lvl: 15
-                </Grid>
-                </Tooltip>
-
-                <Tooltip title={
+                    {runecraftCape === 2 ? "" : "Lvl: 15"}
+                    <br></br>
+                    {fireOrb && staff !== "fire" ?
                     <React.Fragment>
-                        <Typography>Combination: <img src={earthRune} width="36px" height="36px" alt="Earth Rune"></img><img src={fireRune} width="36px" height="36px" alt="Fire Rune"></img></Typography>
-                    </React.Fragment>} arrow placement="right" disableInteractive>
+                    <Tooltip arrow title={battlestaff > 0 ? "" :
+                        <React.Fragment>
+                        <Typography><font color="white">You need a battlestaff to craft this!</font></Typography>
+                        </React.Fragment>
+                    } placement="top">
+                        <Box>
+                        <Button variant="contained" color="success" disabled={battlestaff > 0 ? false : true} onClick={() => {
+                            handleClickOpen("fire")
+                        }}>
+                            Craft Fire Staff&nbsp;
+                            <img src={FireOrb} alt="Craft Fire" width="50px" height="50px"></img>
+                        </Button>
+                        </Box>
+                    </Tooltip>
+                    </React.Fragment> : ""}
+                </Grid>
+
                 <Grid item xs>
                     <div style={{visibility: showLava ? '' : "hidden", color: "green", fontSize: "20px"}} className={showLava ? "slide" : ""} onAnimationEnd={() => {setShowLava(false); setXpgain(0);}}>
                         +{Math.round(xpgain)}
                     </div>
-                    <Button variant="contained" color={lvl >= 19 ? "success" : "error"} disabled={lvl >= 19 ? false : true} onClick={() => {
+                    <Tooltip title={
+                    <React.Fragment>
+                        <Typography>Combination: <img src={earthRune} width="36px" height="36px" alt="Earth Rune"></img><img src={fireRune} width="36px" height="36px" alt="Fire Rune"></img></Typography>
+                    </React.Fragment>} arrow placement="top" disableInteractive>
+                    <Button variant="contained" color={lvl >= 19 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 18 ? "success": "error"} disabled={lvl >= 19 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 18 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftCombination("lava", inventory.length + extra);
+                            setInventory([]);
+                            if (infinityOutfit === 5 && Math.random() < 0.95) {
+                                setExtra(0);
+                            } else if (infinityOutfit !== 5) {
+                                setExtra(0);
+                            }
                         }
                     }}>
                         Craft Lava Rune&nbsp;
                         <img src={lavaRune} alt="Craft Lava" width="50px" height="50px"></img>
                     </Button>
+                    </Tooltip>
                     <br></br>
-                    Lvl: 19
+                    {runecraftCape === 2 ? "" : "Lvl: 19"}
                 </Grid>
-                </Tooltip>
 
-                <Tooltip title={
-                    <React.Fragment>
-                        <Typography>Combination: <img src={waterRune} width="36px" height="36px" alt="Water Rune"></img><img src={fireRune} width="36px" height="36px" alt="Fire Rune"></img></Typography>
-                    </React.Fragment>} arrow placement="right" disableInteractive>
                 <Grid item xs>
                     <div style={{visibility: showSteam ? '' : "hidden", color: "green", fontSize: "20px"}} className={showSteam ? "slide" : ""} onAnimationEnd={() => {setShowSteam(false); setXpgain(0);}}>
                         +{Math.round(xpgain)}
                     </div>
-                    <Button variant="contained" color={lvl >= 23 ? "success" : "error"} disabled={lvl >= 23 ? false : true} onClick={() => {
+                    <Tooltip title={
+                    <React.Fragment>
+                        <Typography>Combination: <img src={waterRune} width="36px" height="36px" alt="Water Rune"></img><img src={fireRune} width="36px" height="36px" alt="Fire Rune"></img></Typography>
+                    </React.Fragment>} arrow placement="top" disableInteractive>
+                    <Button variant="contained" color={lvl >= 23 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 22 ? "success": "error"} disabled={lvl >= 23 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 22 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftCombination("steam", inventory.length + extra);
+                            setInventory([]);
+                            if (infinityOutfit === 5 && Math.random() < 0.95) {
+                                setExtra(0);
+                            } else if (infinityOutfit !== 5) {
+                                setExtra(0);
+                            }
                         }
                     }}>
                         Craft Steam Rune&nbsp;
                         <img src={steamRune} alt="Craft Steam" width="50px" height="50px"></img>
                     </Button>
+                    </Tooltip>
                     <br></br>
-                    Lvl: 23
+                    {runecraftCape === 2 ? "" : "Lvl: 23"}
                 </Grid>
-                </Tooltip>
                 </React.Fragment>
                 }
 
@@ -518,65 +998,179 @@ export default function RunecraftSection(props) {
                     <div style={{visibility: showAstral ? '' : "hidden", color: "green", fontSize: "20px"}} className={showAstral ? "slide" : ""} onAnimationEnd={() => {setShowAstral(false); setXpgain(0);}}>
                         +{Math.round(xpgain)}
                     </div>
-                    <Button variant="contained" color={lvl >= 40 ? "success" : "error"} disabled={lvl >= 40 ? false : true} onClick={() => {
+                    <Button variant="contained" color={lvl >= 40 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 39 ? "success" : "error"} disabled={lvl >= 40 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 39 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftRune("astral", inventory.length + extra);
+                            setInventory([]);
+                            if (infinityOutfit === 5 && Math.random() < 0.95) {
+                                setExtra(0);
+                            } else if (infinityOutfit !== 5) {
+                                setExtra(0);
+                            }
                         }
                     }}>
                         Craft Astral Rune&nbsp;
                         <img src={astralRune} alt="Craft Astral" width="50px" height="50px"></img>
                     </Button>
                     <br></br>
-                    Lvl: 40
+                    {runecraftCape === 2 ? "" : "Lvl: 40"}
+                    <br></br>
+                    {astralOrb && staff !== "astral" ?
+                    <React.Fragment>
+                    <Tooltip arrow title={battlestaff > 0 ? "" :
+                        <React.Fragment>
+                        <Typography><font color="white">You need a battlestaff to craft this!</font></Typography>
+                        </React.Fragment>
+                    } placement="top">
+                        <Box>
+                        <Button variant="contained" color="success" disabled={battlestaff > 0 ? false : true} onClick={() => {
+                            handleClickOpen("astral")
+                        }}>
+                            Craft Astral Staff&nbsp;
+                            <img src={AstralOrb} alt="Craft Astral" width="50px" height="50px"></img>
+                        </Button>
+                        </Box>
+                    </Tooltip>
+                    </React.Fragment> : ""}
                 </Grid>
 
                 <Grid item xs>
                     <div style={{visibility: showLaw ? '' : "hidden", color: "green", fontSize: "20px"}} className={showLaw ? "slide" : ""} onAnimationEnd={() => {setShowLaw(false); setXpgain(0);}}>
                         +{Math.round(xpgain)}
                     </div>
-                    <Button variant="contained" color={lvl >= 54 ? "success" : "error"} disabled={lvl >= 54 ? false : true} onClick={() => {
+                    <Button variant="contained" color={lvl >= 54 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 53 ? "success" : "error"} disabled={lvl >= 54 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 53 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftRune("law", inventory.length + extra);
+                            setInventory([]);
+                            if (infinityOutfit === 5 && Math.random() < 0.95) {
+                                setExtra(0);
+                            } else if (infinityOutfit !== 5) {
+                                setExtra(0);
+                            }
                         }
                     }}>
                         Craft Law Rune&nbsp;
                         <img src={lawRune} alt="Craft Astral" width="50px" height="50px"></img>
                     </Button>
                     <br></br>
-                    Lvl: 54
+                    {runecraftCape === 2 ? "" : "Lvl: 54"}
+                    <br></br>
+                    {lawOrb && staff !== "law" ?
+                    <React.Fragment>
+                    <Tooltip arrow title={battlestaff > 0 ? "" :
+                        <React.Fragment>
+                        <Typography><font color="white">You need a battlestaff to craft this!</font></Typography>
+                        </React.Fragment>
+                    } placement="top">
+                        <Box>
+                        <Button variant="contained" color="success" disabled={battlestaff > 0 ? false : true} onClick={() => {
+                            handleClickOpen("law")
+                        }}>
+                            Craft Law Staff&nbsp;
+                            <img src={LawOrb} alt="Craft Law" width="50px" height="50px"></img>
+                        </Button>
+                        </Box>
+                    </Tooltip>
+                    </React.Fragment> : ""}
                 </Grid>
 
                 <Grid item xs>
                     <div style={{visibility: showBlood ? '' : "hidden", color: "green", fontSize: "20px"}} className={showBlood ? "slide" : ""} onAnimationEnd={() => {setShowBlood(false); setXpgain(0);}}>
                         +{Math.round(xpgain)}
                     </div>
-                    <Button variant="contained" color={lvl >= 77 ? "success" : "error"} disabled={lvl >= 77 ? false : true} onClick={() => {
+                    <Button variant="contained" color={lvl >= 77 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 76 ? "success": "error"} disabled={lvl >= 77 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 76 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftRune("blood", inventory.length + extra);
+                            setInventory([]);
+                            if (infinityOutfit === 5 && Math.random() < 0.95) {
+                                setExtra(0);
+                            } else if (infinityOutfit !== 5) {
+                                setExtra(0);
+                            }
                         }
                     }}>
                         Craft Blood Rune&nbsp;
                         <img src={bloodRune} alt="Craft Astral" width="50px" height="50px"></img>
                     </Button>
                     <br></br>
-                    Lvl: 77
+                    {runecraftCape === 2 ? "" : "Lvl: 77"}
+                    <br></br>
+                    {bloodOrb && staff !== "blood" ?
+                    <React.Fragment>
+                    <Tooltip arrow title={battlestaff > 0 ? "" :
+                        <React.Fragment>
+                        <Typography><font color="white">You need a battlestaff to craft this!</font></Typography>
+                        </React.Fragment>
+                    } placement="top">
+                        <Box>
+                        <Button variant="contained" color="success" disabled={battlestaff > 0 ? false : true} onClick={() => {
+                            handleClickOpen("blood")
+                        }}>
+                            Craft Blood Staff&nbsp;
+                            <img src={BloodOrb} alt="Craft Blood" width="50px" height="50px"></img>
+                        </Button>
+                        </Box>
+                    </Tooltip>
+                    </React.Fragment> : ""}
                 </Grid>
 
                 <Grid item xs>
                     <div style={{visibility: showWrath ? '' : "hidden", color: "green", fontSize: "20px"}} className={showWrath ? "slide" : ""} onAnimationEnd={() => {setShowWrath(false); setXpgain(0);}}>
                         +{Math.round(xpgain)}
                     </div>
-                    <Button variant="contained" color={lvl >= 95 ? "success" : "error"} disabled={lvl >= 95 ? false : true} onClick={() => {
+                    <Button variant="contained" color={lvl >= 95 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 94 ? "success": "error"} disabled={lvl >= 95 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 94 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftRune("wrath", inventory.length + extra);
+                            setInventory([]);
+                            if (infinityOutfit === 5 && Math.random() < 0.95) {
+                                setExtra(0);
+                            } else if (infinityOutfit !== 5) {
+                                setExtra(0);
+                            }
                         }
                     }}>
                         Craft Wrath Rune&nbsp;
                         <img src={wrathRune} alt="Craft Astral" width="50px" height="50px"></img>
                     </Button>
                     <br></br>
-                    Lvl: 95
+                    {runecraftCape === 2 ? "" : "Lvl: 95"}
+                    <br></br>
+                    {wrathOrb && staff !== "wrath" ?
+                    <React.Fragment>
+                    <Tooltip arrow title={battlestaff > 0 ? "" :
+                        <React.Fragment>
+                        <Typography><font color="white">You need a battlestaff to craft this!</font></Typography>
+                        </React.Fragment>
+                    } placement="top">
+                        <Box>
+                        <Button variant="contained" color="success" disabled={battlestaff > 0 ? false : true} onClick={() => {
+                            handleClickOpen("wrath")
+                        }}>
+                            Craft Wrath Staff&nbsp;
+                            <img src={WrathOrb} alt="Craft Wrath" width="50px" height="50px"></img>
+                        </Button>
+                        </Box>
+                    </Tooltip>
+                    </React.Fragment> : ""}
                 </Grid>
+                <Dialog open={open} onClose={handleClose}>
+                    <DialogTitle>Craft a{type === "air" || type === "earth" || type === "astral" ? "n" : ""} {type.charAt(0).toUpperCase() + type.slice(1)} Staff?</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText color="white">
+                            A{type === "air" || type === "earth" || type === "astral" ? "n" : ""} {type.charAt(0).toUpperCase() + type.slice(1)} Staff will provide you with infinite {type} runes, removing the {type} rune requirements from upgrades.
+                            <br></br>
+                            <font color="red"><b>You can only have one staff at a time! Any previously made staff will return the orb, but you will lose the battlestaff!</b></font>
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleClose} sx={{color: "red"}}>No</Button>
+                    <Button onClick={() => {
+                        setStaff(type);
+                        setBattlestaff(battlestaff - 1);
+                        handleClose();
+                    }} sx={{color: "green"}}>Yes</Button>
+                    </DialogActions>
+                </Dialog>
                 </React.Fragment>}
 
                 {ouraniaAltar ? 
@@ -587,6 +1181,12 @@ export default function RunecraftSection(props) {
                     <Button variant="contained" color="success" onClick={() => {
                         if (inventory.length > 0) {
                             craftRune("ourania", inventory.length + extra);
+                            setInventory([]);
+                            if (infinityOutfit === 5 && Math.random() < 0.95) {
+                                setExtra(0);
+                            } else if (infinityOutfit !== 5) {
+                                setExtra(0);
+                            }
                         }
                     }}>
                         Craft Ourania Altar&nbsp;

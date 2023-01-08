@@ -14,6 +14,7 @@ export default function XPSection(props) {
     const totalxp = props.totalxp;
     const nextxp = props.nextxp;
     const setNextxp = props.setNextxp;
+    const runecraftCape = props.runecraftCape;
 
     function sumLevel(level) {
         var sum = 0;
@@ -29,7 +30,7 @@ export default function XPSection(props) {
 
     return (
         <Box sx={{ width: '50%', mx: 'auto', color: 'green' }}>
-            Lvl: {lvl} {prestige >= 1 ? <Typography><font color="gold">&nbsp;Prestige: {prestige}</font> <font color="orange">(+{pBoost}% XP & Runes)</font></Typography>: ""}
+            Lvl: {lvl} {runecraftCape === 1 ? <font color="gold">(+1)</font> : ""} {prestige >= 1 ? <Typography><font color="gold">&nbsp;Prestige: {prestige}</font> <font color="orange">(+{pBoost}% XP & Runes)</font></Typography>: ""}
             <Tooltip title={
                 <Box sx={{fontSize: "20px"}}>
                     <Typography>

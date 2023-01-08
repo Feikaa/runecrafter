@@ -52,6 +52,11 @@ export default function ClickSection(props) {
     
     const bonus = props.bonus;
 
+    const bloodOutfit = props.bloodOutfit;
+    const lawOutfit = props.lawOutfit;
+    const wrathOutfit = props.wrathOutfit;
+    const infinityOutfit = props.infinityOutfit;
+
     const essenceType = props.essenceType;
 
     useEffect(() => {
@@ -87,7 +92,7 @@ export default function ClickSection(props) {
     }
 
     function doClick() {
-        if (pegasian && ((inventory.length < 28 && pouch < 1) || (extra < extraList[pouch - 1]))) {
+        if (pegasian && ((inventory.length < 28 && pouch < 1) || (extra < extraList[pouch - 1] + ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)))) {
             craftRune(runes[Math.floor(Math.random() * runes.length)], 1);
         }
         if (inventory.length < 28) {
@@ -98,10 +103,10 @@ export default function ClickSection(props) {
             } else {
                 setInventory((inventory) => [...inventory, (<Item key={inventory.length} item={essenceType} />)]);
             }
-        } else if (pouch && extra < extraList[pouch - 1]) {
+        } else if ((pouch && extra < extraList[pouch - 1] + ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)) || ((lawOutfit === 5 || bloodOutfit === 5 || wrathOutfit === 5) && extra < ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6))) {
             if (!mute) {audio.play();}
             setShake(true)
-            if (primordial && extra + 2 <= extraList[pouch - 1]) {
+            if (primordial && ((pouch && extra + 2 <= extraList[pouch - 1] + ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)) || ((lawOutfit === 5 || bloodOutfit === 5 || wrathOutfit === 5) && extra < ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)))) {
                 setExtra((extra) => extra + 2);
             } else {
                 setExtra((extra) => extra + 1);
@@ -117,7 +122,7 @@ export default function ClickSection(props) {
 
     return (
         <Box paddingTop="1%">
-            <img src={essenceType === "rune_essence" ? runeEssence : essenceType === "daeyalt_essence" ? daeyaltEssence : essenceType === "dark_essence" ? darkEssence : ""} alt="Clickable Rune essence" width={width > 500 ? "500px" : "200px"} height={width > 500 ? "500px" : "200px"} className={shake ? 'shake' : ""} onClick={() => {
+            <img draggable="false" src={essenceType === "rune_essence" ? runeEssence : essenceType === "daeyalt_essence" ? daeyaltEssence : essenceType === "dark_essence" ? darkEssence : ""} alt="Clickable Rune essence" width={width > 500 ? "500px" : "200px"} height={width > 500 ? "500px" : "200px"} className={shake ? 'shake' : ""} onClick={() => {
                 doClick();
                 }}
                 onAnimationEnd={() => {setShake(false)}}></img>
