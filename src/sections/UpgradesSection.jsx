@@ -94,6 +94,8 @@ export default function UpgradesSection(props) {
     const law = props.law;
     const blood = props.blood;
     const wrath = props.wrath;
+    
+    const combination = props.combination;
 
     const setAir = props.setAir;
     const setEarth = props.setEarth;
@@ -137,7 +139,9 @@ export default function UpgradesSection(props) {
     const autoaltar = props.autoaltar;
     const setAutoaltar = props.setAutoaltar;
     const nextRune = ["air", "earth", "water", "fire", "astral", "law", "blood", "wrath"];
+    const nextRuneC = ["dust", "mist", "mud", "smoke", "lava", "steam", "astral", "law", "blood", "wrath"];
     const talismanList = [autocraft1, autocraft2, autocraft3, autocraft4, autocraft5, autocraft6, autocraft7, autocraft8, autocraftMAX];
+    const talismanListC = [[autocraft1, autocraft2], [autocraft1, autocraft3], [autocraft3, autocraft2], [autocraft1, autocraft4], [autocraft2, autocraft4], [autocraft3, autocraft4], [autocraft5], [autocraft6], [autocraft7], [autocraft8], [autocraftMAX]];
 
     const pouch = props.pouch;
     const setPouch = props.setPouch;
@@ -590,7 +594,7 @@ export default function UpgradesSection(props) {
 
             <br></br>
 
-            { mode === "zmi" ?
+            {mode === "zmi" ?
             <Tooltip title={
               <React.Fragment>
                 {autoaltar < 1 ? <Typography>Allows autocrafting runes when your inventory is full.</Typography> : <Typography>Upgrade MAXED.</Typography>}
@@ -653,6 +657,183 @@ export default function UpgradesSection(props) {
             </span>
             </Tooltip>
             :
+            combination ?
+            <Tooltip title={
+              <React.Fragment>
+                  {autoaltar < 10 ? <Typography>Allows autocrafting {nextRuneC[autoaltar]} runes when your inventory is full.</Typography> : <Typography>Upgrade MAXED.</Typography>}
+                </React.Fragment>} arrow placement="right">
+                <span style={{width: "250px", display: "block"}}>
+              <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={autoaltar === 10 ? true : 
+              autoaltar === 0 ? (air < 1000 ? true : earth < 1000 ? true : false) : 
+              autoaltar === 1 ? (air < 1000 ? true : water < 1000 ? true : false) :
+              autoaltar === 2 ? (water < 1000 ? true : earth < 1000 ? true : false) :
+              autoaltar === 3 ? (air < 1000 ? true : fire < 1000 ? true : false) :
+              autoaltar === 4 ? (earth < 1000 ? true : fire < 1000 ? true : false) :
+              autoaltar === 5 ? (water < 1000 ? true : fire < 1000 ? true : false) :
+              autoaltar === 6 ? (astral < 1000 ? true : false) :
+              autoaltar === 7 ? (law < 1000 ? true : false) :
+              autoaltar === 8 ? (blood < 1000 ? true : false) :
+              (wrath < 1000 ? true : false)} onClick={() => {
+                if (autoaltar === 0) {
+                  setAir(air - 1000);
+                  setEarth(earth - 1000);
+                } else if (autoaltar === 1) {
+                  setWater(water - 1000);
+                  setAir(air - 1000);
+                } else if (autoaltar === 2) {
+                  setWater(water - 1000);
+                  setEarth(earth - 1000);
+                } else if (autoaltar === 3) {
+                  setAir(air - 1000);
+                  setFire(fire - 1000);
+                } else if (autoaltar === 4) {
+                  setEarth(earth - 1000);
+                  setFire(fire - 1000);
+                } else if (autoaltar === 5) {
+                  setWater(water - 1000);
+                  setFire(fire - 1000);
+                } else if (autoaltar === 6) {
+                  setAstral(astral - 1000);
+                } else if (autoaltar === 7) {
+                  setLaw(law - 1000);
+                } else if (autoaltar === 8) {
+                  setBlood(blood - 1000);
+                } else if (autoaltar === 9) {
+                  setWrath(wrath - 1000);
+                }
+                setAutoaltar(autoaltar + 1);
+              }}>
+                Talisman Mysteries&nbsp; {autoaltar < 3 ? "I".repeat(autoaltar + 1) : autoaltar === 3 ? "IV" : autoaltar < 9 ? "V" + "I".repeat(autoaltar - 4) : autoaltar === 9 ? "IX" : "MAX" }<img src={talismanListC[autoaltar][0]} alt="Catalytic Talisman" height="32px" width="32px"></img>
+                {autoaltar < 7 ? <img src={talismanListC[autoaltar][1]} alt="Catalytic Talisman" height="32px" width="32px"></img> : ""}
+                <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
+                {
+                // Level 1
+                autoaltar === 0 ?
+                <React.Fragment>
+                <Box sx={{border: 1, width: "39px", color: air >= 1000 ? "green" : "red"}}>
+                  <img src={airRune} alt="Air Rune Amount"></img>
+                  1000
+                </Box>
+
+                <Box sx={{border: 1, width: "39px", color: earth >= 1000 ? "green" : "red"}}>
+                  <img src={earthRune} alt="Earth Rune Amount"></img>
+                  1000
+                </Box>
+                </React.Fragment>
+                :
+                // Level 2
+                autoaltar === 1 ?
+                <React.Fragment>
+                 <Box sx={{border: 1, width: "39px", color: air >= 1000 ? "green" : "red"}}>
+                  <img src={airRune} alt="Air Rune Amount"></img>
+                  1000
+                </Box>
+
+                <Box sx={{border: 1, width: "39px", color: water >= 1000 ? "green" : "red"}}>
+                  <img src={waterRune} alt="Water Rune Amount"></img>
+                  1000
+                </Box>
+                </React.Fragment>
+                :
+                // Level 3
+                autoaltar === 2 ?
+                <React.Fragment>
+                <Box sx={{border: 1, width: "39px", color: water >= 1000 ? "green" : "red"}}>
+                  <img src={waterRune} alt="Water Rune Amount"></img>
+                  1000
+                </Box>
+                
+                <Box sx={{border: 1, width: "39px", color: earth >= 1000 ? "green" : "red"}}>
+                  <img src={earthRune} alt="Earth Rune Amount"></img>
+                  1000
+                </Box>
+                </React.Fragment>
+                :
+                // Level 4
+                autoaltar === 3 ?
+                <React.Fragment>
+                <Box sx={{border: 1, width: "39px", color: air >= 1000 ? "green" : "red"}}>
+                  <img src={airRune} alt="Air Rune Amount"></img>
+                  1000
+                </Box>
+
+                <Box sx={{border: 1, width: "39px", color: fire >= 1000 ? "green" : "red"}}>
+                  <img src={fireRune} alt="Fire Rune Amount"></img>
+                  1000
+                </Box>
+                </React.Fragment>
+                :
+                // Level 5
+                autoaltar === 4 ?
+                <React.Fragment>
+                <Box sx={{border: 1, width: "39px", color: earth >= 1000 ? "green" : "red"}}>
+                  <img src={earthRune} alt="Earth Rune Amount"></img>
+                  1000
+                </Box>
+
+                <Box sx={{border: 1, width: "39px", color: fire >= 1000 ? "green" : "red"}}>
+                  <img src={fireRune} alt="Fire Rune Amount"></img>
+                  1000
+                </Box>
+                </React.Fragment>
+                :
+                // Level 6
+                autoaltar === 5 ?
+                <React.Fragment>
+                <Box sx={{border: 1, width: "39px", color: water >= 1000 ? "green" : "red"}}>
+                  <img src={waterRune} alt="Water Rune Amount"></img>
+                  1000
+                </Box>
+
+                <Box sx={{border: 1, width: "39px", color: fire >= 1000 ? "green" : "red"}}>
+                  <img src={fireRune} alt="Fire Rune Amount"></img>
+                  1000
+                </Box>
+                </React.Fragment>
+                :
+                // Level 7
+                autoaltar === 6 ?
+                <React.Fragment>
+                <Box sx={{border: 1, width: "39px", color: astral >= 1000 ? "green" : "red"}}>
+                  <img src={astralRune} alt="Astral Rune Amount"></img>
+                  1000
+                </Box>
+                </React.Fragment>
+                :
+                // Level 8
+                autoaltar === 7 ?
+                <React.Fragment>
+                <Box sx={{border: 1, width: "39px", color: law >= 1000 ? "green" : "red"}}>
+                  <img src={lawRune} alt="Law Rune Amount"></img>
+                  1000
+                </Box>
+                </React.Fragment>
+                :
+                // Level 9
+                autoaltar === 8 ?
+                <React.Fragment>
+                <Box sx={{border: 1, width: "39px", color: blood >= 1000 ? "green" : "red"}}>
+                  <img src={bloodRune} alt="Blood Rune Amount"></img>
+                  1000
+                </Box>
+                </React.Fragment>
+                :
+                // Level 10
+                autoaltar === 9 ?
+                <React.Fragment>
+                <Box sx={{border: 1, width: "39px", color: wrath >= 1000 ? "green" : "red"}}>
+                  <img src={wrathRune} alt="Wrath Rune Amount"></img>
+                  1000
+                </Box>
+                </React.Fragment>
+                :
+                ""
+                }
+                </Grid>
+              </Button>
+              </span>
+              </Tooltip>
+              :
             <Tooltip title={
             <React.Fragment>
                 {autoaltar < 8 ? <Typography>Allows autocrafting {nextRune[autoaltar]} runes when your inventory is full.</Typography> : <Typography>Upgrade MAXED.</Typography>}

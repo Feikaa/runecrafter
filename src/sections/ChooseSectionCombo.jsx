@@ -1,9 +1,5 @@
 import { Box, MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 import React from "react";
-import airRune from "../icons/air_rune_small.png";
-import earthRune from "../icons/earth_rune_small.png";
-import waterRune from "../icons/water_rune_small.png";
-import fireRune from "../icons/fire_rune_small.png";
 import astralRune from "../icons/astral_rune_small.png";
 import lawRune from "../icons/law_rune_small.png";
 import bloodRune from "../icons/blood_rune_small.png";
@@ -42,28 +38,34 @@ export default function ChooseSection(props) {
                 >
                     <MenuItem value="none">None
                     </MenuItem>
-                    <MenuItem value="air">Air&nbsp;
-                        <img src={airRune} alt="Air Rune"></img>
-                    </MenuItem> 
-                    {autoaltar >= 2 ? <MenuItem value="earth">Earth&nbsp;
-                        <img src={earthRune} alt="Earth Rune"></img>
+                    <MenuItem value="dust">Dust&nbsp;
+                        <img src={dustRune} alt="Dust Rune"></img>
+                    </MenuItem>
+                    {autoaltar >= 2 ? <MenuItem value="mist">Mist&nbsp;
+                        <img src={mistRune} alt="Mist Rune"></img>
                     </MenuItem> : ""}
-                    {autoaltar >= 3 ? <MenuItem value="water">Water&nbsp;
-                        <img src={waterRune} alt="Water Rune"></img>
+                    {autoaltar >= 3 ? <MenuItem value="mud">Mud&nbsp;
+                        <img src={mudRune} alt="Mud Rune"></img>
                     </MenuItem> : ""}
-                    {autoaltar >= 4 ? <MenuItem value="fire">Fire&nbsp;
-                        <img src={fireRune} alt="Fire Rune"></img>
+                    {autoaltar >= 4 ? <MenuItem value="smoke">Smoke&nbsp;
+                        <img src={smokeRune} alt="Smoke Rune"></img>
                     </MenuItem> : ""}
-                    {autoaltar >= 5 ? <MenuItem value="astral">Astral&nbsp;
+                    {autoaltar >= 5 ? <MenuItem value="lava">Lava&nbsp;
+                        <img src={lavaRune} alt="Lava Rune"></img>
+                    </MenuItem> : ""}
+                    {autoaltar >= 6 ? <MenuItem value="steam">Steam&nbsp;
+                        <img src={steamRune} alt="Steam Rune"></img>
+                    </MenuItem> : ""}
+                    {autoaltar >= 7 ? <MenuItem value="astral">Astral&nbsp;
                         <img src={astralRune} alt="Astral Rune"></img>
                     </MenuItem> : ""}
-                    {autoaltar >= 6 ? <MenuItem value="law">Law&nbsp;
+                    {autoaltar >= 8 ? <MenuItem value="law">Law&nbsp;
                         <img src={lawRune} alt="Law Rune"></img>
                     </MenuItem> : ""}
-                    {autoaltar >= 7 ? <MenuItem value="blood">Blood&nbsp;
+                    {autoaltar >= 9 ? <MenuItem value="blood">Blood&nbsp;
                         <img src={bloodRune} alt="Blood Rune"></img>
                     </MenuItem> : ""}
-                    {autoaltar >= 8 ? <MenuItem value="wrath">Wrath&nbsp;
+                    {autoaltar >= 10 ? <MenuItem value="wrath">Wrath&nbsp;
                         <img src={wrathRune} alt="Wrath Rune"></img>
                     </MenuItem> : ""}
                     {ouraniaAltar ? <MenuItem value="ourania">Ourania Altar&nbsp;

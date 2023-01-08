@@ -6,6 +6,7 @@ import InventorySection from "./sections/InventorySection";
 import XPSection from "./sections/XPSection";
 import RunesSection from "./sections/RunesSection";
 import ChooseSection from "./sections/ChooseSection";
+import ChooseSectionCombo from "./sections/ChooseSectionCombo";
 import PrestigeSection from "./sections/PrestigeSection";
 import ModeSection from "./sections/ModeSection";
 import './App.css';
@@ -948,7 +949,7 @@ const theme = createTheme({
                                                      staff={staff} setStaff={setStaff}/> : ""}
       {<ModeSection lvl={lvl} prestige={prestige} mode={mode} air={air} earth={earth} water={water} fire={fire} astral={astral} law={law} blood={blood} wrath={wrath}></ModeSection> }
       <UpgradesSection lvl={lvl} prestige={prestige} air={air} setAir={setAir} earth={earth} setEarth={setEarth} water={water} setWater={setWater} fire={fire} setFire={setFire} astral={astral} setAstral={setAstral}
-                       law={law} setLaw={setLaw} blood={blood} setBlood={setBlood} wrath={wrath} setWrath={setWrath}
+                       law={law} setLaw={setLaw} blood={blood} setBlood={setBlood} wrath={wrath} setWrath={setWrath} combination={combination}
                        autoclick={autoclick} setAutoclick={setAutoclick}
                        airLvl={airLvl} setAirLvl={setAirLvl} earthLvl={earthLvl} setEarthLvl={setEarthLvl} waterLvl={waterLvl} setWaterLvl={setWaterLvl} fireLvl={fireLvl} setFireLvl={setFireLvl}
                        astralLvl={astralLvl} setAstralLvl={setAstralLvl} lawLvl={lawLvl} setLawLvl={setLawLvl} bloodLvl={bloodLvl} setBloodLvl={setBloodLvl} wrathLvl={wrathLvl} setWrathLvl={setWrathLvl}
@@ -967,7 +968,7 @@ const theme = createTheme({
                        elementalOffer={elementalOffer} setElementalOffer={setElementalOffer} catalyticOffer={catalyticOffer} setCatalyticOffer={setCatalyticOffer}
                        essenceType={essenceType} setEssenceType={setEssenceType} setInventory={setInventory} setExtra={setExtra}
                        ouraniaAltar={ouraniaAltar} setOuraniaAltar={setOuraniaAltar} mode={mode}/>
-      {autoaltar ? <ChooseSection runename={runename} setRunename={setRunename} autoaltar={autoaltar} ouraniaAltar={ouraniaAltar}/> : ""}
+      {autoaltar > 0 ? (!combination ? <ChooseSection runename={runename} setRunename={setRunename} autoaltar={autoaltar} ouraniaAltar={ouraniaAltar}/> : <ChooseSectionCombo runename={runename} setRunename={setRunename} autoaltar={autoaltar} ouraniaAltar={ouraniaAltar}/>) : ""}
       </Grid>
       <XPSection progress={progress} lvl={lvl} xp={xp} prestige={prestige} pBoost={pBoost} totalxp={totalxp} nextxp={nextxp} setNextxp={setNextxp} runecraftCape={runecraftCape}/>
       <RunesSection prestige={prestige} air={air} earth={earth} water={water} fire={fire} astral={astral} law={law} setLaw={setLaw} blood={blood} setBlood={setBlood} wrath={wrath} setWrath={setWrath} 

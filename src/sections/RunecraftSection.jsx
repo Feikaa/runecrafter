@@ -559,8 +559,12 @@ export default function RunecraftSection(props) {
     }, [lvl])
 
     useEffect(() => {
-        if (autoaltar && inventory.length === 28 && (!pouch || extra === extraList[pouch - 1]) && runename !== "none") {
-            craftRune(runename, inventory.length + extra);
+        if (autoaltar && inventory.length === 28 && ((!pouch && extra === ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)) || extra === extraList[pouch - 1] + ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)) && runename !== "none") {
+            if (runename === "dust" || runename === "mist" || runename === "mud" || runename === "smoke" || runename === "lava" || runename === "steam") {
+                craftCombination(runename, inventory.length + extra);
+            } else {
+                craftRune(runename, inventory.length + extra);
+            }
             setInventory([]);
             setExtra(0);
         }
@@ -765,6 +769,7 @@ export default function RunecraftSection(props) {
                     <React.Fragment>
                         <Typography>Combination: <img src={airRune} width="36px" height="36px" alt="Air Rune"></img><img src={earthRune} width="36px" height="36px" alt="Earth Rune"></img></Typography>
                     </React.Fragment>} arrow placement="top" disableInteractive>
+                    <span style={{display: "block"}}>
                     <Button variant="contained" color="success" onClick={() => {
                         if (inventory.length > 0 || extra > 0) { // this if should be in the function btw
                             craftCombination("dust", inventory.length + extra);
@@ -779,6 +784,7 @@ export default function RunecraftSection(props) {
                         Craft Dust Rune&nbsp;
                         <img src={dustRune} alt="Craft Dust" width="50px" height="50px"></img>
                     </Button>
+                    </span>
                     </Tooltip>
                     <br></br>
                     <br></br>
@@ -810,6 +816,7 @@ export default function RunecraftSection(props) {
                     <React.Fragment>
                         <Typography>Combination: <img src={airRune} width="36px" height="36px" alt="Air Rune"></img><img src={waterRune} width="36px" height="36px" alt="Water Rune"></img></Typography>
                     </React.Fragment>} arrow placement="top" disableInteractive>
+                    <span style={{display: "block"}}>
                     <Button variant="contained" color={lvl >= 8 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 7 ? "success" : "error"} disabled={lvl >= 8 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 7 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftCombination("mist", inventory.length + extra);
@@ -824,8 +831,8 @@ export default function RunecraftSection(props) {
                         Craft Mist Rune&nbsp;
                         <img src={mistRune} alt="Craft Mist" width="50px" height="50px"></img>
                     </Button>
+                    </span>
                     </Tooltip>
-                    <br></br>
                     {runecraftCape === 2 ? "" : "Lvl: 8"}
                     <br></br>
                     {waterOrb && staff !== "water" ?
@@ -855,6 +862,7 @@ export default function RunecraftSection(props) {
                     <React.Fragment>
                         <Typography>Combination: <img src={waterRune} width="36px" height="36px" alt="Water Rune"></img><img src={earthRune} width="36px" height="36px" alt="Earth Rune"></img></Typography>
                     </React.Fragment>} arrow placement="top" disableInteractive>
+                    <span style={{display: "block"}}>
                     <Button variant="contained" color={lvl >= 13 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 12 ? "success" : "error"} disabled={lvl >= 13 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 12 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftCombination("mud", inventory.length + extra);
@@ -869,8 +877,8 @@ export default function RunecraftSection(props) {
                         Craft Mud Rune&nbsp;
                         <img src={mudRune} alt="Craft Mud" width="50px" height="50px"></img>
                     </Button>
+                    </span>
                     </Tooltip>
-                    <br></br>
                     {runecraftCape === 2 ? "" : "Lvl: 13"}
                     <br></br>
                     {earthOrb && staff !== "earth" ?
@@ -900,6 +908,7 @@ export default function RunecraftSection(props) {
                     <React.Fragment>
                         <Typography>Combination: <img src={airRune} width="36px" height="36px" alt="Air Rune"></img><img src={fireRune} width="36px" height="36px" alt="Fire Rune"></img></Typography>
                     </React.Fragment>} arrow placement="top" disableInteractive>
+                    <span style={{display: "block"}}>
                     <Button variant="contained" color={lvl >= 15 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 14 ? "success" : "error"} disabled={lvl >= 15 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 14 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftCombination("smoke", inventory.length + extra);
@@ -914,8 +923,8 @@ export default function RunecraftSection(props) {
                         Craft Smoke Rune&nbsp;
                         <img src={smokeRune} alt="Craft Smoke" width="50px" height="50px"></img>
                     </Button>
+                    </span>
                     </Tooltip>
-                    <br></br>
                     {runecraftCape === 2 ? "" : "Lvl: 15"}
                     <br></br>
                     {fireOrb && staff !== "fire" ?
@@ -945,6 +954,7 @@ export default function RunecraftSection(props) {
                     <React.Fragment>
                         <Typography>Combination: <img src={earthRune} width="36px" height="36px" alt="Earth Rune"></img><img src={fireRune} width="36px" height="36px" alt="Fire Rune"></img></Typography>
                     </React.Fragment>} arrow placement="top" disableInteractive>
+                    <span style={{display: "block"}}>
                     <Button variant="contained" color={lvl >= 19 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 18 ? "success": "error"} disabled={lvl >= 19 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 18 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftCombination("lava", inventory.length + extra);
@@ -959,8 +969,8 @@ export default function RunecraftSection(props) {
                         Craft Lava Rune&nbsp;
                         <img src={lavaRune} alt="Craft Lava" width="50px" height="50px"></img>
                     </Button>
+                    </span>
                     </Tooltip>
-                    <br></br>
                     {runecraftCape === 2 ? "" : "Lvl: 19"}
                 </Grid>
 
@@ -972,6 +982,7 @@ export default function RunecraftSection(props) {
                     <React.Fragment>
                         <Typography>Combination: <img src={waterRune} width="36px" height="36px" alt="Water Rune"></img><img src={fireRune} width="36px" height="36px" alt="Fire Rune"></img></Typography>
                     </React.Fragment>} arrow placement="top" disableInteractive>
+                    <span style={{display: "block"}}>
                     <Button variant="contained" color={lvl >= 23 || runecraftCape === 2 ? "success" : runecraftCape === 1 && lvl >= 22 ? "success": "error"} disabled={lvl >= 23 || runecraftCape === 2 ? false : runecraftCape === 1 && lvl >= 22 ? false : true} onClick={() => {
                         if (inventory.length > 0) {
                             craftCombination("steam", inventory.length + extra);
@@ -986,8 +997,8 @@ export default function RunecraftSection(props) {
                         Craft Steam Rune&nbsp;
                         <img src={steamRune} alt="Craft Steam" width="50px" height="50px"></img>
                     </Button>
+                    </span>
                     </Tooltip>
-                    <br></br>
                     {runecraftCape === 2 ? "" : "Lvl: 23"}
                 </Grid>
                 </React.Fragment>
