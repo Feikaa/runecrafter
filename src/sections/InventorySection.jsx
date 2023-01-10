@@ -355,7 +355,7 @@ export default function InventorySection(props) {
                 {element !== "" ?
                     <React.Fragment>
                     <br></br>
-                    <DialogContentText color="white">How many charges? {amount > 0 ? "(-" + amount : ""} {amount > 0 ? <img src={LawRune}></img> : ""}{amount > 0 ? ")" : ""}</DialogContentText>
+                    <DialogContentText color="white">How many charges? {law === 0 ? <font color="red">Law runes required!</font> : ""} {amount > 0 ? "(-" + amount : ""} {amount > 0 ? <img src={LawRune}></img> : ""}{amount > 0 ? ")" : ""}</DialogContentText>
                     
                     <NumericInput name="ringInput" min={0} max={getMax(element)} step={1} onChange={(value) => setAmount(value)} value={amount}/>
                     </React.Fragment>

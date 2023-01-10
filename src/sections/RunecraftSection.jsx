@@ -521,9 +521,21 @@ export default function RunecraftSection(props) {
                 xpbase = 13 * (1 + ((1 / amt) * earthGloves));
                 setEarthGloves(0);
             }
+            if (ringofElements) {
+                if (ringCharge >= amt * 2) {
+                    setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl)) * 2));
+                    setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl)) * 2));
+                    setRingCharge(ringCharge - (amt * 2));
+                } else {
+                    setAir(air + Math.floor(ringCharge * bonus * (1 + (0.1 * airLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * airLvl))));
+                    setEarth(earth + Math.floor(ringCharge * bonus * (1 + (0.1 * earthLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * earthLvl))));
+                    setRingCharge(0);
+                }
+            } else {
+                setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
+                setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
+            }
             setShowDust(true);
-            setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
-            setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
         } else if (rune === "mist") {
             if (airGloves === 0 && waterGloves === 0) {
                 xpbase = 15;
@@ -540,9 +552,21 @@ export default function RunecraftSection(props) {
                 xpbase = 15 * (1 + ((1 / amt) * waterGloves));
                 setWaterGloves(0);
             }
+            if (ringofElements) {
+                if (ringCharge >= amt * 2) {
+                    setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl)) * 2));
+                    setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl)) * 2));
+                    setRingCharge(ringCharge - (amt * 2));
+                } else {
+                    setAir(air + Math.floor(ringCharge * bonus * (1 + (0.1 * airLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * airLvl))));
+                    setWater(water + Math.floor(ringCharge * bonus * (1 + (0.1 * waterLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * waterLvl))));
+                    setRingCharge(0);
+                }
+            } else {
+                setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
+                setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
+            }
             setShowMist(true);
-            setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
-            setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
         } else if (rune === "mud") {
             if (earthGloves === 0 && waterGloves === 0) {
                 xpbase = 18;
@@ -559,9 +583,21 @@ export default function RunecraftSection(props) {
                 xpbase = 18 * (1 + ((1 / amt) * waterGloves));
                 setWaterGloves(0);
             }
+            if (ringofElements) {
+                if (ringCharge >= amt * 2) {
+                    setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl)) * 2));
+                    setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl)) * 2));
+                    setRingCharge(ringCharge - (amt * 2));
+                } else {
+                    setEarth(earth + Math.floor(ringCharge * bonus * (1 + (0.1 * earthLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * earthLvl))));
+                    setWater(water + Math.floor(ringCharge * bonus * (1 + (0.1 * waterLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * waterLvl))));
+                    setRingCharge(0);
+                }
+            } else {
+                setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
+                setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
+            }
             setShowMud(true);
-            setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
-            setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
         } else if (rune === "smoke") {
             if (airGloves === 0 && fireGloves === 0) {
                 xpbase = 17;
@@ -578,9 +614,21 @@ export default function RunecraftSection(props) {
                 xpbase = 17 * (1 + ((1 / amt) * fireGloves));
                 setFireGloves(0);
             }
+            if (ringofElements) {
+                if (ringCharge >= amt * 2) {
+                    setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl)) * 2));
+                    setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl)) * 2));
+                    setRingCharge(ringCharge - (amt * 2));
+                } else {
+                    setAir(air + Math.floor(ringCharge * bonus * (1 + (0.1 * airLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * airLvl))));
+                    setFire(fire + Math.floor(ringCharge * bonus * (1 + (0.1 * fireLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * fireLvl))));
+                    setRingCharge(0);
+                }
+            } else {
+                setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
+                setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
+            }
             setShowSmoke(true);
-            setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
-            setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
         } else if (rune === "steam") {
             if (waterGloves === 0 && fireGloves === 0) {
                 xpbase = 22;
@@ -597,9 +645,21 @@ export default function RunecraftSection(props) {
                 xpbase = 22 * (1 + ((1 / amt) * fireGloves));
                 setFireGloves(0);
             }
+            if (ringofElements) {
+                if (ringCharge >= amt * 2) {
+                    setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl)) * 2));
+                    setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl)) * 2));
+                    setRingCharge(ringCharge - (amt * 2));
+                } else {
+                    setFire(fire + Math.floor(ringCharge * bonus * (1 + (0.1 * fireLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * fireLvl))));
+                    setWater(water + Math.floor(ringCharge * bonus * (1 + (0.1 * waterLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * waterLvl))));
+                    setRingCharge(0);
+                }
+            } else {
+                setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
+                setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
+            }
             setShowSteam(true);
-            setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
-            setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
         } else if (rune === "lava") {
             if (earthGloves === 0 && fireGloves === 0) {
                 xpbase = 20;
@@ -616,9 +676,21 @@ export default function RunecraftSection(props) {
                 xpbase = 20 * (1 + ((1 / amt) * fireGloves));
                 setFireGloves(0);
             }
+            if (ringofElements) {
+                if (ringCharge >= amt * 2) {
+                    setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl)) * 2));
+                    setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl)) * 2));
+                    setRingCharge(ringCharge - (amt * 2));
+                } else {
+                    setEarth(earth + Math.floor(ringCharge * bonus * (1 + (0.1 * earthLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * earthLvl))));
+                    setFire(fire + Math.floor(ringCharge * bonus * (1 + (0.1 * fireLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * fireLvl))));
+                    setRingCharge(0);
+                }
+            } else {
+                setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
+                setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
+            }
             setShowLava(true);
-            setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
-            setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
         }
 
         if (hat > 1 && top > 1 && bottom > 1 && boots > 1) {
