@@ -321,6 +321,7 @@ export default function InventorySection(props) {
                     <Button variant="contained" color="error" onClick={handleCloseC}>Exit</Button>
                     <Button variant="contained" color="success" disabled={element !== "" && amount !== 0 && offer !== "" ? false : true} onClick={() => {
                         if (Math.floor(Math.max(...[astral, law, blood, wrath]) / 20) >= amount) {
+                            console.log(amount)
                             if (!mute) {
                                 audio2.play();
                             }
@@ -330,7 +331,7 @@ export default function InventorySection(props) {
                                 setLaw(law + amount);
                             } else if (element === "blood") {
                                 setBlood(blood + amount);
-                            } else if (element === "fire") {
+                            } else if (element === "wrath") {
                                 setWrath(wrath + amount);
                             }
                             if (offer === "astral") {
