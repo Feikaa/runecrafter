@@ -511,7 +511,7 @@ export default function RunecraftSection(props) {
             } else if (airGloves >= amt) {
                 xpbase = 13 * 2;
                 setAirGloves(airGloves - amt);
-            } else if (airGloves < amt) {
+            } else if (airGloves > 0 && airGloves < amt) {
                 xpbase = 13 * (1 + ((1 / amt) * airGloves));
                 setAirGloves(0);
             } else if (earthGloves >= amt) {
@@ -530,7 +530,7 @@ export default function RunecraftSection(props) {
             } else if (airGloves >= amt) {
                 xpbase = 15 * 2;
                 setAirGloves(airGloves - amt);
-            } else if (airGloves < amt) {
+            } else if (airGloves > 0 && airGloves < amt) {
                 xpbase = 15 * (1 + ((1 / amt) * airGloves));
                 setAirGloves(0);
             } else if (waterGloves >= amt) {
@@ -549,7 +549,7 @@ export default function RunecraftSection(props) {
             } else if (earthGloves >= amt) {
                 xpbase = 18 * 2;
                 setEarthGloves(earthGloves - amt);
-            } else if (earthGloves < amt) {
+            } else if (earthGloves > 0 && earthGloves < amt) {
                 xpbase = 18 * (1 + ((1 / amt) * earthGloves));
                 setEarthGloves(0);
             } else if (waterGloves >= amt) {
@@ -568,7 +568,7 @@ export default function RunecraftSection(props) {
             } else if (airGloves >= amt) {
                 xpbase = 17 * 2;
                 setAirGloves(airGloves - amt);
-            } else if (airGloves < amt) {
+            } else if (airGloves > 0 && airGloves < amt) {
                 xpbase = 17 * (1 + ((1 / amt) * airGloves));
                 setAirGloves(0);
             } else if (fireGloves >= amt) {
@@ -587,7 +587,7 @@ export default function RunecraftSection(props) {
             } else if (waterGloves >= amt) {
                 xpbase = 22 * 2;
                 setWaterGloves(waterGloves - amt);
-            } else if (waterGloves < amt) {
+            } else if (waterGloves > 0 && waterGloves < amt) {
                 xpbase = 22 * (1 + ((1 / amt) * waterGloves));
                 setWaterGloves(0);
             } else if (fireGloves >= amt) {
@@ -606,7 +606,7 @@ export default function RunecraftSection(props) {
             } else if (earthGloves >= amt) {
                 xpbase = 20 * 2;
                 setEarthGloves(earthGloves - amt);
-            } else if (earthGloves < amt) {
+            } else if (earthGloves > 0 && earthGloves < amt) {
                 xpbase = 20 * (1 + ((1 / amt) * earthGloves));
                 setEarthGloves(0);
             } else if (fireGloves >= amt) {
