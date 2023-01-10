@@ -30,7 +30,7 @@ import LawRune from "../icons/law_rune_small.png";
 import LawRuneChecked from "../icons/law_rune_small_checked.png";
 import BloodRune from "../icons/blood_rune_small.png";
 import BloodRuneChecked from "../icons/blood_rune_small_checked.png";
-import WrathRune from "../icons/astral_rune_small.png";
+import WrathRune from "../icons/wrath_rune_small.png";
 import WrathRuneChecked from "../icons/wrath_rune_small_checked.png";
 import DemonOffer from "../audio/demon_offer.mp3";
 import SinisterOffer from "../audio/sinister_offer.mp3";
@@ -207,7 +207,13 @@ export default function InventorySection(props) {
                     <React.Fragment>
                     <br></br>
                     <DialogContentText color="white">How many runes? {amount > 0 ? "(" + amount * 20 + " runes required)": ""}</DialogContentText>
-                    <NumericInput min={0} max={Math.floor(Math.max(...[air, earth, water, fire]) / 20)} step={1} onChange={(value) => setAmount(value)} defaultValue={0}/>
+                    <NumericInput min={0} max={Math.floor(Math.max(...[air, earth, water, fire]) / 20)} step={1} onChange={(value) => {
+                        if (Math.floor(Math.max(...[air, earth, water, fire]) / 20) >= value) {
+                            setAmount(value)
+                        } else {
+                            setAmount(Math.floor(Math.max(...[air, earth, water, fire]) / 20));
+                        }
+                    }} value={amount}/>
                     </React.Fragment>
                     :
                     ""}
@@ -233,28 +239,30 @@ export default function InventorySection(props) {
                     <Box component="span" m={1} display="flex" justifyContent="space-between" alignItems="center">
                     <Button variant="contained" color="error" onClick={handleCloseE}>Exit</Button>
                     <Button variant="contained" color="success" disabled={element !== "" && amount !== 0 && offer !== "" ? false : true} onClick={() => {
-                        if (!mute) {
-                            audio.play();
+                        if (Math.floor(Math.max(...[air, earth, water, fire]) / 20) >= amount) {
+                            if (!mute) {
+                                audio.play();
+                            }
+                            if (element === "air") {
+                                setAir(air + amount);
+                            } else if (element === "earth") {
+                                setEarth(earth + amount);
+                            } else if (element === "water") {
+                                setWater(water + amount);
+                            } else if (element === "fire") {
+                                setFire(fire + amount);
+                            }
+                            if (offer === "air") {
+                                setAir(air - (amount * 20));
+                            } else if (offer === "earth") {
+                                setEarth(earth - (amount * 20));
+                            } else if (offer === "water") {
+                                setWater(water - (amount * 20));
+                            } else if (offer === "fire") {
+                                setFire(fire - (amount * 20));
+                            }
+                            handleCloseE();
                         }
-                        if (element === "air") {
-                            setAir(air + amount);
-                        } else if (element === "earth") {
-                            setEarth(earth + amount);
-                        } else if (element === "water") {
-                            setWater(water + amount);
-                        } else if (element === "fire") {
-                            setFire(fire + amount);
-                        }
-                        if (offer === "air") {
-                            setAir(air - (amount * 20));
-                        } else if (offer === "earth") {
-                            setEarth(earth - (amount * 20));
-                        } else if (offer === "water") {
-                            setWater(water - (amount * 20));
-                        } else if (offer === "fire") {
-                            setFire(fire - (amount * 20));
-                        }
-                        handleCloseE();
                     }}>Craft</Button>
                     </Box>
                 </DialogContent>
@@ -280,7 +288,13 @@ export default function InventorySection(props) {
                     <React.Fragment>
                     <br></br>
                     <DialogContentText color="white">How many runes? {amount > 0 ? "(" + amount * 20 + " runes required)": ""}</DialogContentText>
-                    <NumericInput min={0} max={Math.floor(Math.max(...[astral, law, blood, wrath]) / 20)} step={1} onChange={(value) => setAmount(value)} defaultValue={0}/>
+                    <NumericInput min={0} max={Math.floor(Math.max(...[astral, law, blood, wrath]) / 20)} step={1} onChange={(value) => {
+                        if (Math.floor(Math.max(...[astral, law, blood, wrath]) / 20) >= value) {
+                            setAmount(value)
+                        } else {
+                            setAmount(Math.floor(Math.max(...[astral, law, blood, wrath]) / 20));
+                        }
+                    }} value={amount}/>
                     </React.Fragment>
                     :
                     ""}
@@ -306,28 +320,30 @@ export default function InventorySection(props) {
                     <Box component="span" m={1} display="flex" justifyContent="space-between" alignItems="center">
                     <Button variant="contained" color="error" onClick={handleCloseC}>Exit</Button>
                     <Button variant="contained" color="success" disabled={element !== "" && amount !== 0 && offer !== "" ? false : true} onClick={() => {
-                        if (!mute) {
-                            audio2.play();
+                        if (Math.floor(Math.max(...[astral, law, blood, wrath]) / 20) >= amount) {
+                            if (!mute) {
+                                audio2.play();
+                            }
+                            if (element === "astral") {
+                                setAstral(astral + amount);
+                            } else if (element === "law") {
+                                setLaw(law + amount);
+                            } else if (element === "blood") {
+                                setBlood(blood + amount);
+                            } else if (element === "fire") {
+                                setWrath(wrath + amount);
+                            }
+                            if (offer === "astral") {
+                                setAstral(astral - (amount * 20));
+                            } else if (offer === "law") {
+                                setLaw(law - (amount * 20));
+                            } else if (offer === "blood") {
+                                setBlood(blood - (amount * 20));
+                            } else if (offer === "wrath") {
+                                setWrath(wrath - (amount * 20));
+                            }
+                            handleCloseC();
                         }
-                        if (element === "astral") {
-                            setAstral(astral + amount);
-                        } else if (element === "law") {
-                            setLaw(law + amount);
-                        } else if (element === "blood") {
-                            setBlood(blood + amount);
-                        } else if (element === "fire") {
-                            setWrath(wrath + amount);
-                        }
-                        if (offer === "astral") {
-                            setAstral(astral - (amount * 20));
-                        } else if (offer === "law") {
-                            setLaw(law - (amount * 20));
-                        } else if (offer === "blood") {
-                            setBlood(blood - (amount * 20));
-                        } else if (offer === "wrath") {
-                            setWrath(wrath - (amount * 20));
-                        }
-                        handleCloseC();
                     }}>Craft</Button>
                     </Box>
                 </DialogContent>
@@ -357,28 +373,36 @@ export default function InventorySection(props) {
                     <br></br>
                     <DialogContentText color="white">How many charges? {law === 0 ? <font color="red">Law runes required!</font> : ""} {amount > 0 ? "(-" + amount : ""} {amount > 0 ? <img src={LawRune}></img> : ""}{amount > 0 ? ")" : ""}</DialogContentText>
                     
-                    <NumericInput name="ringInput" min={0} max={getMax(element)} step={1} onChange={(value) => setAmount(value)} value={amount}/>
+                    <NumericInput name="ringInput" min={0} max={getMax(element)} step={1} onChange={(value) => {
+                        if (getMax(element) >= value) {
+                            setAmount(value)
+                        } else {
+                            setAmount(getMax(element));
+                        }
+                    }} value={amount}/>
                     </React.Fragment>
                     :
                     ""}
                 <Box component="span" m={1} display="flex" justifyContent="space-between" alignItems="center">
                     <Button variant="contained" color="error" onClick={handleCloseR}>Exit</Button>
                     <Button variant="contained" color="success" disabled={element !== "" && amount !== 0 ? false : true} onClick={() => {
-                        if (!mute) {
-                            audio3.play();
+                        if (getMax(element) >= amount) {
+                            if (!mute) {
+                                audio3.play();
+                            }
+                            if (element === "air") {
+                                setAir(air - amount);
+                            } else if (element === "earth") {
+                                setEarth(earth - amount);
+                            } else if (element === "water") {
+                                setWater(water - amount);
+                            } else {
+                                setFire(fire - amount);
+                            }
+                            setLaw(law - amount);
+                            setRingCharge(ringCharge + amount);
+                            handleCloseR();
                         }
-                        if (element === "air") {
-                            setAir(air - amount);
-                        } else if (element === "earth") {
-                            setEarth(earth - amount);
-                        } else if (element === "water") {
-                            setWater(water - amount);
-                        } else {
-                            setFire(fire - amount);
-                        }
-                        setLaw(law - amount);
-                        setRingCharge(ringCharge + amount);
-                        handleCloseR();
                     }}>Charge</Button>
                 </Box>
                 </DialogContent>
