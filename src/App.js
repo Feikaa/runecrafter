@@ -872,7 +872,7 @@ const theme = createTheme({
     } else {
       save(mode);
     }
-  }, 60000);
+  }, 300000);
 
   // Cooldown timer for rune generation
   useInterval(() => {
@@ -933,7 +933,8 @@ const theme = createTheme({
       <TitleSection mode={mode}/>
       <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
       {(mode !== "ironman" && (air + earth + water + fire >= 10000 || astral + law + blood + wrath >= 10000 || prestige >= 1)) ? <PrestigeSection prestige={prestige} pBoost={pBoost} lvl={lvl} elemental={elemental} catalytic={catalytic} setElemental={setElemental} setCatalytic={setCatalytic}
-                                                     air={air} earth={earth} water={water} fire={fire} astral={astral} law={law} blood={blood} wrath={wrath}
+                                                     air={air} setAir={setAir} earth={earth} setEarth={setEarth} water={water} setWater={setWater} fire={fire} setFire={setFire} astral={astral} setAstral={setAstral}
+                                                     law={law} setLaw={setLaw} blood={blood} setBlood={setBlood} wrath={wrath} setWrath={setWrath}
                                                      mode={mode} setMode={setMode}
                                                      runecraftCape={runecraftCape} setRunecraftCape={setRunecraftCape}
                                                      combination={combination} setCombination={setCombination}
@@ -966,7 +967,7 @@ const theme = createTheme({
                        wrathOutfit={wrathOutfit} setWrathOutfit={setWrathOutfit}
                        infinityOutfit={infinityOutfit} setInfinityOutfit={setInfinityOutfit}
                        elementalOffer={elementalOffer} setElementalOffer={setElementalOffer} catalyticOffer={catalyticOffer} setCatalyticOffer={setCatalyticOffer}
-                       essenceType={essenceType} setEssenceType={setEssenceType} setInventory={setInventory} setExtra={setExtra}
+                       essenceType={essenceType} setEssenceType={setEssenceType} setInventory={setInventory} setExtra={setExtra} staff={staff}
                        ouraniaAltar={ouraniaAltar} setOuraniaAltar={setOuraniaAltar} mode={mode}/>
       {autoaltar > 0 ? (!combination ? <ChooseSection runename={runename} setRunename={setRunename} autoaltar={autoaltar} ouraniaAltar={ouraniaAltar}/> : <ChooseSectionCombo runename={runename} setRunename={setRunename} autoaltar={autoaltar} ouraniaAltar={ouraniaAltar}/>) : ""}
       </Grid>

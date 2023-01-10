@@ -106,6 +106,8 @@ export default function UpgradesSection(props) {
     const setBlood = props.setBlood;
     const setWrath = props.setWrath;
 
+    const staff = props.staff;
+
     const airGloves = props.airGloves;
     const setAirGloves = props.setAirGloves;
     const earthGloves = props.earthGloves;
@@ -222,7 +224,25 @@ export default function UpgradesSection(props) {
         ) {
         return;
         }
-
+        if (open && staff !== "") {
+          if (staff === "air") {
+            setAir(100000);
+          } else if (staff === "earth") {
+            setEarth(100000);
+          } else if (staff === "water") {
+            setWater(100000);
+          } else if (staff === "fire") {
+            setFire(100000);
+          } else if (staff === "astral") {
+            setAstral(100000);
+          } else if (staff === "law") {
+            setLaw(100000);
+          } else if (staff === "blood") {
+            setBlood(100000);
+          } else {
+            setWrath(100000);
+          }
+        }
         setState(open);
     };
 
@@ -574,16 +594,16 @@ export default function UpgradesSection(props) {
 
             <Tooltip title={
             <React.Fragment>
-                <Typography>Doubles experience when crafting air runes. This effect lasts for the crafting of 1000 essence.</Typography>
+                <Typography>Doubles experience when crafting air runes. This effect lasts for the crafting of 1000 essence. You can only equip 1 pair of gloves at a time.</Typography>
               </React.Fragment>} arrow placement="right">
               <span style={{width: "250px", display: "block"}}>
-            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={airGloves > 0 ? true : air < 1000 ? true : false} onClick={() => {
+            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={airGloves > 0 || earthGloves > 0 || waterGloves > 0 || fireGloves > 0 ? true : air < 1000 ? true : false} onClick={() => {
               setAir(air - 1000);
               setAirGloves(1000);
             }}>
               Air Gloves&nbsp; <img src={AirGloves} alt="Air gloves" height="32px" width="32px"></img>
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-              <Box sx={{border: 1, width: "39px", color: airGloves > 0 ? "black" : air >= 1000 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: airGloves > 0 || earthGloves > 0 || waterGloves > 0 || fireGloves > 0 ? "black" : air >= 1000 ? "green" : "red"}}>
                 <img src={airRune} alt="Air Rune Amount"></img>
                 1000
               </Box>
@@ -704,7 +724,7 @@ export default function UpgradesSection(props) {
                 setAutoaltar(autoaltar + 1);
               }}>
                 Talisman Mysteries&nbsp; {autoaltar < 3 ? "I".repeat(autoaltar + 1) : autoaltar === 3 ? "IV" : autoaltar < 9 ? "V" + "I".repeat(autoaltar - 4) : autoaltar === 9 ? "IX" : "MAX" }<img src={talismanListC[autoaltar][0]} alt="Catalytic Talisman" height="32px" width="32px"></img>
-                {autoaltar < 7 ? <img src={talismanListC[autoaltar][1]} alt="Catalytic Talisman" height="32px" width="32px"></img> : ""}
+                {autoaltar < 6 ? <img src={talismanListC[autoaltar][1]} alt="Catalytic Talisman" height="32px" width="32px"></img> : ""}
                 <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
                 {
                 // Level 1
@@ -954,16 +974,16 @@ export default function UpgradesSection(props) {
 
             <Tooltip title={
             <React.Fragment>
-                <Typography>Doubles experience when crafting earth runes. This effect lasts for the crafting of 1000 essence.</Typography>
+                <Typography>Doubles experience when crafting earth runes. This effect lasts for the crafting of 1000 essence. You can only equip 1 pair of gloves at a time.</Typography>
               </React.Fragment>} arrow placement="right">
               <span style={{width: "250px", display: "block"}}>
-            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={earthGloves > 0 ? true : earth < 1000 ? true : false} onClick={() => {
+            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={airGloves > 0 || earthGloves > 0 || waterGloves > 0 || fireGloves > 0 ? true : earth < 1000 ? true : false} onClick={() => {
               setEarth(earth - 1000);
               setEarthGloves(1000);
             }}>
               Earth Gloves&nbsp; <img src={EarthGloves} alt="Earth gloves" height="32px" width="32px"></img>
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-              <Box sx={{border: 1, width: "39px", color: earthGloves > 0 ? "black" : earth >= 1000 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: airGloves > 0 || earthGloves > 0 || waterGloves > 0 || fireGloves > 0 ? "black" : earth >= 1000 ? "green" : "red"}}>
                 <img src={earthRune} alt="Earth Rune Amount"></img>
                 1000
               </Box>
@@ -1106,7 +1126,7 @@ export default function UpgradesSection(props) {
               pouch === 1 ? (earth < 500 ? true : water >= 100 ? false : true) :
               pouch === 2 ? (water < 500 ? true : fire < 100 ? true : astral < 100 ? true : false) :
               pouch === 3 ? (astral < 500 ? true : law >= 100 ? false : true) :
-              (law < 500 ? true : blood >= 100 ? false : true)} onClick={() => {
+              (law < 500 ? true : blood >= 500 ? false : true)} onClick={() => {
               if (pouch === 0) {
                 setAir(air - 100);
                 setEarth(earth - 100);
@@ -1122,7 +1142,7 @@ export default function UpgradesSection(props) {
                 setLaw(law - 100);
               } else if (pouch === 4) {
                 setLaw(law - 500);
-                setBlood(blood - 100);
+                setBlood(blood - 500);
               }
               setPouch(pouch + 1);
             }}>
@@ -1200,7 +1220,7 @@ export default function UpgradesSection(props) {
 
                   <Box sx={{border: 1, width: "39px", color: blood >= 500 ? "green" : "red"}}>
                     <img src={bloodRune} alt="Blood Rune Amount"></img>
-                    100
+                    500
                   </Box>
                   </React.Fragment>
                   :
@@ -1215,16 +1235,16 @@ export default function UpgradesSection(props) {
 
             <Tooltip title={
             <React.Fragment>
-                <Typography>Doubles experience when crafting water runes. This effect lasts for the crafting of 1000 essence.</Typography>
+                <Typography>Doubles experience when crafting water runes. This effect lasts for the crafting of 1000 essence. You can only equip 1 pair of gloves at a time.</Typography>
               </React.Fragment>} arrow placement="right">
               <span style={{width: "250px", display: "block"}}>
-            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={waterGloves > 0 ? true : water < 1000 ? true : false} onClick={() => {
+            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={airGloves > 0 || earthGloves > 0 || waterGloves > 0 || fireGloves > 0 ? true : water < 1000 ? true : false} onClick={() => {
               setWater(water - 1000);
               setWaterGloves(1000);
             }}>
               Water Gloves&nbsp; <img src={WaterGloves} alt="Water gloves" height="32px" width="32px"></img>
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-              <Box sx={{border: 1, width: "39px", color: waterGloves > 0 ? "black" : water >= 1000 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: airGloves > 0 || earthGloves > 0 || waterGloves > 0 || fireGloves > 0 ? "black" : water >= 1000 ? "green" : "red"}}>
                 <img src={waterRune} alt="Water Rune Amount"></img>
                 1000
               </Box>
@@ -1287,8 +1307,8 @@ export default function UpgradesSection(props) {
                 1000
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: law >= 1000 ? "green" : "red"}}>
-                <img src={lawRune} alt="Law Rune Amount"></img>
+              <Box sx={{border: 1, width: "39px", color: astral >= 1000 ? "green" : "red"}}>
+                <img src={astralRune} alt="Astral Rune Amount"></img>
                 1000
               </Box>
               </React.Fragment>
@@ -1300,8 +1320,8 @@ export default function UpgradesSection(props) {
                 1500
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: astral >= 1000 ? "green" : "red"}}>
-                <img src={astralRune} alt="Astral Rune Amount"></img>
+              <Box sx={{border: 1, width: "39px", color: law >= 1000 ? "green" : "red"}}>
+                <img src={lawRune} alt="Law Rune Amount"></img>
                 1000
               </Box>
               </React.Fragment>
@@ -1354,7 +1374,7 @@ export default function UpgradesSection(props) {
                   setHat(1);
                 } else if (hat === 1) {
                   setAir(air - 2000);
-                  setAstral(law - 2000);
+                  setLaw(law - 2000);
                   setBlood(blood - 2000);
                   setHat(2);
                 }
@@ -1443,7 +1463,7 @@ export default function UpgradesSection(props) {
                 2000
               </Box>
 
-              <Box sx={{border: 1, width: "39px", color: top === 2 ? "black" : astral >= 2000 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: top === 2 ? "black" : law >= 2000 ? "green" : "red"}}>
                 <img src={lawRune} alt="Law Rune Amount"></img>
                 2000
               </Box>
@@ -1582,16 +1602,16 @@ export default function UpgradesSection(props) {
 
             <Tooltip title={
             <React.Fragment>
-                <Typography>Doubles experience when crafting fire runes. This effect lasts for the crafting of 1000 essence.</Typography>
+                <Typography>Doubles experience when crafting fire runes. This effect lasts for the crafting of 1000 essence. You can only equip 1 pair of gloves at a time.</Typography>
               </React.Fragment>} arrow placement="right">
               <span style={{width: "250px", display: "block"}}>
-            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={fireGloves > 0 ? true : fire < 1000 ? true : false} onClick={() => {
+            <Button key={"auto altar"} sx={{border: 1, color: "green", height: "80px", width: "250px"}} disabled={airGloves > 0 || earthGloves > 0 || waterGloves > 0 || fireGloves > 0 ? true : fire < 1000 ? true : false} onClick={() => {
               setFire(fire - 1000);
               setFireGloves(1000);
             }}>
               Fire Gloves&nbsp; <img src={FireGloves} alt="Fire gloves" height="32px" width="32px"></img>
               <Grid container spacing={0} direction="row" alignItems="center" justifyContent="center">
-              <Box sx={{border: 1, width: "39px", color: fireGloves > 0 ? "black" : fire >= 1000 ? "green" : "red"}}>
+              <Box sx={{border: 1, width: "39px", color: airGloves > 0 || earthGloves > 0 || waterGloves > 0 || fireGloves > 0 ? "black" : fire >= 1000 ? "green" : "red"}}>
                 <img src={fireRune} alt="Fire Rune Amount"></img>
                 1000
               </Box>

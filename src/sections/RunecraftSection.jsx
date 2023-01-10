@@ -506,38 +506,126 @@ export default function RunecraftSection(props) {
         }
 
         if (rune === "dust") {
-            xpbase = 13;
+            if (airGloves === 0 || earthGloves === 0) {
+                xpbase = 13;
+            } else if (airGloves >= amt) {
+                xpbase *= 2;
+                setAirGloves(airGloves - amt);
+            } else if (airGloves < amt) {
+                xpbase *= (1 + ((1 / amt) * airGloves));
+                setAirGloves(0);
+            } else if (earthGloves >= amt) {
+                xpbase *= 2;
+                setEarthGloves(earthGloves - amt);
+            } else {
+                xpbase *= (1 + ((1 / amt) * earthGloves));
+                setEarthGloves(0);
+            }
             setShowDust(true);
             setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
             setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
         } else if (rune === "mist") {
-            xpbase = 15;
+            if (airGloves === 0 || waterGloves === 0) {
+                xpbase = 15;
+            } else if (airGloves >= amt) {
+                xpbase *= 2;
+                setAirGloves(airGloves - amt);
+            } else if (airGloves < amt) {
+                xpbase *= (1 + ((1 / amt) * airGloves));
+                setAirGloves(0);
+            } else if (waterGloves >= amt) {
+                xpbase *= 2;
+                setWaterGloves(waterGloves - amt);
+            } else {
+                xpbase *= (1 + ((1 / amt) * waterGloves));
+                setWaterGloves(0);
+            }
             setShowMist(true);
             setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
             setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
         } else if (rune === "mud") {
-            xpbase = 18;
+            if (earthGloves === 0 || waterGloves === 0) {
+                xpbase = 18;
+            } else if (earthGloves >= amt) {
+                xpbase *= 2;
+                setEarthGloves(earthGloves - amt);
+            } else if (earthGloves < amt) {
+                xpbase *= (1 + ((1 / amt) * earthGloves));
+                setEarthGloves(0);
+            } else if (waterGloves >= amt) {
+                xpbase *= 2;
+                setWaterGloves(waterGloves - amt);
+            } else {
+                xpbase *= (1 + ((1 / amt) * waterGloves));
+                setWaterGloves(0);
+            }
             setShowMud(true);
             setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
             setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
         } else if (rune === "smoke") {
-            xpbase = 17;
+            if (airGloves === 0 || fireGloves === 0) {
+                xpbase = 17;
+            } else if (airGloves >= amt) {
+                xpbase *= 2;
+                setAirGloves(airGloves - amt);
+            } else if (airGloves < amt) {
+                xpbase *= (1 + ((1 / amt) * airGloves));
+                setAirGloves(0);
+            } else if (fireGloves >= amt) {
+                xpbase *= 2;
+                setFireGloves(fireGloves - amt);
+            } else {
+                xpbase *= (1 + ((1 / amt) * fireGloves));
+                setFireGloves(0);
+            }
             setShowSmoke(true);
             setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
             setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
         } else if (rune === "steam") {
-            xpbase = 22;
+            if (waterGloves === 0 || fireGloves === 0) {
+                xpbase = 22;
+            } else if (waterGloves >= amt) {
+                xpbase *= 2;
+                setWaterGloves(waterGloves - amt);
+            } else if (waterGloves < amt) {
+                xpbase *= (1 + ((1 / amt) * waterGloves));
+                setWaterGloves(0);
+            } else if (fireGloves >= amt) {
+                xpbase *= 2;
+                setFireGloves(fireGloves - amt);
+            } else {
+                xpbase *= (1 + ((1 / amt) * fireGloves));
+                setFireGloves(0);
+            }
             setShowSteam(true);
             setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
             setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
         } else if (rune === "lava") {
-            xpbase = 20;
+            if (earthGloves === 0 || fireGloves === 0) {
+                xpbase = 20;
+            } else if (earthGloves >= amt) {
+                xpbase *= 2;
+                setEarthGloves(earthGloves - amt);
+            } else if (earthGloves < amt) {
+                xpbase *= (1 + ((1 / amt) * earthGloves));
+                setEarthGloves(0);
+            } else if (fireGloves >= amt) {
+                xpbase *= 2;
+                setFireGloves(fireGloves - amt);
+            } else {
+                xpbase *= (1 + ((1 / amt) * fireGloves));
+                setFireGloves(0);
+            }
             setShowLava(true);
             setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
             setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
         }
 
-        setXpgain(Math.floor(xpbase * amt * boost));
+        if (hat > 1 && top > 1 && bottom > 1 && boots > 1) {
+            setXpgain(Math.floor(xpbase * amt * boost * (1 + pBoost/10) * 1.5));
+        } else {
+            setXpgain(Math.floor(xpbase * amt * boost * (1 + pBoost/10) * (1 + ([hat, top, bottom, boots].reduce((a, f) => a + Math.floor(f/2), 0) / 10))));
+        }
     }
 
     useEffect(() => {
@@ -559,36 +647,46 @@ export default function RunecraftSection(props) {
     }, [lvl])
 
     useEffect(() => {
-        if (autoaltar && inventory.length === 28 && ((!pouch && extra === ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)) || extra === extraList[pouch - 1] + ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)) && runename !== "none") {
-            if (runename === "dust" || runename === "mist" || runename === "mud" || runename === "smoke" || runename === "lava" || runename === "steam") {
-                craftCombination(runename, inventory.length + extra);
-            } else {
-                craftRune(runename, inventory.length + extra);
+        if (inventory.length >= 28) {
+            if (inventory.length > 28) {
+                setInventory(inventory.slice(0,28));
             }
-            setInventory([]);
-            setExtra(0);
+            if (!pouch && extra > ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)) {
+                setExtra(([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6));
+            } else if (extra > extraList[pouch - 1] + ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)) {
+                setExtra(extraList[pouch - 1] + ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6));
+            }
+            if (autoaltar && inventory.length === 28 && ((!pouch && extra === ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)) || extra === extraList[pouch - 1] + ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)) && runename !== "none") {
+                if (runename === "dust" || runename === "mist" || runename === "mud" || runename === "smoke" || runename === "lava" || runename === "steam") {
+                    craftCombination(runename, inventory.length + extra);
+                } else {
+                    craftRune(runename, inventory.length + extra);
+                }
+                setInventory([]);
+                setExtra(0);
+            }
         }
-    }, [inventory, runename, extra]);
+    }, [inventory, extra, runename]);
 
-    useEffect(() => {
-        if (staff === "air") {
-            setAir(9999);
-        } else if (staff === "earth") {
-            setEarth(9999);
-        } else if (staff === "water") {
-            setWater(9999);
-        } else if (staff === "fire") {
-            setFire(9999);
-        } else if (staff === "astral") {
-            setAstral(9999);
-        } else if (staff === "law") {
-            setLaw(9999);
-        } else if (staff === "blood") {
-            setBlood(9999);
-        } else if (staff === "wrath") {
-            setWrath(9999);
-        }
-    }, [air, earth, water, fire, astral, law, blood, wrath]);
+    // useEffect(() => {
+    //     if (staff === "air") {
+    //         setAir(9999);
+    //     } else if (staff === "earth") {
+    //         setEarth(9999);
+    //     } else if (staff === "water") {
+    //         setWater(9999);
+    //     } else if (staff === "fire") {
+    //         setFire(9999);
+    //     } else if (staff === "astral") {
+    //         setAstral(9999);
+    //     } else if (staff === "law") {
+    //         setLaw(9999);
+    //     } else if (staff === "blood") {
+    //         setBlood(9999);
+    //     } else if (staff === "wrath") {
+    //         setWrath(9999);
+    //     }
+    // }, [air, earth, water, fire, astral, law, blood, wrath]);
 
     return (
         <ThemeProvider theme={theme}>

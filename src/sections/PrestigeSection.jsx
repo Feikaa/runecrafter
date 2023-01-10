@@ -42,6 +42,15 @@ export default function PrestigeSection(props) {
     const law = props.law;
     const blood = props.blood;
     const wrath = props.wrath;
+    
+    const setAir = props.setAir;
+    const setEarth = props.setEarth;
+    const setWater = props.setWater;
+    const setFire = props.setFire;
+    const setAstral = props.setAstral;
+    const setLaw = props.setLaw;
+    const setBlood = props.setBlood;
+    const setWrath = props.setWrath;
 
     const elemental = props.elemental;
     const catalytic = props.catalytic;
@@ -135,6 +144,77 @@ export default function PrestigeSection(props) {
         
     }
 
+    function remove(currentMode, elem, cata) {
+        localStorage.setItem("prestige" + currentMode, prestige + 1);
+        localStorage.setItem("elemental" + currentMode, elemental + elem);
+        localStorage.setItem("catalytic" + currentMode, catalytic + cata);
+        localStorage.setItem("pBoost" + currentMode, pBoost + elem + cata);
+
+        localStorage.removeItem("inventory" + currentMode);
+        localStorage.removeItem("progress" + currentMode);
+        localStorage.removeItem("lvl" + currentMode);
+        localStorage.removeItem("xp" + currentMode);
+        localStorage.removeItem("totalxp" + currentMode);
+    
+        localStorage.removeItem("air" + currentMode);
+        localStorage.removeItem("earth" + currentMode);
+        localStorage.removeItem("water" + currentMode);
+        localStorage.removeItem("fire" + currentMode);
+        localStorage.removeItem("astral" + currentMode);
+        localStorage.removeItem("law" + currentMode);
+        localStorage.removeItem("blood" + currentMode);
+        localStorage.removeItem("wrath" + currentMode);
+    
+        localStorage.removeItem("extra" + currentMode);
+    
+        localStorage.removeItem("airgloves" + currentMode);
+        localStorage.removeItem("earthgloves" + currentMode);
+        localStorage.removeItem("watergloves" + currentMode);
+        localStorage.removeItem("firegloves" + currentMode);
+    
+        localStorage.removeItem("airlvl" + currentMode);
+        localStorage.removeItem("earthlvl" + currentMode);
+        localStorage.removeItem("waterlvl" + currentMode);
+        localStorage.removeItem("firelvl" + currentMode);
+        localStorage.removeItem("astrallvl" + currentMode);
+        localStorage.removeItem("lawlvl" + currentMode);
+        localStorage.removeItem("bloodlvl" + currentMode);
+        localStorage.removeItem("wrathlvl" + currentMode);
+    
+        localStorage.removeItem("autoclick" + currentMode);
+        localStorage.removeItem("pouch" + currentMode);
+        localStorage.removeItem("hat" + currentMode);
+        localStorage.removeItem("top" + currentMode);
+        localStorage.removeItem("bottom" + currentMode);
+        localStorage.removeItem("boots" + currentMode);
+        localStorage.removeItem("bloodEssence" + currentMode);
+    
+        localStorage.removeItem("lawoutfit" + currentMode);
+        localStorage.removeItem("bloodoutfit" + currentMode);
+        localStorage.removeItem("wrathoutfit" + currentMode);
+        localStorage.removeItem("infinityoutfit" + currentMode);
+    
+        localStorage.removeItem("battlestaff" + currentMode);
+    
+        localStorage.removeItem("timer" + currentMode);
+    
+        localStorage.removeItem("staff" + currentMode);
+    
+        localStorage.removeItem("elementaloffer" + currentMode);
+        localStorage.removeItem("catalyticoffer" + currentMode);
+    
+        localStorage.removeItem("essenceType" + currentMode);
+        localStorage.removeItem("daeyalt" + currentMode);
+        localStorage.removeItem("dark" + currentMode);
+    
+        if (currentMode !== "zmi") {
+          localStorage.removeItem("autoaltar" + currentMode);
+          localStorage.removeItem("ouraniaaltar" + currentMode);
+        }
+
+        window.location.reload(false);
+      }
+
     const [state, setState] = useState(false);
     
     const toggleDrawer = (open) => (event) => {
@@ -145,6 +225,25 @@ export default function PrestigeSection(props) {
         ) {
         return;
         }
+        if (open && staff !== "") {
+            if (staff === "air") {
+              setAir(0);
+            } else if (staff === "earth") {
+              setEarth(0);
+            } else if (staff === "water") {
+              setWater(0);
+            } else if (staff === "fire") {
+              setFire(0);
+            } else if (staff === "astral") {
+              setAstral(0);
+            } else if (staff === "law") {
+              setLaw(0);
+            } else if (staff === "blood") {
+              setBlood(0);
+            } else {
+              setWrath(0);
+            }
+          }
         setState(open);
     };
 
@@ -180,27 +279,20 @@ export default function PrestigeSection(props) {
                                 You will reset all your progress. For every 10k <font color="aqua">elemental</font>/<font color="yellow">catalytic</font> runes, you will get 1 <font color="aqua">elemental</font>/<font color="yellow">catalytic</font> guardian stone.
                                 <br></br>
                                 <br></br>
-                                <b>You will recieve <font color="aqua">{(staff === "air" || staff === "earth" || staff === "water" || staff === "fire") ? Math.floor((air + earth + water + fire - 9999) / 10000) : Math.floor((air + earth + water + fire) / 10000)} elemental rune(s)</font>,
-                                and <font color="yellow">{(staff === "astral" || staff === "law" || staff === "blood" || staff === "wrath") ? Math.floor((astral + law + blood + wrath - 9999) / 10000) : Math.floor((astral + law + blood + wrath) / 10000)} catalytic rune(s)</font>.</b>
+                                <b>You will recieve <font color="aqua">{Math.floor((air + earth + water + fire) / 10000)} elemental rune(s)</font>,
+                                and <font color="yellow">{Math.floor((astral + law + blood + wrath) / 10000)} catalytic rune(s)</font>.</b>
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleClose} sx={{color: "red"}}>No</Button>
                             <Button onClick={() => {
-                                var save = prestige;
                                 var newElem = Math.floor((air + earth + water + fire) / 10000);
                                 var newCata = Math.floor((astral + law + blood + wrath) / 10000);
-                                if (staff === "air" || staff === "earth" || staff === "water" || staff === "fire") {
-                                    newElem = Math.floor((air + earth + water + fire - 9999) / 10000);
-                                } else if (staff === "astral" || staff === "law" || staff === "blood" || staff === "wrath") {
-                                    newCata = Math.floor((astral + law + blood + wrath - 9999) / 10000);
+                                if (mode === "normal") {
+                                    remove("", newElem, newCata);
+                                } else {
+                                    remove(mode, newElem, newCata);
                                 }
-                                window.localStorage.clear();
-                                localStorage.setItem("prestige", save + 1);
-                                localStorage.setItem("elemental", elemental + newElem);
-                                localStorage.setItem("catalytic", catalytic + newCata);
-                                localStorage.setItem("pBoost", pBoost + newElem + newCata);
-                                window.location.reload(false);
                             }} autoFocus sx={{color: "green"}}>Yes</Button>
                         </DialogActions>
                     </Dialog>
