@@ -509,16 +509,16 @@ export default function RunecraftSection(props) {
             if (airGloves === 0 && earthGloves === 0) {
                 xpbase = 13;
             } else if (airGloves >= amt) {
-                xpbase *= 2;
+                xpbase = 13 * 2;
                 setAirGloves(airGloves - amt);
             } else if (airGloves < amt) {
-                xpbase *= (1 + ((1 / amt) * airGloves));
+                xpbase = 13 * (1 + ((1 / amt) * airGloves));
                 setAirGloves(0);
             } else if (earthGloves >= amt) {
-                xpbase *= 2;
+                xpbase = 13 * 2;
                 setEarthGloves(earthGloves - amt);
             } else {
-                xpbase *= (1 + ((1 / amt) * earthGloves));
+                xpbase = 13 * (1 + ((1 / amt) * earthGloves));
                 setEarthGloves(0);
             }
             setShowDust(true);
@@ -528,16 +528,16 @@ export default function RunecraftSection(props) {
             if (airGloves === 0 && waterGloves === 0) {
                 xpbase = 15;
             } else if (airGloves >= amt) {
-                xpbase *= 2;
+                xpbase = 15 * 2;
                 setAirGloves(airGloves - amt);
             } else if (airGloves < amt) {
-                xpbase *= (1 + ((1 / amt) * airGloves));
+                xpbase = 15 * (1 + ((1 / amt) * airGloves));
                 setAirGloves(0);
             } else if (waterGloves >= amt) {
-                xpbase *= 2;
+                xpbase = 15 * 2;
                 setWaterGloves(waterGloves - amt);
             } else {
-                xpbase *= (1 + ((1 / amt) * waterGloves));
+                xpbase = 15 * (1 + ((1 / amt) * waterGloves));
                 setWaterGloves(0);
             }
             setShowMist(true);
@@ -547,16 +547,16 @@ export default function RunecraftSection(props) {
             if (earthGloves === 0 && waterGloves === 0) {
                 xpbase = 18;
             } else if (earthGloves >= amt) {
-                xpbase *= 2;
+                xpbase = 18 * 2;
                 setEarthGloves(earthGloves - amt);
             } else if (earthGloves < amt) {
-                xpbase *= (1 + ((1 / amt) * earthGloves));
+                xpbase = 18 * (1 + ((1 / amt) * earthGloves));
                 setEarthGloves(0);
             } else if (waterGloves >= amt) {
-                xpbase *= 2;
+                xpbase = 18 * 2;
                 setWaterGloves(waterGloves - amt);
             } else {
-                xpbase *= (1 + ((1 / amt) * waterGloves));
+                xpbase = 18 * (1 + ((1 / amt) * waterGloves));
                 setWaterGloves(0);
             }
             setShowMud(true);
@@ -566,16 +566,16 @@ export default function RunecraftSection(props) {
             if (airGloves === 0 && fireGloves === 0) {
                 xpbase = 17;
             } else if (airGloves >= amt) {
-                xpbase *= 2;
+                xpbase = 17 * 2;
                 setAirGloves(airGloves - amt);
             } else if (airGloves < amt) {
-                xpbase *= (1 + ((1 / amt) * airGloves));
+                xpbase = 17 * (1 + ((1 / amt) * airGloves));
                 setAirGloves(0);
             } else if (fireGloves >= amt) {
-                xpbase *= 2;
+                xpbase = 17 * 2;
                 setFireGloves(fireGloves - amt);
             } else {
-                xpbase *= (1 + ((1 / amt) * fireGloves));
+                xpbase = 17 * (1 + ((1 / amt) * fireGloves));
                 setFireGloves(0);
             }
             setShowSmoke(true);
@@ -585,16 +585,16 @@ export default function RunecraftSection(props) {
             if (waterGloves === 0 && fireGloves === 0) {
                 xpbase = 22;
             } else if (waterGloves >= amt) {
-                xpbase *= 2;
+                xpbase = 22 * 2;
                 setWaterGloves(waterGloves - amt);
             } else if (waterGloves < amt) {
-                xpbase *= (1 + ((1 / amt) * waterGloves));
+                xpbase = 22 * (1 + ((1 / amt) * waterGloves));
                 setWaterGloves(0);
             } else if (fireGloves >= amt) {
-                xpbase *= 2;
+                xpbase = 22 * 2;
                 setFireGloves(fireGloves - amt);
             } else {
-                xpbase *= (1 + ((1 / amt) * fireGloves));
+                xpbase = 22 * (1 + ((1 / amt) * fireGloves));
                 setFireGloves(0);
             }
             setShowSteam(true);
@@ -604,16 +604,16 @@ export default function RunecraftSection(props) {
             if (earthGloves === 0 && fireGloves === 0) {
                 xpbase = 20;
             } else if (earthGloves >= amt) {
-                xpbase *= 2;
+                xpbase = 20 * 2;
                 setEarthGloves(earthGloves - amt);
             } else if (earthGloves < amt) {
-                xpbase *= (1 + ((1 / amt) * earthGloves));
+                xpbase = 20 * (1 + ((1 / amt) * earthGloves));
                 setEarthGloves(0);
             } else if (fireGloves >= amt) {
-                xpbase *= 2;
+                xpbase = 20 * 2;
                 setFireGloves(fireGloves - amt);
             } else {
-                xpbase *= (1 + ((1 / amt) * fireGloves));
+                xpbase = 20 * (1 + ((1 / amt) * fireGloves));
                 setFireGloves(0);
             }
             setShowLava(true);
