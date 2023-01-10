@@ -258,14 +258,14 @@ export default function RunecraftSection(props) {
             }
             if (ringofElements) {
                 if (ringCharge >= amt) {
-                    setAir(air + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * airLvl)) * 2));
+                    setAir(air + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * airLvl)) * 2));
                     setRingCharge(ringCharge - amt);
                 } else if (ringCharge < amt) {
-                    setAir(air + (Math.floor(ringCharge * bonus * (1 + pBoost/10)) * (1 + (0.1 * airLvl)) * 2) + (Math.floor((amt - ringCharge) * bonus * (1 + pBoost/10)) * (1 + (0.1 * airLvl))));
+                    setAir(air + (Math.floor(ringCharge * bonus * (1 + pBoost/100)) * (1 + (0.1 * airLvl)) * 2) + (Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100)) * (1 + (0.1 * airLvl))));
                     setRingCharge(0);
                 }
             } else {
-                setAir(air + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * airLvl))));
+                setAir(air + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * airLvl))));
             }
             setShowAir(true);
         } else if (rune === "earth") {
@@ -280,13 +280,13 @@ export default function RunecraftSection(props) {
             }
             if (ringofElements) {
                 if (ringCharge >= amt) {
-                    setEarth(earth + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * earthLvl)) * 2));
+                    setEarth(earth + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * earthLvl)) * 2));
                     setRingCharge(ringCharge - amt);
                 } else if (ringCharge < amt) {
-                    setEarth(earth + (Math.floor(ringCharge * bonus * (1 + pBoost/10)) * (1 + (0.1 * earthLvl)) * 2) + (Math.floor((amt - ringCharge) * bonus * (1 + pBoost/10)) * (1 + (0.1 * earthLvl))));
+                    setEarth(earth + (Math.floor(ringCharge * bonus * (1 + pBoost/100)) * (1 + (0.1 * earthLvl)) * 2) + (Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100)) * (1 + (0.1 * earthLvl))));
                 }
             } else {
-                setEarth(earth + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * earthLvl))));
+                setEarth(earth + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * earthLvl))));
             }
             setShowEarth(true);
         } else if (rune === "water") {
@@ -301,14 +301,14 @@ export default function RunecraftSection(props) {
             }
             if (ringofElements) {
                 if (ringCharge >= amt) {
-                    setWater(water + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * waterLvl)) * 2));
+                    setWater(water + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl)) * 2));
                     setRingCharge(ringCharge - amt);
                 } else if (ringCharge < amt) {
-                    setWater(water + Math.floor(ringCharge * bonus * (1 + pBoost/10) * (1 + (0.1 * waterLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/10) * (1 + (0.1 * waterLvl))));
+                    setWater(water + Math.floor(ringCharge * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl))));
                     setRingCharge(0);
                 }
             } else {
-                setWater(water + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * waterLvl))));
+                setWater(water + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl))));
             }
             setShowWater(true);
         } else if (rune === "fire") {
@@ -323,54 +323,54 @@ export default function RunecraftSection(props) {
             }
             if (ringofElements) {
                 if (ringCharge >= amt) {
-                    setFire(fire + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * fireLvl)) * 2));
+                    setFire(fire + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl)) * 2));
                     setRingCharge(ringCharge - amt);
                 } else if (ringCharge < amt) {
-                    setFire(fire + Math.floor(ringCharge * bonus * (1 + pBoost/10) * (1 + (0.1 * fireLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/10) * (1 + (0.1 * fireLvl))));
+                    setFire(fire + Math.floor(ringCharge * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl))));
                     setRingCharge(0);
                 }
             } else {
-                setFire(fire + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * fireLvl))));
+                setFire(fire + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl))));
             }
             setShowFire(true);
         } else if (rune === "astral") {
             xpbase = 15;
             setShowAstral(true);
-            setAstral(astral + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * astralLvl))));
+            setAstral(astral + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * astralLvl))));
         } else if (rune === "law") {
             if ((infinityOutfit === 5 && Math.random() < 0.07) || (lawOutfit === 5 && Math.random() < 0.1)) {
                 xpbase = 38;
-                setLaw(law + (Math.floor(amt * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * lawLvl))));
+                setLaw(law + (Math.floor(amt * bonus * (1 + pBoost/100)) * 2 * (1 + (0.1 * lawLvl))));
             } else {
                 xpbase = 19;
-                setLaw(law + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * lawLvl))));
+                setLaw(law + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * lawLvl))));
             }
             setShowLaw(true);
         } else if (rune === "blood") {
             if ((infinityOutfit === 5 && Math.random() < 0.07) || (bloodOutfit === 5 && Math.random() < 0.05)) {
                 if (bloodEssence === 0) {
                     xpbase = 48;
-                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * bloodLvl))));
+                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/100)) * 2 * (1 + (0.1 * bloodLvl))));
                 } else if (bloodEssence >= amt) {
                     xpbase = 48 * 1.5;
-                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * bloodLvl)) * 1.5));
+                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/100)) * 2 * (1 + (0.1 * bloodLvl)) * 1.5));
                     setBloodEssence(bloodEssence - amt);
                 } else {
                     xpbase = 48 * (1 + ((0.5 / amt) * bloodEssence));
-                    setBlood(blood + (Math.floor(bloodEssence * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * bloodLvl)) * 1.5) + (Math.floor((amt - bloodEssence) * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * bloodLvl))));
+                    setBlood(blood + (Math.floor(bloodEssence * bonus * (1 + pBoost/100)) * 2 * (1 + (0.1 * bloodLvl)) * 1.5) + (Math.floor((amt - bloodEssence) * bonus * (1 + pBoost/100)) * 2 * (1 + (0.1 * bloodLvl))));
                     setBloodEssence(0);
                 }
             } else {
                 if (bloodEssence === 0) {
                     xpbase = 24;
-                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/10)) * (1 + (0.1 * bloodLvl))));
+                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/100)) * (1 + (0.1 * bloodLvl))));
                 } else if (bloodEssence >= amt) {
                     xpbase = 24 * 1.5;
-                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/10)) * (1 + (0.1 * bloodLvl)) * 1.5));
+                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/100)) * (1 + (0.1 * bloodLvl)) * 1.5));
                     setBloodEssence(bloodEssence - amt);
                 } else {
                     xpbase = 24 * (1 + ((0.5 / amt) * bloodEssence));
-                    setBlood(blood + (Math.floor(bloodEssence * bonus * (1 + pBoost/10)) * (1 + (0.1 * bloodLvl)) * 1.5) + (Math.floor((amt - bloodEssence) * bonus * (1 + pBoost/10)) * (1 + (0.1 * bloodLvl))));
+                    setBlood(blood + (Math.floor(bloodEssence * bonus * (1 + pBoost/100)) * (1 + (0.1 * bloodLvl)) * 1.5) + (Math.floor((amt - bloodEssence) * bonus * (1 + pBoost/100)) * (1 + (0.1 * bloodLvl))));
                     setBloodEssence(0);
                 }
             }
@@ -378,10 +378,10 @@ export default function RunecraftSection(props) {
         } else if (rune === "wrath") {
             if ((infinityOutfit === 5 && Math.random() < 0.07) || (wrathOutfit === 5 && Math.random() < 0.05)) {
                 xpbase = 60;
-                setWrath(wrath + (Math.floor(amt * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * wrathLvl))));
+                setWrath(wrath + (Math.floor(amt * bonus * (1 + pBoost/100)) * 2 * (1 + (0.1 * wrathLvl))));
             } else {
                 xpbase = 30;
-                setWrath(wrath + Math.floor(amt * bonus * (1 + pBoost/10) * (1 + (0.1 * wrathLvl))));
+                setWrath(wrath + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * wrathLvl))));
             }
             setShowWrath(true);
         } else if (rune === "ourania") {
@@ -420,20 +420,20 @@ export default function RunecraftSection(props) {
                     }
                 }
             }
-            setWrath(wrath + Math.floor(runes[0] * bonus * (1 + pBoost/10) * (1 + (0.1 * wrathLvl))));
+            setWrath(wrath + Math.floor(runes[0] * bonus * (1 + pBoost/100) * (1 + (0.1 * wrathLvl))));
             if (bloodEssence === 0) {
-                setBlood(blood + Math.floor(runes[1] * bonus * (1 + pBoost/10) * (1 + (0.1 * bloodLvl))));
+                setBlood(blood + Math.floor(runes[1] * bonus * (1 + pBoost/100) * (1 + (0.1 * bloodLvl))));
             } else if (bloodEssence >= runes[1]) {
-                setBlood(blood + (Math.floor(runes[1] * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * bloodLvl)) * 1.5));
+                setBlood(blood + (Math.floor(runes[1] * bonus * (1 + pBoost/100)) * 2 * (1 + (0.1 * bloodLvl)) * 1.5));
             } else {
-                setBlood(blood + (Math.floor(bloodEssence * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * bloodLvl)) * 1.5) + (Math.floor((runes[1] - bloodEssence) * bonus * (1 + pBoost/10)) * 2 * (1 + (0.1 * bloodLvl))));
+                setBlood(blood + (Math.floor(bloodEssence * bonus * (1 + pBoost/100)) * 2 * (1 + (0.1 * bloodLvl)) * 1.5) + (Math.floor((runes[1] - bloodEssence) * bonus * (1 + pBoost/100)) * 2 * (1 + (0.1 * bloodLvl))));
             }
-            setLaw(law + Math.floor(runes[2] * bonus * (1 + pBoost/10) * (1 + (0.1 * lawLvl))));
-            setAstral(astral + Math.floor(runes[3] * bonus * (1 + pBoost/10) * (1 + (0.1 * astralLvl))));
-            setFire(fire + Math.floor(runes[4] * bonus * (1 + pBoost/10) * (1 + (0.1 * fireLvl))));
-            setWater(water + Math.floor(runes[5] * bonus * (1 + pBoost/10) * (1 + (0.1 * waterLvl))));
-            setEarth(earth + Math.floor(runes[6] * bonus * (1 + pBoost/10) * (1 + (0.1 * earthLvl))));
-            setAir(air + Math.floor(runes[7] * bonus * (1 + pBoost/10) * (1 + (0.1 * airLvl))));
+            setLaw(law + Math.floor(runes[2] * bonus * (1 + pBoost/100) * (1 + (0.1 * lawLvl))));
+            setAstral(astral + Math.floor(runes[3] * bonus * (1 + pBoost/100) * (1 + (0.1 * astralLvl))));
+            setFire(fire + Math.floor(runes[4] * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl))));
+            setWater(water + Math.floor(runes[5] * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl))));
+            setEarth(earth + Math.floor(runes[6] * bonus * (1 + pBoost/100) * (1 + (0.1 * earthLvl))));
+            setAir(air + Math.floor(runes[7] * bonus * (1 + pBoost/100) * (1 + (0.1 * airLvl))));
 
             setShowOurania(true);
             var bloodxp = 24;
@@ -445,28 +445,28 @@ export default function RunecraftSection(props) {
                 setBloodEssence(0);
             }
             if (hat > 1 && top > 1 && bottom > 1 && boots > 1) {
-                setXpgain(Math.floor(((30 * runes[0]) + (bloodxp * runes[1]) + (19 * runes[2]) + (15 * runes[3]) + (12 * runes[4]) + (10 * runes[5]) + (8 * runes[6]) + (5 * runes[7])) * boost * 1.7 * (1 + pBoost/10) * 1.5));
+                setXpgain(Math.floor(((30 * runes[0]) + (bloodxp * runes[1]) + (19 * runes[2]) + (15 * runes[3]) + (12 * runes[4]) + (10 * runes[5]) + (8 * runes[6]) + (5 * runes[7])) * boost * 1.7 * (1 + pBoost/100) * 1.5));
             } else {
-                setXpgain(Math.floor(((30 * runes[0]) + (bloodxp * runes[1]) + (19 * runes[2]) + (15 * runes[3]) + (12 * runes[4]) + (10 * runes[5]) + (8 * runes[6]) + (5 * runes[7])) * boost * 1.7 * (1 + pBoost/10) * (1 + ([hat, top, bottom, boots].reduce((a, f) => a + Math.floor(f/2), 0) / 10))));
+                setXpgain(Math.floor(((30 * runes[0]) + (bloodxp * runes[1]) + (19 * runes[2]) + (15 * runes[3]) + (12 * runes[4]) + (10 * runes[5]) + (8 * runes[6]) + (5 * runes[7])) * boost * 1.7 * (1 + pBoost/100) * (1 + ([hat, top, bottom, boots].reduce((a, f) => a + Math.floor(f/2), 0) / 10))));
             }
         }
 
         // 10% of runes crafted turn into law, blood and wrath if you have the outfits
         if (lawOutfit === 5 & rune !== "law") {
-            setLaw(law + Math.floor((amt * bonus * (1 + pBoost/10)) * 0.1));
+            setLaw(law + Math.floor((amt * bonus * (1 + pBoost/100)) * 0.1));
         }
         if (bloodOutfit === 5 && rune !== "blood") {
-            setBlood(blood + Math.floor((amt * bonus * (1 + pBoost/10)) * 0.1));
+            setBlood(blood + Math.floor((amt * bonus * (1 + pBoost/100)) * 0.1));
         }
         if (wrathOutfit === 5 && rune !== "wrath") {
-            setWrath(wrath + Math.floor((amt * bonus * (1 + pBoost/10)) * 0.1));
+            setWrath(wrath + Math.floor((amt * bonus * (1 + pBoost/100)) * 0.1));
         }
 
         if (rune !== "ourania") {
             if (hat > 1 && top > 1 && bottom > 1 && boots > 1) {
-                setXpgain(Math.floor(xpbase * amt * boost * (1 + pBoost/10) * 1.5));
+                setXpgain(Math.floor(xpbase * amt * boost * (1 + pBoost/100) * 1.5));
             } else {
-                setXpgain(Math.floor(xpbase * amt * boost * (1 + pBoost/10) * (1 + ([hat, top, bottom, boots].reduce((a, f) => a + Math.floor(f/2), 0) / 10))));
+                setXpgain(Math.floor(xpbase * amt * boost * (1 + pBoost/100) * (1 + ([hat, top, bottom, boots].reduce((a, f) => a + Math.floor(f/2), 0) / 10))));
             }
         }
     }
@@ -523,17 +523,17 @@ export default function RunecraftSection(props) {
             }
             if (ringofElements) {
                 if (ringCharge >= amt * 2) {
-                    setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl)) * 2));
-                    setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl)) * 2));
+                    setAir(air + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * airLvl)) * 2));
+                    setEarth(earth + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * earthLvl)) * 2));
                     setRingCharge(ringCharge - (amt * 2));
                 } else {
-                    setAir(air + Math.floor(ringCharge * bonus * (1 + (0.1 * airLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * airLvl))));
-                    setEarth(earth + Math.floor(ringCharge * bonus * (1 + (0.1 * earthLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * earthLvl))));
+                    setAir(air + Math.floor(ringCharge * bonus * (1 + pBoost/100) * (1 + (0.1 * airLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100) * (1 + (0.1 * airLvl))));
+                    setEarth(earth + Math.floor(ringCharge * bonus * (1 + pBoost/100) * (1 + (0.1 * earthLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100) * (1 + (0.1 * earthLvl))));
                     setRingCharge(0);
                 }
             } else {
-                setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
-                setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
+                setAir(air + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * airLvl))));
+                setEarth(earth + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * earthLvl))));
             }
             setShowDust(true);
         } else if (rune === "mist") {
@@ -554,17 +554,17 @@ export default function RunecraftSection(props) {
             }
             if (ringofElements) {
                 if (ringCharge >= amt * 2) {
-                    setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl)) * 2));
-                    setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl)) * 2));
+                    setAir(air + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * airLvl)) * 2));
+                    setWater(water + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl)) * 2));
                     setRingCharge(ringCharge - (amt * 2));
                 } else {
-                    setAir(air + Math.floor(ringCharge * bonus * (1 + (0.1 * airLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * airLvl))));
-                    setWater(water + Math.floor(ringCharge * bonus * (1 + (0.1 * waterLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * waterLvl))));
+                    setAir(air + Math.floor(ringCharge * bonus * (1 + pBoost/100) * (1 + (0.1 * airLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100) * (1 + (0.1 * airLvl))));
+                    setWater(water + Math.floor(ringCharge * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl))));
                     setRingCharge(0);
                 }
             } else {
-                setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
-                setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
+                setAir(air + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * airLvl))));
+                setWater(water + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl))));
             }
             setShowMist(true);
         } else if (rune === "mud") {
@@ -585,17 +585,17 @@ export default function RunecraftSection(props) {
             }
             if (ringofElements) {
                 if (ringCharge >= amt * 2) {
-                    setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl)) * 2));
-                    setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl)) * 2));
+                    setEarth(earth + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * earthLvl)) * 2));
+                    setWater(water + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl)) * 2));
                     setRingCharge(ringCharge - (amt * 2));
                 } else {
-                    setEarth(earth + Math.floor(ringCharge * bonus * (1 + (0.1 * earthLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * earthLvl))));
-                    setWater(water + Math.floor(ringCharge * bonus * (1 + (0.1 * waterLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * waterLvl))));
+                    setEarth(earth + Math.floor(ringCharge * bonus * (1 + pBoost/100) * (1 + (0.1 * earthLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100) * (1 + (0.1 * earthLvl))));
+                    setWater(water + Math.floor(ringCharge * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl))));
                     setRingCharge(0);
                 }
             } else {
-                setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
-                setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
+                setEarth(earth + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * earthLvl))));
+                setWater(water + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl))));
             }
             setShowMud(true);
         } else if (rune === "smoke") {
@@ -616,17 +616,17 @@ export default function RunecraftSection(props) {
             }
             if (ringofElements) {
                 if (ringCharge >= amt * 2) {
-                    setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl)) * 2));
-                    setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl)) * 2));
+                    setAir(air + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * airLvl)) * 2));
+                    setFire(fire + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl)) * 2));
                     setRingCharge(ringCharge - (amt * 2));
                 } else {
-                    setAir(air + Math.floor(ringCharge * bonus * (1 + (0.1 * airLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * airLvl))));
-                    setFire(fire + Math.floor(ringCharge * bonus * (1 + (0.1 * fireLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * fireLvl))));
+                    setAir(air + Math.floor(ringCharge * bonus * (1 + pBoost/100) * (1 + (0.1 * airLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100) * (1 + (0.1 * airLvl))));
+                    setFire(fire + Math.floor(ringCharge * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl))));
                     setRingCharge(0);
                 }
             } else {
-                setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
-                setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
+                setAir(air + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * airLvl))));
+                setFire(fire + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl))));
             }
             setShowSmoke(true);
         } else if (rune === "steam") {
@@ -647,12 +647,12 @@ export default function RunecraftSection(props) {
             }
             if (ringofElements) {
                 if (ringCharge >= amt * 2) {
-                    setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl)) * 2));
-                    setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl)) * 2));
+                    setFire(fire + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl)) * 2));
+                    setWater(water + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl)) * 2));
                     setRingCharge(ringCharge - (amt * 2));
                 } else {
-                    setFire(fire + Math.floor(ringCharge * bonus * (1 + (0.1 * fireLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * fireLvl))));
-                    setWater(water + Math.floor(ringCharge * bonus * (1 + (0.1 * waterLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * waterLvl))));
+                    setFire(fire + Math.floor(ringCharge * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl))));
+                    setWater(water + Math.floor(ringCharge * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100) * (1 + (0.1 * waterLvl))));
                     setRingCharge(0);
                 }
             } else {
@@ -678,25 +678,25 @@ export default function RunecraftSection(props) {
             }
             if (ringofElements) {
                 if (ringCharge >= amt * 2) {
-                    setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl)) * 2));
-                    setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl)) * 2));
+                    setEarth(earth + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * earthLvl)) * 2));
+                    setFire(fire + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl)) * 2));
                     setRingCharge(ringCharge - (amt * 2));
                 } else {
-                    setEarth(earth + Math.floor(ringCharge * bonus * (1 + (0.1 * earthLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * earthLvl))));
-                    setFire(fire + Math.floor(ringCharge * bonus * (1 + (0.1 * fireLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + (0.1 * fireLvl))));
+                    setEarth(earth + Math.floor(ringCharge * bonus * (1 + pBoost/100) * (1 + (0.1 * earthLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100) * (1 + (0.1 * earthLvl))));
+                    setFire(fire + Math.floor(ringCharge * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl)) * 2) + Math.floor((amt - ringCharge) * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl))));
                     setRingCharge(0);
                 }
             } else {
-                setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
-                setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
+                setEarth(earth + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * earthLvl))));
+                setFire(fire + Math.floor(amt * bonus * (1 + pBoost/100) * (1 + (0.1 * fireLvl))));
             }
             setShowLava(true);
         }
 
         if (hat > 1 && top > 1 && bottom > 1 && boots > 1) {
-            setXpgain(Math.floor(xpbase * amt * boost * (1 + pBoost/10) * 1.5));
+            setXpgain(Math.floor(xpbase * amt * boost * (1 + pBoost/100) * 1.5));
         } else {
-            setXpgain(Math.floor(xpbase * amt * boost * (1 + pBoost/10) * (1 + ([hat, top, bottom, boots].reduce((a, f) => a + Math.floor(f/2), 0) / 10))));
+            setXpgain(Math.floor(xpbase * amt * boost * (1 + pBoost/100) * (1 + ([hat, top, bottom, boots].reduce((a, f) => a + Math.floor(f/2), 0) / 10))));
         }
     }
 
