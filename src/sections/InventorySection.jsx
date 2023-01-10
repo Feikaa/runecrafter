@@ -77,6 +77,8 @@ export default function InventorySection(props) {
     const setBlood = props.setBlood;
     const setWrath = props.setWrath;
 
+    const staff = props.staff;
+
     const airGloves = props.airGloves;
     const earthGloves = props.earthGloves;
     const waterGloves = props.waterGloves;
@@ -109,6 +111,25 @@ export default function InventorySection(props) {
         setElement("");
         setAmount(0);
         setOffer("");
+        if (staff !== "") {
+            if (staff === "air") {
+              setAir(0);
+            } else if (staff === "earth") {
+              setEarth(0);
+            } else if (staff === "water") {
+              setWater(0);
+            } else if (staff === "fire") {
+              setFire(0);
+            } else if (staff === "astral") {
+              setAstral(0);
+            } else if (staff === "law") {
+              setLaw(0);
+            } else if (staff === "blood") {
+              setBlood(0);
+            } else {
+              setWrath(0);
+            }
+          }
         setOpenE(true);
     }
     const handleCloseE = () => {
@@ -119,6 +140,25 @@ export default function InventorySection(props) {
         setElement("");
         setAmount(0);
         setOffer("");
+        if (staff !== "") {
+            if (staff === "air") {
+              setAir(0);
+            } else if (staff === "earth") {
+              setEarth(0);
+            } else if (staff === "water") {
+              setWater(0);
+            } else if (staff === "fire") {
+              setFire(0);
+            } else if (staff === "astral") {
+              setAstral(0);
+            } else if (staff === "law") {
+              setLaw(0);
+            } else if (staff === "blood") {
+              setBlood(0);
+            } else {
+              setWrath(0);
+            }
+          }
         setOpenC(true);
     }
     const handleCloseC = () => {
@@ -128,6 +168,25 @@ export default function InventorySection(props) {
     const handleClickOpenR = () => {
         setElement("");
         setAmount(0);
+        if (staff !== "") {
+            if (staff === "air") {
+              setAir(0);
+            } else if (staff === "earth") {
+              setEarth(0);
+            } else if (staff === "water") {
+              setWater(0);
+            } else if (staff === "fire") {
+              setFire(0);
+            } else if (staff === "astral") {
+              setAstral(0);
+            } else if (staff === "law") {
+              setLaw(0);
+            } else if (staff === "blood") {
+              setBlood(0);
+            } else {
+              setWrath(0);
+            }
+          }
         setOpenR(true);
     }
     const handleCloseR = () => {

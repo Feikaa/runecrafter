@@ -1006,7 +1006,7 @@ const theme = createTheme({
       <InventorySection inventory={inventory} extra={extra} pouch={pouch} lawOutfit={lawOutfit} bloodOutfit={bloodOutfit} wrathOutfit={wrathOutfit} battlestaff={battlestaff} bloodEssence={bloodEssence}
                         air={air} setAir={setAir} earth={earth} setEarth={setEarth} water={water} setWater={setWater} fire={fire} setFire={setFire} astral={astral} setAstral={setAstral}
                         law={law} setLaw={setLaw} blood={blood} setBlood={setBlood} wrath={wrath} setWrath={setWrath}
-                        mute={mute}
+                        mute={mute} staff={staff}
                         airGloves={airGloves} earthGloves={earthGloves} waterGloves={waterGloves} fireGloves={fireGloves} ringofElements={ringofElements} ringCharge={ringCharge} setRingCharge={setRingCharge}
                         elementalOffer={elementalOffer} catalyticOffer={catalyticOffer}/>
     </div>
