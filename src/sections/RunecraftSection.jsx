@@ -506,7 +506,7 @@ export default function RunecraftSection(props) {
         }
 
         if (rune === "dust") {
-            if (airGloves === 0 || earthGloves === 0) {
+            if (airGloves === 0 && earthGloves === 0) {
                 xpbase = 13;
             } else if (airGloves >= amt) {
                 xpbase *= 2;
@@ -525,7 +525,7 @@ export default function RunecraftSection(props) {
             setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
             setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
         } else if (rune === "mist") {
-            if (airGloves === 0 || waterGloves === 0) {
+            if (airGloves === 0 && waterGloves === 0) {
                 xpbase = 15;
             } else if (airGloves >= amt) {
                 xpbase *= 2;
@@ -544,7 +544,7 @@ export default function RunecraftSection(props) {
             setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
             setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
         } else if (rune === "mud") {
-            if (earthGloves === 0 || waterGloves === 0) {
+            if (earthGloves === 0 && waterGloves === 0) {
                 xpbase = 18;
             } else if (earthGloves >= amt) {
                 xpbase *= 2;
@@ -563,7 +563,7 @@ export default function RunecraftSection(props) {
             setEarth(earth + Math.floor(amt * bonus * (1 + (0.1 * earthLvl))));
             setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
         } else if (rune === "smoke") {
-            if (airGloves === 0 || fireGloves === 0) {
+            if (airGloves === 0 && fireGloves === 0) {
                 xpbase = 17;
             } else if (airGloves >= amt) {
                 xpbase *= 2;
@@ -582,7 +582,7 @@ export default function RunecraftSection(props) {
             setAir(air + Math.floor(amt * bonus * (1 + (0.1 * airLvl))));
             setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
         } else if (rune === "steam") {
-            if (waterGloves === 0 || fireGloves === 0) {
+            if (waterGloves === 0 && fireGloves === 0) {
                 xpbase = 22;
             } else if (waterGloves >= amt) {
                 xpbase *= 2;
@@ -601,7 +601,7 @@ export default function RunecraftSection(props) {
             setWater(water + Math.floor(amt * bonus * (1 + (0.1 * waterLvl))));
             setFire(fire + Math.floor(amt * bonus * (1 + (0.1 * fireLvl))));
         } else if (rune === "lava") {
-            if (earthGloves === 0 || fireGloves === 0) {
+            if (earthGloves === 0 && fireGloves === 0) {
                 xpbase = 20;
             } else if (earthGloves >= amt) {
                 xpbase *= 2;
