@@ -5,7 +5,9 @@ A clicker game based off of the *best* skill in Old School Runescape
 ## Upgrade Notes
 
 Pouches add up. Ex. when you unlock Medium Pouch, it adds the +6 to the +3 from the Small Pouch, giving you a total of +9.
+
 Raiments of the Eye: When all 4 "of the eye" pieces are bought, you get a +20% bonus to the current +40% bonus from the set, giving a total of +60% bonus.
+
 Ethereal Set Bonus:
   - 5% chance to double law/blood/wrath runes crafted, giving twice as much experience.
   - Stores an additional 2 essence (for each set).
