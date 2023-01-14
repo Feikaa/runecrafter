@@ -1,0 +1,32 @@
+.slide {
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    animation: slide 1s linear forwards;
+  }
+
+@keyframes slide {
+    0% {
+      bottom: 0;
+    }
+    20% {
+      bottom: 10%;
+    }
+    40% {
+      bottom: 20%;
+    }
+    60% {
+      bottom: 30%;
+    }
+    80% {
+      bottom: 40%;
+    }
+    100% {
+      bottom: 50%;
+      overflow: hidden;
+      opacity: 0;
+      display: none;
+      visibility: hidden;
+    }
+  }

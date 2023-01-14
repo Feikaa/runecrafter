@@ -2,28 +2,130 @@ import { Box } from "@mui/material";
 import "../styles/ClickSection.scss";
 import Item from "../class/Item.jsx";
 import { useState } from 'react';
+import runeEssence from "../icons/rune_essence_detail.png";
+import daeyaltEssence from "../icons/daeyalt_essence_click.png";
+import darkEssence from "../icons/dark_essence_click.png";
+import clickAudio from "../audio/click.mp3";
+import { useEffect } from "react";
+import useInterval from "react-useinterval";
 
 export default function ClickSection(props) {
+
+    const mute = props.mute;
 
     const inventory = props.inventory;
     const setInventory = props.setInventory;
 
-    const audio = new Audio("/audio/click.mp3");
+    const audio = new Audio(clickAudio);
+    audio.volume = 0.1;
     const [shake, setShake] = useState(false);
+    const [width, setWidth] = useState(0);
+
+    const autoclick = props.autoclick;
+    const smashing = props.smashing;
+
+    const pouch = props.pouch;
+    const extraList = [3, 9, 18, 30, 40];
+    const extra = props.extra;
+    const setExtra = props.setExtra;
+
+    const primordial = props.primordial;
+    const pegasian = props.pegasian;
+    const runes = ["air", "earth", "water", "fire", "astral", "law", "blood", "wrath"];
+
+    const air = props.air;
+    const earth = props.earth;
+    const water = props.water;
+    const fire = props.fire;
+    const astral = props.astral;
+    const law = props.law;
+    const blood = props.blood;
+    const wrath = props.wrath;
+    const setAir = props.setAir;
+    const setEarth = props.setEarth;
+    const setWater = props.setWater;
+    const setFire = props.setFire;
+    const setAstral = props.setAstral;
+    const setLaw = props.setLaw;
+    const setBlood = props.setBlood;
+    const setWrath = props.setWrath;
+    
+    const bonus = props.bonus;
+
+    const bloodOutfit = props.bloodOutfit;
+    const lawOutfit = props.lawOutfit;
+    const wrathOutfit = props.wrathOutfit;
+    const infinityOutfit = props.infinityOutfit;
+
+    const essenceType = props.essenceType;
+
+    useEffect(() => {
+        updateDimensions();
+        window.addEventListener("resize", updateDimensions);
+        
+        return () => window.removeEventListener("resize", updateDimensions);
+    }, [])
+
+    const updateDimensions = () => {
+        const width = window.innerWidth;
+        setWidth(width);
+    }
+
+    function craftRune(rune, amt) {
+        if (rune === "air") {
+            setAir(air + Math.floor(amt * bonus));
+        } else if (rune === "earth") {
+            setEarth(earth + Math.floor(amt * bonus));
+        } else if (rune === "water") {
+            setWater(water + Math.floor(amt * bonus));
+        } else if (rune === "fire") {
+            setFire(fire + Math.floor(amt * bonus));
+        } else if (rune === "astral") {
+            setAstral(astral + Math.floor(amt * bonus));
+        } else if (rune === "law") {
+            setLaw(law + Math.floor(amt * bonus));
+        } else if (rune === "blood") {
+            setBlood(blood + Math.floor(amt * bonus));
+        } else if (rune === "wrath") {
+            setWrath(wrath + Math.floor(amt * bonus));
+        }
+    }
+
+    function doClick() {
+        if (pegasian && ((inventory.length < 28 && pouch < 1) || (extra < extraList[pouch - 1] + ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)))) {
+            craftRune(runes[Math.floor(Math.random() * runes.length)], 1);
+        }
+        if (inventory.length < 28) {
+            if (!mute) {audio.play();}
+            setShake(true)
+            if (primordial && inventory.length + 2 <= 28) {
+                setInventory((inventory) => [...inventory, (<Item key={inventory.length} item={essenceType} />), (<Item key={inventory.length+1} item={essenceType} />)]);
+            } else {
+                setInventory((inventory) => [...inventory, (<Item key={inventory.length} item={essenceType} />)]);
+            }
+        } else if ((pouch && extra < extraList[pouch - 1] + ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)) || ((lawOutfit === 5 || bloodOutfit === 5 || wrathOutfit === 5) && extra < ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6))) {
+            if (!mute) {audio.play();}
+            setShake(true)
+            if (primordial && ((pouch && extra + 2 <= extraList[pouch - 1] + ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)) || ((lawOutfit === 5 || bloodOutfit === 5 || wrathOutfit === 5) && extra < ([lawOutfit, bloodOutfit, wrathOutfit].filter(a => a === 5).length * 2) + ([infinityOutfit].filter(a => a === 5).length * 6)))) {
+                setExtra((extra) => extra + 2);
+            } else {
+                setExtra((extra) => extra + 1);
+            }
+        }
+    }
+
+    useInterval(() => {
+        if (autoclick) {
+            doClick();
+        };
+    }, (smashing > 0) ? (1000 / (10 * smashing)) : (1000 / autoclick));
 
     return (
-        <Box paddingTop="5%">
-            <img src={"/icons/rune_essence_detail.png"} alt="Clickable Rune essence" width="500px" height="500px" className={shake ? 'shake' : ""} onClick={() => {
-                if (inventory.length < 36) {
-                    audio.play();
-                    setShake(true);
-                    setInventory([...inventory, (<Item item={"rune_essence"} />)]);
-                }
-
-                console.log(shake);
+        <Box paddingTop="1%">
+            <img draggable="false" src={essenceType === "rune_essence" ? runeEssence : essenceType === "daeyalt_essence" ? daeyaltEssence : essenceType === "dark_essence" ? darkEssence : ""} alt="Clickable Rune essence" width={width > 500 ? "500px" : "200px"} height={width > 500 ? "500px" : "200px"} className={shake ? 'shake' : ""} onClick={() => {
+                doClick();
                 }}
-                onAnimationEnd={() => {setShake(false);
-                    console.log(shake);}}></img>
+                onAnimationEnd={() => {setShake(false)}}></img>
         </Box>
     )
 }

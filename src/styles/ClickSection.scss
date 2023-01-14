@@ -5,6 +5,11 @@
     bottom: 15%;
 }
 
+img {
+  -drag: none;
+  user-select: none;
+}
+
 .shake {
   animation: shake 0.15s;
 }
