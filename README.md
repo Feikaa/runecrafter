@@ -8,7 +8,7 @@ Pouches add up. Ex. when you unlock Medium Pouch, it adds the +6 to the +3 from 
 
 Raiments of the Eye: When all 4 "of the eye" pieces are bought, you get a +20% rune bonus to the current +40% rune bonus from the set, giving a total of +60% rune bonus. Each set piece has an upgrade for the Master Runecrafter Set.
 
-Master Runecrafter: When all 4 master runecrafter pieces are bought, you get a +1% xp bonus to the current +4% xp bonus, giving a total fo +5% xp bonus.
+Master Runecrafter: When all 4 master runecrafter pieces are bought, you get a +1% xp bonus to the current +4% xp bonus, giving a total of +5% xp bonus.
 
 Ethereal Set Bonus:
   - 5% chance to double law/blood/wrath runes crafted, giving twice as much experience.
