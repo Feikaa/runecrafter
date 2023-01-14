@@ -29,7 +29,7 @@ Infinity Ethereal Set Bonus:
 
 Prestige is available when you have at least 10,000 elemental (air, earth, water, fire) or catalytic (astral, law, blood, wrath) runes. Upon prestiging, for every 10,000 elemental runes you have, you will get 1 elemental stone, and for every 10,000 catalytic runes you have, you will get 1 catalytic stone. These stones are used to purchase Prestige Upgrades. Also, you will get an xp and rune crafting bonus equal to the total number of elemental and catalytic stones you gain from prestiging to the next level.
 
-Runecrafting Cape: Gives an invisible +1 level bonus. Buying this upgrade unlocks the Trimmed Runecrafting Cape upgrade which is 10 elemental and 10 catalytic stones.
+Runecrafting Cape: Gives an invisible +1 level bonus, allowing you to craft runes 1 level before their required level. Buying this upgrade unlocks the Trimmed Runecrafting Cape upgrade which is 10 elemental and 10 catalytic stones.
 
 Trimmed Runecrafting Cape: Removes level requirement to craft runes.
 
