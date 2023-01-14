@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# Runecrafter
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A clicker game based off of the *best* skill in Old School Runescape
 
-## Available Scripts
+## Upgrade Notes
 
-In the project directory, you can run:
+Pouches add up. Ex. when you unlock Medium Pouch, it adds the +6 to the +3 from the Small Pouch, giving you a total of +9.
+Raiments of the Eye: When all 4 "of the eye" pieces are bought, you get a +20% bonus to the current +40% bonus from the set, giving a total of +60% bonus.
+Ethereal Set Bonus:
+  - 5% chance to double law/blood/wrath runes crafted, giving twice as much experience.
+  - Stores an additional 2 essence (for each set).
+  - Grants access to the Law/Blood/Wrath Orb Prestige Upgrades.
+  - When crafting runes (excl. Law/Blood/Wrath), you recieve law/blood/wrath runes equal to 10% of the runes crafted.
+  
+Upon buying all 3 ethereal sets, you can buy the Infinity Ethereal Set.
 
-### `npm start`
+Infinity Ethereal Set Bonus:
+  - 7% chance to double law, blood, and wrath runes crafted, giving twice as much experience.
+  - 5% chance to keep runes in rune pouches when crafting.
+  - Every 5 minutes, generate 5000 law, blood, or wrath runes of your choice.
+  - Battlestaff drops are rolled twice.
+  - Stores an additional 12 essence.
+  - Grants access to the Law Orb, Blood Orb, and Wrath Orb Prestige Upgrades.
+  - When crafting runes (excl. Law, Blood, Wrath), you recieve law, blood, and wrath runes equal to 10% of the runes crafted.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Prestige Notes
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Prestige is available when your prestige level is at least 1, or when you have at least 10,000 elemental (air, earth, water, fire) or catalytic (astral, law, blood, wrath) runes.
 
-### `npm test`
+Runecrafting Cape: Gives an invisible +1 level bonus. Buying this upgrade unlocks the Trimmed Runecrafting Cape upgrade which is 10 elemental and 10 catalytic stones.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Trimmed Runecrafting Cape: Removes level requirement to craft runes.
 
-### `npm run build`
+Smashing!(!!/!!!): Auto mines 10/20/30 essence every second.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Orbs: Orbs require a battlestaff to be attached to. Once attached, gives an infinite supply of the specific rune. You can only have 1 staff at a time equipped. Upon crafting a staff when you already have one equipped, your currently equipped staff will turn back into an orb. (Law Staff will remove the law rune requirement when charging the Ring of the Elements)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Battlestaff: Battlestaves will randomly drop when you craft a rune. The based chance is 1/1000.
 
 ### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### `npm run deploy`
