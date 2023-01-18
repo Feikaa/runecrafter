@@ -350,10 +350,10 @@ export default function RunecraftSection(props) {
             if ((infinityOutfit === 5 && Math.random() < 0.07) || (bloodOutfit === 5 && Math.random() < 0.05)) {
                 if (bloodEssence === 0) {
                     xpbase = 48;
-                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/100)) * 2 * (1 + (0.1 * bloodLvl))));
+                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/100) * 2 * (1 + (0.1 * bloodLvl)))));
                 } else if (bloodEssence >= amt) {
                     xpbase = 48 * 1.5;
-                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/100)) * 2 * (1 + (0.1 * bloodLvl)) * 1.5));
+                    setBlood(blood + (Math.floor(amt * bonus * (1 + pBoost/100) * 2 * (1 + (0.1 * bloodLvl)) * 1.5)));
                     setBloodEssence(bloodEssence - amt);
                 } else {
                     xpbase = 48 * (1 + ((0.5 / amt) * bloodEssence));
@@ -424,9 +424,9 @@ export default function RunecraftSection(props) {
             if (bloodEssence === 0) {
                 setBlood(blood + Math.floor(runes[1] * bonus * (1 + pBoost/100) * (1 + (0.1 * bloodLvl))));
             } else if (bloodEssence >= runes[1]) {
-                setBlood(blood + (Math.floor(runes[1] * bonus * (1 + pBoost/100)) * 2 * (1 + (0.1 * bloodLvl)) * 1.5));
+                setBlood(blood + (Math.floor(runes[1] * bonus * (1 + pBoost/100) * 2 * (1 + (0.1 * bloodLvl)) * 1.5)));
             } else {
-                setBlood(blood + (Math.floor(bloodEssence * bonus * (1 + pBoost/100)) * 2 * (1 + (0.1 * bloodLvl)) * 1.5) + (Math.floor((runes[1] - bloodEssence) * bonus * (1 + pBoost/100)) * 2 * (1 + (0.1 * bloodLvl))));
+                setBlood(blood + (Math.floor(bloodEssence * bonus * (1 + pBoost/100) * 2 * (1 + (0.1 * bloodLvl)) * 1.5)) + (Math.floor((runes[1] - bloodEssence) * bonus * (1 + pBoost/100) * 2 * (1 + (0.1 * bloodLvl)))));
             }
             setLaw(law + Math.floor(runes[2] * bonus * (1 + pBoost/100) * (1 + (0.1 * lawLvl))));
             setAstral(astral + Math.floor(runes[3] * bonus * (1 + pBoost/100) * (1 + (0.1 * astralLvl))));
@@ -472,10 +472,12 @@ export default function RunecraftSection(props) {
     }
 
     function calcLevel(lvlGain) {
-        if (lvl < 99 && totalxp >= lvls[lvl + lvlGain + 1]) {
-            calcLevel(lvlGain + 1);
-        } else {
-            setLvl(lvl + lvlGain);
+        if (lvl < 99) {
+            if (totalxp >= lvls[lvl + lvlGain + 1]) {
+                calcLevel(lvlGain + 1);
+            } else {
+                setLvl(lvl + lvlGain);
+            }
         }
     }
 
@@ -746,7 +748,11 @@ export default function RunecraftSection(props) {
                     craftRune(runename, inventory.length + extra);
                 }
                 setInventory([]);
-                setExtra(0);
+                if (infinityOutfit === 5 && Math.random() < 0.95) {
+                    setExtra(0);
+                } else if (infinityOutfit !== 5) {
+                    setExtra(0);
+                }
             }
         }
     }, [inventory, extra, runename]);

@@ -42,7 +42,7 @@ export default function XPSection(props) {
                     </Typography>
                 </Box>
             } followCursor arrow>
-            <ProgressBar variant="success" now={progress} label={`${progress}%`}/>
+            <ProgressBar variant="success" now={lvl < 99 ? progress : 100} label={`${lvl < 99 ? progress : 100}%`}/>
             </Tooltip>
         </Box>
     )
