@@ -39,7 +39,7 @@ Smashing!(!!/!!!): Auto mines 10/20/30 essence every second.
 
 Orbs: Orbs require a battlestaff to be attached to. Once attached, gives an infinite supply of the specific rune. You can only have 1 staff at a time equipped. Upon crafting a staff when you already have one equipped, your currently equipped staff will turn back into an orb. (Law Staff will remove the law rune requirement when charging the Ring of the Elements)
 
-Battlestaff: Battlestaves will randomly drop when you craft a rune. The based chance is 1/1000.
+Battlestaff: Battlestaves will randomly drop when you craft a rune. The base chance is 1/1000.
 
 ### Deployment
 
